@@ -26,7 +26,7 @@ function backup_file {
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DISTRIBUTION_DIR="${SCRIPT_DIR}/distribution"
-FTP_SRC="http://ftp.ebi.ac.uk/pub/contrib/UniProtKB/UniFIRE/rules/"
+FTP_SRC="ftp://ftp.ebi.ac.uk/pub/contrib/UniProt/UniFIRE/rules/"
 
 pushd ${SCRIPT_DIR} > /dev/null
 
@@ -40,7 +40,7 @@ popd > /dev/null
 
 
 echo "Downloading rule urml files..."
-for i in aa-rules-saas-urml-latest.xml aa-rules-unirule-urml-latest.xml unirule-templates-latest.xml;
+for i in saas-urml-latest.xml unirule-urml-latest.xml unirule-templates-latest.xml;
 do
     backup_file ${SCRIPT_DIR}/samples/${i}
     wget ${FTP_SRC}/${i} -O ${SCRIPT_DIR}/samples/${i}
