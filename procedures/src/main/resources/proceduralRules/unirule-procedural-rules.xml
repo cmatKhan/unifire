@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~  Copyright (c) 2018 European Molecular Biology Laboratory
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<rules xmlns="http://uniprot.org/urml/rules" xmlns:fact="http://uniprot.org/urml/facts" name="org.uniprot.unirule.procedures" version="1.0">
+
+    <rule id="UR_RESOLVE_GENE_NAME_PLACEHOLDERS" procedural="true">
+        <conditions>
+            <AND>
+                <condition on="fact:ProteinAnnotation" bind="proteinAnnotation">
+                    <filter on="hasPlaceholder"/>
+                    <filter on="value">
+                        <matches>.*@GENE_NAME@.*</matches>
+                    </filter>
+                </condition>
+            </AND>
+        </conditions>
+        <actions>
+            <action type="update">
+                <fact type="fact:ProteinAnnotation" id="proteinAnnotation">
+                    <call uri="java://uk.ac.ebi.uniprot.urml.procedures.unirule.placeholders.GeneNamePlaceholderResolver">
+                        <procedure>resolve</procedure>
+                        <arguments>
+                            <argument isReference="true">proteinAnnotation</argument>
+                        </arguments>
+                    </call>
+                </fact>
+            </action>
+        </actions>
+    </rule>
+
+    <rule id="UR_RESOLVE_RESIDUE_NAME_AT_POSITION" procedural="true">
+        <conditions>
+            <AND>
+                <condition on="fact:ProteinAnnotation" bind="proteinAnnotation">
+                    <filter on="hasPlaceholder"/>
+                    <filter on="value">
+                        <matches>.*@RESIDUE_NAME_AT_POS\\|.+?@.*</matches>
+                    </filter>
+                </condition>
+                <condition on="fact:PositionalMapping" bind="positionalMappings" with="protein:proteinAnnotation.protein" collect="true"/>
+            </AND>
+        </conditions>
+        <actions>
+            <action type="update">
+                <fact type="fact:ProteinAnnotation" id="proteinAnnotation">
+                    <call uri="java://uk.ac.ebi.uniprot.urml.procedures.unirule.placeholders.ResidueNameAtPosPlaceholderResolver">
+                        <procedure>resolve</procedure>
+                        <arguments>
+                            <argument isReference="true">proteinAnnotation</argument>
+                            <argument isReference="true">positionalMappings</argument>
+                        </arguments>
+                    </call>
+                </fact>
+            </action>
+        </actions>
+    </rule>
+
+    <rule id="UR_RESOLVE_MAX_SIG_FREQ_PLACEHOLDER" procedural="true">
+        <conditions>
+            <AND>
+                <condition on="fact:ProteinAnnotation" bind="proteinAnnotation">
+                    <filter on="hasPlaceholder"/>
+                    <filter on="value">
+                        <matches>.*@MAX_SIG_FREQ\\|(.+?)@.*</matches>
+                    </filter>
+                </condition>
+                <condition on="fact:ProteinSignature" bind="proteinSignatures" with="protein:proteinAnnotation.protein" collect="true"/>
+            </AND>
+        </conditions>
+        <actions>
+            <action type="update">
+                <fact type="fact:ProteinAnnotation" id="proteinAnnotation">
+                    <call uri="java://uk.ac.ebi.uniprot.urml.procedures.unirule.placeholders.MaxSigFreqPlaceholderResolver">
+                        <procedure>resolve</procedure>
+                        <arguments>
+                            <argument isReference="true">proteinAnnotation</argument>
+                            <argument isReference="true">proteinSignatures</argument>
+                        </arguments>
+                    </call>
+                </fact>
+            </action>
+        </actions>
+    </rule>
+
+    <rule id="UR_RESOLVE_OLN_OR_ORF_NAME_PLACEHOLDER" procedural="true">
+        <conditions>
+            <AND>
+                <condition on="fact:ProteinAnnotation" bind="proteinAnnotation">
+                    <filter on="hasPlaceholder"/>
+                    <filter on="value">
+                        <matches>.*@OLN_OR_ORF_NAME@.*</matches>
+                    </filter>
+                </condition>
+            </AND>
+        </conditions>
+        <actions>
+            <action type="update">
+                <fact type="fact:ProteinAnnotation" id="proteinAnnotation">
+                    <call uri="java://uk.ac.ebi.uniprot.urml.procedures.unirule.placeholders.OlnOrOrfNamePlaceholderResolver">
+                        <procedure>resolve</procedure>
+                        <arguments>
+                            <argument isReference="true">proteinAnnotation</argument>
+                        </arguments>
+                    </call>
+                </fact>
+            </action>
+        </actions>
+    </rule>
+
+    <rule id="UR_POSITIONAL_MAPPING" procedural="true">
+        <conditions>
+            <AND>
+                <condition on="fact:PositionalMapping" bind="positionalMapping">
+                    <filter on="isMapped" negative="true"/>
+                </condition>
+            </AND>
+        </conditions>
+        <actions>
+            <action type="update">
+                <fact type="fact:PositionalMapping" id="positionalMapping">
+                    <call uri="java://uk.ac.ebi.uniprot.urml.procedures.unirule.positionalfeatures.PositionalMapper">
+                        <procedure>map</procedure>
+                        <arguments>
+                            <argument isReference="true">positionalMapping</argument>
+                        </arguments>
+                    </call>
+                </fact>
+            </action>
+        </actions>
+    </rule>
+
+    <rule id="UR_POSITIONAL_MAPPING_INVALID_CLEANING" procedural="true">
+        <conditions>
+            <AND>
+                <condition on="fact:PositionalMapping" bind="positionalMapping">
+                    <filter on="isMapped"/>
+                    <filter on="isValid" negative="true"/>
+                </condition>
+            </AND>
+        </conditions>
+        <actions>
+            <action type="remove">
+                <fact type="fact:PositionalMapping" id="positionalMapping"/>
+            </action>
+        </actions>
+    </rule>
+</rules>

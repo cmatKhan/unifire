@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<!-- Completely fake facts just to illustrate some UniRule complex features -->
+<facts xmlns="http://uniprot.org/urml/facts" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <fact xsi:type="Organism" id="org1">
+    <scientificName>Test Bacteria</scientificName>
+    <lineage>
+      <ids>2</ids>
+    </lineage>
+  </fact>
+  <fact xsi:type="Protein" id="P1_with_gene_in_organelle">
+    <sequence length="459" isFragment="false">MLKIIMPTAMLLPVTWYSTNPMIWINITLHSLTISLVSLLLFKQADTNSNNFSLTFFSDPLSSPLLILTTWLFPLTVMASQYHLTKESWERKKHFLSTLISLQLFLIMTFTATELIMFYILFESTLIPTLIIITRWGNQTERLNAGLYFLFYTLAGSLPLLVALCHIQDSMGTLSLFMMTYWLQELPSSWSNYLLWTACIMAFMVKMPLYGLHMWLPKAHVEAPIAGSMILAAILLKLGGYGMMRIIMILNPLTKFMAYPFLMMCLWGMIMTSLICLRQTDLKSLIAYSSISHMALVTMAILIQTPWSLMGATTLMVAHGLTSSVLFCLANSNYERIHS</sequence>
+    <organism>org1</organism>
+      <gene>
+          <names>gn1</names>
+          <organelleLocations>plastid chloroplast</organelleLocations>
+      </gene>
+  </fact>
+  <fact xsi:type="ProteinSignature">
+    <protein>P1_with_gene_in_organelle</protein>
+    <signature type="PRINTS">PR00059</signature>
+    <frequency>1</frequency>
+  </fact>
+  <fact xsi:type="ProteinSignature">
+    <protein>P1_with_gene_in_organelle</protein>
+    <signature type="PFAM">PF00347</signature>
+    <frequency>1</frequency>
+  </fact>
+    <fact xsi:type="Organism" id="org2">
+        <scientificName>Test Archaea</scientificName>
+        <lineage>
+            <ids>2157</ids>
+        </lineage>
+    </fact>
+    <fact xsi:type="Protein" id="P2_matching_placeholder">
+        <sequence length="459" isFragment="false">PLLVALCHIQDSMGTLSLFMMTYWLQELPSSWSNYLLWTACIMAFMVKMPLYGLHMWLPKAHVEAPIAGSMILA</sequence>
+        <organism>org2</organism>
+    </fact>
+    <fact xsi:type="ProteinSignature">
+        <protein>P2_matching_placeholder</protein>
+        <signature type="HAMAP">MF_01111</signature>
+        <frequency>1</frequency>
+    </fact>
+</facts>

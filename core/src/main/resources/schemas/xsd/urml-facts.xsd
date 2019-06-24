@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2018 European Molecular Biology Laboratory
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://uniprot.org/urml/facts"
+            targetNamespace="http://uniprot.org/urml/facts" elementFormDefault="qualified"
+           xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+           jxb:version="2.1">
+
+    <xs:element name="facts" type="FactSet"/>
+
+    <xs:complexType name="FactSet">
+        <xs:sequence>
+            <xs:element name="fact" type="Fact" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Fact" abstract="true">
+    </xs:complexType>
+
+    <xs:complexType name="Organism">
+        <xs:complexContent>
+            <xs:extension base="Fact">
+                <xs:all>
+                    <xs:element name="scientificName" type="xs:string" minOccurs="0"/>
+                    <xs:element name="lineage" type="Lineage"/>
+                </xs:all>
+                <xs:attribute name="id" type="xs:ID" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Lineage">
+        <xs:sequence>
+            <xs:element name="ids">
+                <xs:simpleType>
+                    <xs:list itemType="xs:int"/>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TemplateProtein">
+        <xs:complexContent>
+            <xs:extension base="Fact">
+                <xs:sequence>
+                    <xs:element name="sequence" type="ProteinSequence"/>
+                </xs:sequence>
+                <xs:attribute name="id" type="xs:ID" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Protein">
+        <xs:complexContent>
+            <xs:extension base="TemplateProtein">
+                <xs:sequence>
+                    <xs:element name="organism" type="xs:IDREF">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <jxb:property>
+                                    <jxb:baseType name="Organism"/>
+                                </jxb:property>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="gene" type="GeneInformation" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="Sequence">
+        <xs:restriction base="xs:normalizedString">
+            <xs:pattern value='\S.*\S'/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ProteinSequence">
+        <xs:simpleContent>
+            <xs:extension base="Sequence">
+                <xs:attribute name="length" type="xs:int"/>
+                <xs:attribute name="isFragment" type="xs:boolean" default="false"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="GeneInformation">
+        <xs:complexContent>
+            <xs:extension base="Fact">
+                <xs:sequence>
+                    <xs:element name="names" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list itemType="xs:string"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="orfOrOlnNames" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list itemType="xs:string"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="organelleLocations" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Supertype (i.e plastid) must be provided for each of its subtypes (i.e apicoplast, chloroplast, etc).
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:list itemType="OrganelleType"/>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ProteinSignature">
+        <xs:complexContent>
+            <xs:extension base="Fact">
+                <xs:sequence>
+                    <xs:element name="protein" type="xs:IDREF">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <jxb:property>
+                                    <jxb:baseType name="TemplateProtein"/>
+                                </jxb:property>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="signature" type="Signature"/>
+                    <xs:element name="frequency" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PositionalProteinSignature">
+        <xs:complexContent>
+            <xs:extension base="ProteinSignature">
+                <xs:sequence>
+                    <xs:element name="positionStart" type="xs:int"/>
+                    <xs:element name="positionEnd" type="xs:int" minOccurs="0"/>
+                    <xs:element name="alignment" type="SequenceAlignment" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TemplateProteinSignature">
+        <xs:complexContent>
+            <xs:extension base="PositionalProteinSignature">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SequenceAlignment">
+        <xs:simpleContent>
+            <xs:extension base="Sequence"/>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Signature">
+        <xs:simpleContent>
+            <xs:extension base="xs:normalizedString">
+                <xs:attribute name="type" type="SignatureType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ProteinAnnotation">
+        <xs:complexContent>
+            <xs:extension base="Fact">
+                <xs:all>
+                    <xs:element name="protein" type="xs:IDREF">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <jxb:property>
+                                    <jxb:baseType name="Protein"/>
+                                </jxb:property>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="evidence" type="xs:string"/>
+                    <xs:element name="type" type="xs:string" />
+                    <xs:element name="value" type="xs:string" />
+                    <xs:element name="positionStart" type="xs:int" minOccurs="0"/>
+                    <xs:element name="positionEnd" type="xs:int" minOccurs="0"/>
+                </xs:all>
+                <xs:attribute name="hasPlaceholder" type="xs:boolean" default="false"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PositionalFeatureTag">
+        <xs:complexContent>
+            <xs:extension base="Fact">
+                <xs:all>
+                    <xs:element name="ruleId" type="xs:string"/>
+                    <xs:element name="tag" type="xs:string"/>
+                    <xs:element name="positionalMapping" type="PositionalMapping"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PositionalMapping">
+        <xs:complexContent>
+            <xs:extension base="Fact">
+                <xs:all>
+                    <xs:element name="protein" type="Protein"/>
+                    <xs:element name="targetMatch" type="PositionalProteinSignature"/>
+                    <xs:element name="templateMatch" type="PositionalProteinSignature"/>
+                    <xs:element name="templateStart" type="xs:string"/>
+                    <xs:element name="templateEnd" type="xs:string"/>
+                    <xs:element name="mappedSequence" type="xs:normalizedString" minOccurs="0"/>
+                    <xs:element name="mappedStart" type="xs:int" minOccurs="0"/>
+                    <xs:element name="mappedEnd" type="xs:int" minOccurs="0"/>
+                </xs:all>
+                <xs:attribute name="isMapped" type="xs:boolean" default="false"/>
+                <xs:attribute name="isValid" type="xs:boolean" default="false"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="SignatureType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="HAMAP"/>
+            <xs:enumeration value="PFAM"/>
+            <xs:enumeration value="PIR Superfamily"/>
+            <xs:enumeration value="Gene3D"/>
+            <xs:enumeration value="InterPro"/>
+            <xs:enumeration value="PRINTS"/>
+            <xs:enumeration value="SMART"/>
+            <xs:enumeration value="SCOP Superfamily"/>
+            <xs:enumeration value="TIGRFAM"/>
+            <xs:enumeration value="PANTHER"/>
+            <xs:enumeration value="PROSITE"/>
+            <xs:enumeration value="ProDom"/>
+            <xs:enumeration value="CDD"/>
+            <xs:enumeration value="SFLD"/>
+            <xs:enumeration value="GeneTree"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="OrganelleType">
+        <xs:annotation>
+            <xs:documentation>
+                According to controlled vocabulary defined here: https://www.ebi.ac.uk/ena/WebFeat/qualifiers/organelle.html
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="apicoplast"/>
+            <xs:enumeration value="chloroplast"/>
+            <xs:enumeration value="organellar chromatophore"/>
+            <xs:enumeration value="cyanelle"/>
+            <xs:enumeration value="hydrogenosome"/>
+            <xs:enumeration value="mitochondrion"/>
+            <xs:enumeration value="non-photosynthetic plastid"/>
+            <xs:enumeration value="nucleomorph"/>
+            <xs:enumeration value="plasmid"/>
+            <xs:enumeration value="plastid"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

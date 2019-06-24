@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2018 European Molecular Biology Laboratory
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>uk.ac.ebi.uniprot.aa</groupId>
+        <artifactId>unifire</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>unifire-core</artifactId>
+
+    <properties>
+        <reflections.version>0.9.10</reflections.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>${reflections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+        </dependency>
+        <!-- CXF plugin - alternative to the JVNET one in case migration to Java 9 is faster -->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.cxf.xjcplugins</groupId>-->
+        <!--<artifactId>cxf-xjc-ts</artifactId>-->
+        <!--<version>3.2.1</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.cxf.xjc-utils</groupId>-->
+        <!--<artifactId>cxf-xjc-runtime</artifactId>-->
+        <!--<version>3.2.1</version>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<groupId>javax.xml.bind</groupId>-->
+        <!--<artifactId>jaxb-api</artifactId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- TODO: JAXB Maven plugin ; Poor Java 9 support - will be fixed any time soon...
+                 cf: https://github.com/highsource/maven-jaxb2-plugin/issues/120.
+                 Works perfectly for Java 8.-->
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>uniprot-urml-xjc</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>${project.basedir}/src/main/resources/schemas/xsd</schemaDirectory>
+                            <cleanPackageDirectories>false</cleanPackageDirectories>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-urml</generateDirectory>
+                            <bindingDirectory>${project.basedir}/src/main/resources/schemas/bindings</bindingDirectory>
+                            <extension>true</extension>
+                            <args>
+                                <arg>-XtoString</arg>
+                                <arg>-Xequals</arg>
+                                <arg>-XhashCode</arg>
+                                <arg>-Xsetters</arg>
+                                <arg>-Xannotate</arg>
+                                <arg>-Xinheritance</arg>
+                                <arg>-Xfluent-builder</arg>
+                                <arg>-enableIntrospection</arg>
+                                <arg>-Xdefault-value</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <!-- TODO: JAXB Maven Plugin - Apparently, CXF has a more active support for Java 9. But get this issue:
+        https://stackoverflow.com/questions/49717155/failed-to-run-custom-xjc-extension-within-cxf-xjc-plugin-on-java-9
+             Works perfectly for Java 8. -->
+            <!--<plugin>-->
+            <!--<groupId>org.apache.cxf</groupId>-->
+            <!--<artifactId>cxf-xjc-plugin</artifactId>-->
+            <!--<version>3.2.1</version>-->
+            <!--<configuration>-->
+            <!--<extensions>-->
+            <!--<extension>org.jvnet.jaxb2_commons:jaxb2-basics:0.7.0</extension>-->
+            <!--<extension>org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.0.4</extension>-->
+            <!--<extension>net.codesup.util:jaxb2-rich-contract-plugin:1.18.0</extension>-->
+            <!--<extension>org.jvnet.jaxb2_commons:jaxb2-default-value:1.1</extension>-->
+            <!--</extensions>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>generate-sources</id>-->
+            <!--<phase>generate-sources</phase>-->
+            <!--<goals>-->
+            <!--<goal>xsdtojava</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<sourceRoot>${basedir}/target/generated-sources/src/main/java</sourceRoot>-->
+            <!--<xsdOptions>-->
+            <!--<xsdOption>-->
+            <!--<extension>true</extension>-->
+            <!--<xsdDir>${project.basedir}/src/main/resources/schemas/xsd</xsdDir>-->
+            <!--<bindingFile>${project.basedir}/src/main/resources/schemas/bindings/urml-bindings.xjb</bindingFile>-->
+            <!--<extensionArgs>-->
+            <!--<extensionArg>-XtoString</extensionArg>-->
+            <!--<extensionArg>-Xequals</extensionArg>-->
+            <!--<extensionArg>-XhashCode</extensionArg>-->
+            <!--<extensionArg>-Xannotate</extensionArg>-->
+            <!--<extensionArg>-Xsetters</extensionArg>-->
+            <!--<extensionArg>-Xinheritance</extensionArg>-->
+            <!--<extensionArg>-Xfluent-builder</extensionArg>-->
+            <!--<extensionArg>-enableIntrospection</extensionArg>-->
+            <!--<extensionArg>-Xdefault-value</extensionArg>-->
+            <!--</extensionArgs>-->
+            <!--</xsdOption>-->
+            <!--</xsdOptions>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--<dependencies>-->
+            <!--<dependency>-->
+            <!--<groupId>javax.activation</groupId>-->
+            <!--<artifactId>activation</artifactId>-->
+            <!--<version>1.1.1</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+            <!--<groupId>org.jvnet.jaxb2_commons</groupId>-->
+            <!--<artifactId>jaxb2-basics</artifactId>-->
+            <!--<version>${jaxb2-basics.version}</version>-->
+            <!--</dependency>-->
+            <!--</dependencies>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2018 European Molecular Biology Laboratory
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://uniprot.org/urml/rules"
+           targetNamespace="http://uniprot.org/urml/rules" elementFormDefault="qualified"
+           xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+           jxb:version="2.1">
+
+    <xs:element name="rules" type="Rules"/>
+
+    <xs:complexType name="Rules">
+        <xs:annotation>
+            <xs:documentation>Describes a collection of Rules.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="rule" type="Rule" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="version" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="Rule">
+        <xs:sequence>
+            <xs:element name="meta" type="InformationSet" minOccurs="0"/>
+            <xs:element name="conditions" type="DisjunctiveConditionSet"/>
+            <xs:element name="actions" type="Actions" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="status" type="RuleStatus" default="APPLY"/>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="extends" type="xs:IDREF">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property>
+                        <jxb:baseType name="Rule"/>
+                    </jxb:property>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="group" type="xs:NMTOKEN"/>
+        <xs:attribute name="procedural" type="xs:boolean" default="false"/>
+    </xs:complexType>
+
+    <xs:simpleType name="RuleStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="APPLY"/>
+            <xs:enumeration value="DISUSED"/>
+            <xs:enumeration value="TEST"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="InformationSet">
+        <xs:sequence>
+            <xs:element name="information" type="Information" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Information">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:normalizedString"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ConjunctiveConditionSet">
+        <xs:sequence>
+            <xs:element name="condition" type="Condition" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="FactType">
+        <xs:restriction base="xs:QName"/>
+    </xs:simpleType>
+
+    <xs:complexType name="Binding">
+        <xs:attribute name="on" type="FactType" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>Specifies the type of fact to be evaluated, from the fact model.</p>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="bind" type="xs:NMTOKEN">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>Specifies the binding id of the fact ('on') that can be used to join it to other facts.</p>
+                    <p>Implementation:</p>
+                    <ul>
+                        <li>If set, exists attribute should be considered as null (universal quantification);</li>
+                    </ul>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="with" type="xs:NMTOKENS">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>Specifies binding conditions using the id of another @{link Condition} to be joined to an attribute.</p>
+                    <p>Can be constructed in two ways:</p>
+                    <ul>
+                        <li>1) attribute_a:id_a [attribute_b:id_b, ...]</li>
+                        <li>2) id_a [id_b, ...]</li>
+                    </ul>
+                    <p>Implementation:</p>
+                    <ul>
+                        <li>In the 2nd way, it should be assumed that the attribute name is the same as the given binding id.</li>
+                    </ul>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="of" type="xs:NMTOKENS">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>Specifies binding conditions using the id of another @{link Condition} + an attribute to be joined to the current condition.</p>
+                    <p>Can be constructed in two ways:</p>
+                    <ul>
+                        <li>1) attribute_a:id_a [attribute_b:id_b, ...]</li>
+                        <li>2) id_a [id_b, ...]</li>
+                    </ul>
+                    <p>Implementation:</p>
+                    <ul>
+                        <li>In the 2nd way, it should be assumed that the attribute name is the same as lowerCase(FactType) of current condition.</li>
+                    </ul>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="collect" type="xs:boolean" default="false"/>
+    </xs:complexType>
+
+    <xs:complexType name="Condition">
+        <xs:complexContent>
+            <xs:extension base="Binding">
+                <xs:sequence>
+                    <xs:element name="filter" type="Filter" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Specifies the constraints to be applied on the fact ('on').</p>
+                                <p>Implementation:</p>
+                                <ul>
+                                    <li>If all the constraints are evaluated to be true, the condition should be true;</li>
+                                    <li>If at least one of those constraints is evaluated to be false, the condition should be false.</li>
+                                </ul>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="exists" type="xs:boolean" default="true">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <p>Evaluates the condition using an existential quantification (as opposed to the default universal quantification).</p>
+                            <ul>
+                                <li>(exists = true) means 'Considering all facts, there exists at least one fact matching these conditions';</li>
+                                <li>(exists = false) means 'Considering all facts, there are no facts matching these conditions';</li>
+                            </ul>
+                            <p>Implementation:</p>
+                            <ul>
+                                <li>If the id attribute is set, exists value should be considered as null (universal quantification);</li>
+                            </ul>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Filter">
+        <xs:choice minOccurs="0">
+            <xs:element name="ref" type="xs:string"/>
+            <xs:element name="value" type="SimpleValue"/>
+            <xs:sequence>
+                <xs:element name="field" type="Field" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:element name="range" type="Range"/>
+            <xs:element name="contains" type="MultiValue"/>
+            <xs:element name="in" type="MultiValue"/>
+            <xs:element name="startsWith" type="StartsWith"/>
+            <xs:element name="matches" type="Matches"/>
+        </xs:choice>
+        <xs:attribute name="on" type="xs:string" use="required"/>
+        <xs:attribute name="negative" type="xs:boolean" default="false"/>
+    </xs:complexType>
+
+    <xs:complexType name="SimpleValue">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="description" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Field">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="attribute" type="xs:string" use="required"/>
+                <xs:attribute name="isReference" type="xs:boolean" default="false"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Range">
+        <xs:annotation>
+            <xs:documentation>Generic type for data with a start and end range.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="start" type="xs:int"/>
+        <xs:attribute name="end" type="xs:int"/>
+        <xs:attribute name="inclusiveStart" type="xs:boolean" default="true"/>
+        <xs:attribute name="inclusiveEnd" type="xs:boolean" default="true"/>
+    </xs:complexType>
+
+    <xs:complexType name="MultiValue">
+        <xs:sequence>
+            <xs:element name="value" type="SimpleValue" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="operator" type="LogicalOperator" default="any"/>
+    </xs:complexType>
+
+    <xs:simpleType name="LogicalOperator">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="any"/>
+            <xs:enumeration value="all"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Matches">
+        <xs:simpleContent>
+            <xs:extension base="xs:string"/>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="StartsWith">
+        <xs:simpleContent>
+            <xs:extension base="Matches"/>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Actions">
+        <xs:sequence>
+            <xs:element name="action" type="Action" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DisjunctiveConditionSet">
+        <xs:sequence>
+            <xs:element name="AND" type="ConjunctiveConditionSet" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Action">
+        <xs:annotation>
+            <xs:documentation>Annotation definition.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="fact" type="RuleFact" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="ActionType" use="required">
+        </xs:attribute>
+        <xs:attribute name="with">
+            <xs:annotation>
+            <xs:documentation>
+                <p>Wire an attribute and a value for all the created facts.</p>
+                <p>Syntax must be: </p>
+                <ul>
+                    <li>"attribute:ref" -> for a reference to another fact</li>
+                    <li>"attribute:'value'"</li>
+                </ul>
+            </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:list itemType="xs:normalizedString"/>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="ActionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="declare"/>
+            <xs:enumeration value="create"/>
+            <xs:enumeration value="update"/>
+            <xs:enumeration value="remove"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="RuleFact">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element name="field" type="Field" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:element name="call" type="ProceduralAttachment"/>
+        </xs:choice>
+        <xs:attribute name="type" type="FactType" use="required"/>
+        <xs:attribute name="with">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>Specifies autowired fields having a @{link Condition} id as value.</p>
+                    <p>Can be constructed in two ways:</p>
+                    <ul>
+                        <li>1) attribute_a:id_a [attribute_b:id_b, ...]</li>
+                        <li>2) id_a [id_b, ...]</li>
+                    </ul>
+                    <p>Implementation:</p>
+                    <ul>
+                        <li>In the 2nd way, it should be assumed that the attribute name is the same as the id.</li>
+                    </ul>
+                    <p>Note: This is similar to @{link Condition} from attribute.</p>
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:list itemType="xs:normalizedString"/>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="id" type="xs:NMTOKEN"/>
+    </xs:complexType>
+
+    <xs:complexType name="ProceduralAttachment">
+        <xs:all>
+            <xs:element name="procedure" type="xs:normalizedString"/>
+            <xs:element name="arguments">
+                <xs:annotation>
+                    <xs:documentation>
+                        <p>Ordered procedure list of arguments</p>
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="argument" type="ProcedureArgument" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="uri" type="xs:anyURI"/>
+    </xs:complexType>
+
+    <xs:complexType name="ProcedureArgument">
+        <xs:simpleContent>
+            <xs:extension base="xs:normalizedString">
+                <xs:attribute name="isReference" type="xs:boolean" default="false"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>

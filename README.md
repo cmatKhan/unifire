@@ -1,0 +1,282 @@
+# UniFIRE Project
+
+UniFIRE (The UniProt Functional annotation Inference Rule Engine) is an engine to execute rules in the UniProt Rule Markup Language (URML) format.
+It can be used to execute the UniProt annotation rules (UniRule and SAAS).
+
+This project is a work in progress, open for private collaboration only. Please do not share this code without explicit authorization.
+
+Introducing presentation: [UniFIRE-URML.pptx](misc/media/UniFIRE-URML.pptx)  
+
+## Getting Started
+
+### Prerequisites
+
+#### Hardware
+
+A machine with at least 2 Go of memory.
+
+#### Operating system support
+
+The Java software is portable for any system.
+Scripts are only provided for Linux and Mac OS.
+
+#### Software
+
+- Java (>=1.8)
+
+### Usage
+
+#### Try it out
+
+We provide some sample files in the [sample](samples) folder to test the software.
+
+**Example with UniRule rules & InterProScan XML input:**
+``` bash
+$ ./distribution/bin/unifire.sh -r samples/unirule-urml-2019_04.xml -i samples/input_ipr.fasta.xml -t samples/unirule-templates-2019_04.xml -o ~/output_unirule_annotations.csv
+```
+
+*Note: To be able to predict the UniRule positional annotations, a template file is provided (`samples/unirule-templates-2018_05.xml`) (optional.)*
+
+**Example with SAAS rules & Fact XML input:**
+``` bash
+$ ./distribution/bin/unifire.sh -r samples/saas-urml-2019_04.xml -i samples/input_facts.xml -s XML -o ~/output_saas_annotations.csv
+```
+
+_Note_: With all rule systems, it is possible that a protein get the exact same annotation from different rules due to overlap in condition spaces.
+
+#### Options
+
+```
+usage: unifire -i <INPUT_FILE> -o <OUTPUT_FILE> -r <RULE_URML_FILE> [-f <OUTPUT_FORMAT>] [-n
+       <INPUT_CHUNK_SIZE>] [-s <INPUT_SOURCE>] [-t <TEMPLATE_FACTS>] [-m <MAX_MEMORY>] [-h]
+--------------------------------------------
+     -i,--input <INPUT_FILE>                Input file (path) containing the proteins to annotate
+                                            and required data, in the format specified by the -s
+                                            option.
+     -o,--output <OUTPUT_FILE>              Output file (path) containing predictions in the format
+                                            specified in the -f option.
+     -r,--rules <RULE_URML_FILE>            Rule base file (path) provided by UniProt (e.g UniRule
+                                            or SAAS) (format: URML).
+     -f,--output-format <OUTPUT_FORMAT>     Output file format. Supported formats are:
+                                            - TSV (Tab-Separated Values)
+                                            - XML (URML Fact XML)
+                                            (default: TSV).
+     -n,--chunksize <INPUT_CHUNK_SIZE>      Chunk size (number of proteins) to be batch processed
+                                            simultaneously
+                                            (default: 1000).
+     -s,--input-source <INPUT_SOURCE>       Input source type. Supported input sources are:
+                                            - InterProScan (InterProScan Output XML)
+                                            - UniParc (UniParc XML)
+                                            - XML (Input Fact XML)
+                                            (default: InterProScan).
+     -t,--templates <TEMPLATE_FACTS>        UniRule template sequence matches, provided by UniProt
+                                            (format: Fact Model XML).
+     -m <MAX_MEMORY>                        Max size of the memory allocation pool in MB (JVM -Xmx)
+                                            (default: 4096 MB).
+     -h,--help                              Print this usage.
+```
+
+***
+
+## Data preparation
+
+This section is a walkthrough on how to prepare your data, assuming you are starting from scratch: from a set of sequences (multifasta) that you would like to annotate.
+
+More advanced users / developers with an existing bioinformatics pipeline already integrating InterProScan results should try to load their existing data into the fact model described on the Developer Guide below.
+
+### MultiFasta header format
+
+The MultiFasta headers should, more or less, follow the UniProtKB conventions ([https://www.uniprot.org/help/fasta-headers](https://www.uniprot.org/help/fasta-headers))
+
+The minimal structure of the header is the following:
+
+```
+>{id}|{name} {flags}
+```
+
+* `{id}` must be a unique string amongst the processed sequences
+* `{name}`:
+    * can be any string starting from the previous separator, that should not contain any flag
+    * might contains `(Fragment)` if applicable (e.g "`ACN2_ACAGO Acanthoscurrin-2 (Fragment)`")
+* `{flags}` \[mandatory]: to be considered a valid header, only the following flags should be provided:
+    * OX=`{taxonomy Id}`
+* `{flags}` \[optional]: If possible / applicable, you should also provide:
+    * OS=`{organism name}`
+    * GN=`{recommended gene name}`
+    * GL=`{recommended ordered locus name (OLN) or Open Reading Frame (OLN) name}`
+    * OG=`{gene location(s), comma-separated if multiple}` ([cf. organelle ontology](https://www.ebi.ac.uk/ena/WebFeat/qualifiers/organelle.html))
+
+The UniProt header format has been slightly extended with GL and OG flags.
+
+Optionally, `{id}` can be prepended by `{database}|`, to follow UniProt conventions. If used, it will simply be skipped during the parsing.
+
+Also note that any additional flags will also be ignored.
+
+#### Examples of valid headers:
+
+From UniProt:
+```
+>tr|Q3SA23|Q3SA23_9HIV1 Protein Nef (Fragment) OS=Human immunodeficiency virus 1  OX=11676 GN=nef PE=3 SV=1
+```
+
+From UniProt, customized with additional flags:
+```
+>tr|A0A0D6DT88|A0A0D6DT88_BRADI Maturase K (Fragment) OS=Brachypodium distachyon OX=15368 GN=matK GL=BN3904_34004 OG=Plastid,Chloroplast PE=3 SV=1
+```
+
+Customized minimal:
+```
+>123|Mystery protein OX=62977
+```
+
+Customized full:
+```
+>MyPlantDB|P987|Photosystem II protein D1 OS=Lolium multiflorum OX=4521 GN=psbA GL=LomuCp001 OG=Plastid
+```
+
+### Fetching the full lineages
+
+From the previously described multifasta format, you can use the following scripts to fetch the full NCBI taxonomy id lineage.
+
+* [fetchLineageLocal.py](misc/taxonomy/fetchLineageLocal.py) `<input` `<output>`  - for large amount of data on multiple species
+* [fetchLineageRemote.py](misc/taxonomy/fetchLineageRemote.py) `<input` `<output>`   - for one-off usage / few species
+
+Both scripts will simply replace the OX={taxId} by OX={fullLineage}.
+
+Having the full lineage is necessary for the majority of the rules to be executed.
+
+### Validating the MultiFasta file
+
+If you want to ensure the headers are in the correct format, you can run the following script:
+
+``` bash
+$ ./distribution/bin/fasta-header-validator.sh multifasta_sequences.fasta
+```
+
+You will get an error message if at least one sequence's header is invalid.
+The script also print out warnings if an important data (e.g organism name) is missing. The warnings can be ignored.
+
+### Running InterProScan
+
+Once the multifasta file is ready (cf. previous steps), you can find the matches of all sequences using InterProScan.
+It is advised to download the last version from [https://www.ebi.ac.uk/interpro/download.html](https://www.ebi.ac.uk/interpro/download.html) and keep it up-to-date.
+
+The output format must be XML to be accepted as a valid input for UniFIRE.
+
+The option `-dp` or `--disable-precalc` must be used to be able to get the sequence alignments (necessary if you are interested by the positional features annotations provided by UniRule).
+
+Command:
+
+``` bash
+./interproscan.sh -f xml -dp -i multifasta_sequences.fasta --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,ProDom,PIRSF,PANTHER,SUPERFAMILY"
+```
+
+#### Analyses to run
+
+* Hamap
+* ProSiteProfiles
+* ProSitePatterns
+* Pfam
+* TIGRFAM
+* SMART
+* PRINTS
+* SFLD
+* CDD
+* Gene3D
+* ProDom
+* PIRSF
+* PANTHER
+* SUPERFAMILY
+
+It is possible to include/exclude some of the analyses by modifying the `--appl` option in the above command. UniFIRE will still be able to process the data. 
+By excluding some of those analyses, some rules might not be triggered as a result.
+
+If you do not wish to install InterProScan, you can use the [online version](https://www.ebi.ac.uk/interpro/search/sequence-search) and then download the results in XML.
+The only limitation is that the online version does not provide the sequence alignments for the matches, making the execution of UniRule positional features impossible (non-positional rules will still be executed).
+
+### Running UniFIRE
+
+Once you get the InterProScan output (by default, it is the name of the input file, appended with .xml), you can use it as a input for UniFIRE (e.g `--input multifasta_sequences.fasta.xml`).
+
+***
+
+## Developer guide
+
+### Fact Model
+
+The fact model is automatically created from the following XML Schema: [urml-facts.xsd](core/src/main/resources/schemas/xsd/urml-facts.xsd)
+
+The corresponding Java classes are built in the [core](core) module under the package `org.uniprot.urml.facts`, after building the project with Maven (or using the `./build.sh` script).
+
+You can use theses classes (described in the UML diagram below) and the container `org.uniprot.urml.facts.FactSet` to load your own data directly into objects (via an ORM or a custom parser).
+
+### Fact Model Diagram
+
+![fact-model-diagram](misc/media/fact-model.png)
+
+### Rule Model
+
+The rule model is described in another XML Schema available here: [urml-rules.xsd](core/src/main/resources/schemas/xsd/urml-rules.xsd)  
+
+The corresponding Java classes are built in the [core](core) module under the package `org.uniprot.urml.rules`.
+
+### Building the software
+
+#### Requirement
+
+- Maven (>= 3.0)
+- Java (=1.8 required, cf. limitations)
+
+#### Command
+
+``` bash
+$ ./build.sh
+```
+
+This script is installing some libraries in your local maven repository (temporary solution before publishing the artifacts on a public repository).
+
+Then it runs `mvn clean install`, assembling all the libs and the execution script under `./distribution/target/unifire-distribution/`.
+
+To use the newly built distribution, you will need to run: `./distribution/target/unifire-distribution/bin/unifire.sh` instead.
+
+
+### Execution
+
+The execution of the rules relies on [Drools](https://www.drools.org), an open-source rule-based technology developed by RedHat. 
+It is using an optimized version of the [Rete algorithm](https://en.wikipedia.org/wiki/Rete_algorithm) to match facts and rules in a scalable way.
+This tool translates the URML rules into the Drools language, converts the input data according to the rule model and execute all the rules to produce a list of protein annotations.  
+
+***
+
+## Limitations
+
+### Memory
+A minimum of 2 Go of memory is required for this software to run.
+For a large number of protein to process, it is advised to split them into chunks of approx. 1000 proteins per rule evaluation to keep the memory usage low.
+This is automatically handled by the `-n / --chunksize` option of UniFIRE (by default 1000).
+
+### Java 9 / 10 issues
+
+- For users, the software will be functional under Java 9 or 10, but you will get some warning messages complaining about illegal reflective accesses. You can simply ignore them at the moment.
+- For developers, building the software with JDK 9 / 10 is currently not possible because of JAXB Maven plugin issues. Cf:
+
+    * https://github.com/highsource/maven-jaxb2-plugin/issues/120
+    * https://stackoverflow.com/questions/49717155/failed-to-run-custom-xjc-extension-within-cxf-xjc-plugin-on-java-9
+
+    Those issues have been raised very recently. The fixes will be applied as soon as there are available.
+
+***
+
+## Issues & Suggestions
+
+Please do not hesitate to raise new issues if you experience any bugs or you have improvement suggestions on the software, the models, the helper scripts, the documentation, etc...
+
+[UniFIRE Issue Tracker](https://gitlabci.ebi.ac.uk/uniprot.aa/UniFIRE/issues)
+
+## Authors
+
+* **Alexandre Renaux**
+
+## Contact
+
+* **UniProt Help** - [help@uniprot.org](mailto:help@uniprot.org)

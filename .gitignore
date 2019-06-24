@@ -1,0 +1,12 @@
+# maven build:
+/**/target/
+
+# IntelliJ Idea:
+/**/*.iml
+/**/*.eml
+/.idea
+
+# Eclipse:
+/.classpath
+/.project
+/.settings
