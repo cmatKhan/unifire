@@ -33,7 +33,7 @@
         <dependency>
             <groupId>uk.ac.ebi.uniprot.aa</groupId>
             <artifactId>unirule.public</artifactId>
-            <version>2019.7-SNAPSHOT</version>
+            <version>${uniprot-dependencies.version}</version>
         </dependency>
         <dependency>
             <groupId>uk.ac.ebi.uniprot.aa</groupId>
