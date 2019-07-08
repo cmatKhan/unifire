@@ -23,23 +23,36 @@ Scripts are only provided for Linux and Mac OS.
 #### Software
 
 - Java (>=1.8)
+- Bash
+- Maven (version 3.6.0 has been tested successfully)
+
+### Build
+In order to build the software and download the latest rules and templates into the folder samples/ 
+please execute below command. 
+
+```
+$ <Path to UniFIRE parent folder>/build.sh
+```
+
+Depending on the speed of your internet connection, it will take a few minutes to download all dependencies through 
+maven. You will require in total ~500 MB disk space in UniFIRE folder and in your local maven cache. The script also 
+downloads the latest UniRule and SAAS rules in URML format and UniRule template alignments in fact XML format from 
+EBI FTP into samples/ folder.   
 
 ### Usage
-
-#### Try it out
 
 We provide some sample files in the [sample](samples) folder to test the software.
 
 **Example with UniRule rules & InterProScan XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/unirule-urml-2019_04.xml -i samples/input_ipr.fasta.xml -t samples/unirule-templates-2019_04.xml -o ~/output_unirule_annotations.csv
+$ ./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/input_ipr.fasta.xml -t samples/unirule-templates-latest.xml -o ~/output_unirule_annotations.csv
 ```
 
 *Note: To be able to predict the UniRule positional annotations, a template file is provided (`samples/unirule-templates-2018_05.xml`) (optional.)*
 
 **Example with SAAS rules & Fact XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/saas-urml-2019_04.xml -i samples/input_facts.xml -s XML -o ~/output_saas_annotations.csv
+$ ./distribution/bin/unifire.sh -r samples/saas-urml-latest.xml -i samples/input_facts.xml -s XML -o ~/output_saas_annotations.csv
 ```
 
 _Note_: With all rule systems, it is possible that a protein get the exact same annotation from different rules due to overlap in condition spaces.
