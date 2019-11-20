@@ -16,56 +16,66 @@
 
 package uk.ac.ebi.uniprot.urml.output.xml;
 
-import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLFactWriter;
-import uk.ac.ebi.uniprot.urml.output.FactSetWriter;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import org.uniprot.urml.facts.FactSet;
 import org.uniprot.urml.facts.ProteinAnnotation;
+import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLFactWriter;
+import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLWriter;
+import uk.ac.ebi.uniprot.urml.output.FactSetWriter;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
- *  Writes {@link ProteinAnnotation}s from a {@link FactSet} into XML format.
+ * Writes {@link ProteinAnnotation}s from a {@link FactSet} into XML format.
  *
  * @author Alexandre Renaux
  */
 public class AnnotationXMLWriter implements FactSetWriter<ProteinAnnotation> {
 
-    private final URMLFactWriter urmlFactWriter;
-    private final XMLStreamWriter xmlStreamWriter;
+    private final URMLWriter urmlFactWriter;
 
     public AnnotationXMLWriter(OutputStream outputStream) {
-        this.urmlFactWriter = new URMLFactWriter();
         try {
-            this.xmlStreamWriter = urmlFactWriter.initStream(outputStream, FactSet.builder().build());
+            this.urmlFactWriter = new URMLFactWriter(outputStream);
         } catch (XMLStreamException e) {
             throw new IllegalArgumentException("Cannot initialize XML stream output");
+        } catch (JAXBException jaxbException) {
+            throw new IllegalArgumentException(jaxbException.getMessage());
         }
     }
 
     @Override
     public void write(FactSet factSet) {
-        factSet.getFact().forEach(f -> write(((ProteinAnnotation)f)));
+        factSet.getFact().forEach(f -> write(((ProteinAnnotation) f)));
+        try {
+            urmlFactWriter.completeWrite();
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void write(ProteinAnnotation proteinAnnotation) {
         try {
-            urmlFactWriter.marshallElement(proteinAnnotation, xmlStreamWriter);
+            urmlFactWriter.writeElementWise(proteinAnnotation);
+            urmlFactWriter.completeWrite();
         } catch (JAXBException e) {
-            throw new IllegalArgumentException("Error writing annotation "+proteinAnnotation, e);
+            throw new IllegalArgumentException("Error writing annotation " + proteinAnnotation, e);
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void close() throws IOException {
         try {
-            urmlFactWriter.write(xmlStreamWriter);
+            urmlFactWriter.close();
         } catch (XMLStreamException e) {
             throw new IOException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

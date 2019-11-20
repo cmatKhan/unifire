@@ -1,31 +1,14 @@
-/*
- *  Copyright (c) 2018 European Molecular Biology Laboratory
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
-package uk.ac.ebi.uniprot.urml.core.xml.writers;
+package uk.ac.ebi.uniprot.urml.output.xml;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
-import org.apache.commons.lang3.ArrayUtils;
 import org.uniprot.urml.facts.Fact;
 import org.uniprot.urml.facts.FactSet;
 import org.uniprot.urml.facts.ObjectFactory;
 import org.w3c.dom.Document;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.mappers.FactNamespaceMapper;
+import uk.ac.ebi.uniprot.urml.core.xml.writers.AbstractURMLWriter;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -45,20 +28,18 @@ import static javax.xml.stream.XMLOutputFactory.newFactory;
 import static uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants.URML_FACT_NAMESPACE;
 
 /**
- * URML fact writer, marshalling {@link Fact} elements into the specified {@link OutputStream} using JAXB.
- *
- * @author Alexandre Renaux
+ * @author Vishal Joshi
  */
-public class URMLFactWriter extends AbstractURMLWriter<FactSet, Fact> {
+public class IndividualFactWriter extends AbstractURMLWriter<FactSet, Fact> {
 
-    public URMLFactWriter(OutputStream outputStream) throws JAXBException, XMLStreamException {
+    public IndividualFactWriter(OutputStream outputStream) throws XMLStreamException, JAXBException {
         super(outputStream, JAXBContext.newInstance(URMLConstants.URML_FACTS_JAXB_CONTEXT), URML_FACT_NAMESPACE);
         writeRoot(getRootDocument(FactSet.builder().build()));
     }
 
     @Override
-    public void write(FactSet factSet) throws XMLStreamException {
-        factSet.getFact().forEach(fact -> {
+    public void write(FactSet superSet) throws XMLStreamException {
+        superSet.getFact().forEach(fact -> {
             try {
                 writeElementWise(fact);
             } catch (JAXBException e) {
@@ -72,21 +53,21 @@ public class URMLFactWriter extends AbstractURMLWriter<FactSet, Fact> {
     public void writeElementWise(Fact fact) throws JAXBException {
         Marshaller marshaller = initMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new FactNamespaceMapper() {
-            @Override
-            public String[] getContextualNamespaceDecls() {
-                return ArrayUtils.addAll(super.getContextualNamespaceDecls(), XSI_PREFIX, XMLConstants
-                        .W3C_XML_SCHEMA_INSTANCE_NS_URI);
-            }
-        });
-
-        QName qualifiedName = new QName(URMLConstants.URML_FACT_NAMESPACE, URMLConstants.URML_FACT_TAG);
+        QName qualifiedName = new QName(URML_FACT_NAMESPACE, URMLConstants.URML_FACT_TAG);
         JAXBElement<Fact> jbe = new JAXBElement<>(qualifiedName, Fact.class, fact);
         try {
-            marshaller.marshal(jbe, xmlStreamWriter);
+            marshaller.marshal(jbe, this.xmlStreamWriter);
         } catch (JAXBException | RuntimeException e) {
             throw new JAXBException("Cannot marshall fact: " + fact, e);
         }
+    }
+
+    @Override
+    public Marshaller initMarshaller() throws JAXBException {
+        Marshaller m = jaxbContext.createMarshaller();
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        m.setProperty("com.sun.xml.bind.namespacePrefixMapper", new FactNamespaceMapper());
+        return m;
     }
 
     @Override
@@ -116,13 +97,4 @@ public class URMLFactWriter extends AbstractURMLWriter<FactSet, Fact> {
             throw new IllegalArgumentException("Conversion failed for document root", e);
         }
     }
-
-    @Override
-    protected Marshaller initMarshaller() throws JAXBException {
-        Marshaller m = jaxbContext.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        m.setProperty("com.sun.xml.bind.namespacePrefixMapper", new FactNamespaceMapper());
-        return m;
-    }
-
 }

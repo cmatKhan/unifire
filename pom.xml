@@ -42,7 +42,7 @@
         <hamcrest.version>1.3</hamcrest.version>
         <guava.version>23.0</guava.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <junit.version>5.2.0</junit.version>
+        <junit.version>5.5.2</junit.version>
         <maven-jaxb.version>0.13.3</maven-jaxb.version>
         <javax-activation.version>1.1</javax-activation.version>
         <jaxb.version>2.3.0</jaxb.version>
@@ -56,7 +56,10 @@
         <maven.source.version>3.0.1</maven.source.version>
         <junit-platform-surefire-provider.version>1.2.0</junit-platform-surefire-provider.version>
         <junit.runner.version>1.2.0</junit.runner.version>
+        <junit-platform-surefire.version>1.3.2</junit-platform-surefire.version>
         <jacoco.maven.version>0.8.1</jacoco.maven.version>
+        <xmlunit.core.version>2.6.3</xmlunit.core.version>
+        <xmlunit.matchers.version>2.6.3</xmlunit.matchers.version>
 
         <!-- Test coverage -->
         <jacoco.outputDir>${project.build.directory}</jacoco.outputDir>
@@ -99,33 +102,25 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
-            <version>${junit.runner.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -196,12 +191,92 @@
                 <artifactId>activation</artifactId>
                 <version>${javax-activation.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-runner</artifactId>
+                <version>${junit.runner.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.xmlunit/xmlunit-core -->
+            <dependency>
+                <groupId>org.xmlunit</groupId>
+                <artifactId>xmlunit-core</artifactId>
+                <version>${xmlunit.core.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.xmlunit/xmlunit-matchers -->
+            <dependency>
+                <groupId>org.xmlunit</groupId>
+                <artifactId>xmlunit-matchers</artifactId>
+                <version>${xmlunit.matchers.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-surefire-provider</artifactId>
+                            <version>${junit-platform-surefire.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-engine</artifactId>
+                            <version>${junit.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <systemProperties>
+                            <property>
+                                <name>http.proxyHost</name>
+                                <value>${http.proxyHost}</value>
+                            </property>
+                            <property>
+                                <name>http.proxyPort</name>
+                                <value>${http.proxyPort}</value>
+                            </property>
+                        </systemProperties>
+                        <argLine>${jacoco.agent.ut.arg}</argLine>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.jvnet.jaxb2.maven2</groupId>
                     <artifactId>maven-jaxb2-plugin</artifactId>
@@ -324,24 +399,6 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${maven-surefire-plugin.version}</version>
-                        <configuration>
-                            <systemProperties>
-                                <property>
-                                    <name>http.proxyHost</name>
-                                    <value>${http.proxyHost}</value>
-                                </property>
-                                <property>
-                                    <name>http.proxyPort</name>
-                                    <value>${http.proxyPort}</value>
-                                </property>
-                            </systemProperties>
-                            <argLine>${jacoco.agent.ut.arg}</argLine>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${maven-failsafe-version}</version>
                         <configuration>
@@ -375,6 +432,10 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
