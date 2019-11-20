@@ -252,6 +252,7 @@
             <xs:enumeration value="CDD"/>
             <xs:enumeration value="SFLD"/>
             <xs:enumeration value="GeneTree"/>
+            <xs:enumeration value="SRHMM"/>
         </xs:restriction>
     </xs:simpleType>
 

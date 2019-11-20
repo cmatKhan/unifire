@@ -40,10 +40,10 @@ popd > /dev/null
 
 
 echo "Downloading rule urml files..."
-for i in saas-urml-latest.xml unirule-urml-latest.xml unirule-templates-latest.xml;
+for file in saas-urml-latest.xml unirule-urml-latest.xml unirule-templates-latest.xml unirule.pirsr-latest.xml;
 do
     backup_file ${SCRIPT_DIR}/samples/${i}
-    wget ${FTP_SRC}/${i} -O ${SCRIPT_DIR}/samples/${i}
+    wget ${FTP_SRC}/${file} -O ${SCRIPT_DIR}/samples/${file}
 done
 echo "Done downloading rule urml files."
 

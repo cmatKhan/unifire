@@ -16,91 +16,72 @@
 
 package uk.ac.ebi.uniprot.urml.core.xml.writers;
 
-import uk.ac.ebi.uniprot.urml.core.xml.schema.JAXBContextInitializationException;
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+import org.uniprot.urml.rules.ObjectFactory;
+import org.uniprot.urml.rules.Rule;
+import org.uniprot.urml.rules.Rules;
+import org.w3c.dom.Document;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.mappers.RuleNamespaceMapper;
 
-import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.uniprot.urml.rules.ObjectFactory;
-import org.uniprot.urml.rules.Rule;
-import org.uniprot.urml.rules.Rules;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+
+import static javax.xml.stream.XMLOutputFactory.newFactory;
+import static uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants.URML_RULE_NAMESPACE;
 
 /**
  * URML rule writer using JAXB.
  *
  * @author Alexandre Renaux
  */
-public class URMLRuleWriter implements URMLWriter<Rules, Rule> {
+public class URMLRuleWriter extends AbstractURMLWriter<Rules, Rule> {
 
-    private final Logger logger = LoggerFactory.getLogger(URMLRuleWriter.class);
-
-    private JAXBContext jc;
-
-    public URMLRuleWriter() {
-        try {
-            this.jc = JAXBContext.newInstance(URMLConstants.URML_RULES_JAXB_CONTEXT);
-        } catch (JAXBException e){
-            throw new JAXBContextInitializationException("Cannot initialize the URML rule writer", e);
-        }
+    public URMLRuleWriter(OutputStream outputStream, Rules rules) throws XMLStreamException, JAXBException {
+        super(outputStream, JAXBContext.newInstance(URMLConstants.URML_RULES_JAXB_CONTEXT), URML_RULE_NAMESPACE);
+        writeRoot(getRootDocument(rules));
     }
 
     @Override
-    public void write(Rules rules, OutputStream out) throws JAXBException, XMLStreamException {
-        XMLStreamWriter writerNonIndenting = XMLOutputFactory.newFactory().createXMLStreamWriter(out);
-        XMLStreamWriter writer = new IndentingXMLStreamWriter(writerNonIndenting);
+    public void write(Rules rules) throws JAXBException, XMLStreamException {
         Marshaller marshaller = initMarshaller();
-        marshaller.marshal(rules, writer);
+        marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+        marshaller.marshal(rules, xmlStreamWriter);
+        completeWrite();
     }
 
     @Override
-    public XMLStreamWriter initStream(OutputStream out, Rules rules) throws XMLStreamException {
-        logger.info("Initializing rule stream marshaller");
-        XMLStreamWriter writerNonIndenting = XMLOutputFactory.newFactory().createXMLStreamWriter(out);
-        XMLStreamWriter writer = new IndentingXMLStreamWriter(writerNonIndenting);
-        writeRoot(getRootDocument(rules), writer);
-        return writer;
-    }
-
-    @Override
-    public void marshallElement(Rule rule, XMLStreamWriter writer) throws JAXBException {
-        Marshaller marshaller = jc.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+    public void writeElementWise(Rule rule) throws JAXBException {
+        Marshaller marshaller = initMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
         try {
-            marshaller.marshal(rule, writer);
-        } catch (JAXBException | RuntimeException e){
-            throw new JAXBException("Cannot marshall rule: "+rule, e);
+            marshaller.marshal(rule, xmlStreamWriter);
+        } catch (JAXBException | RuntimeException e) {
+            throw new JAXBException("Cannot marshall rule: " + rule, e);
         }
     }
 
-    private Document getRootDocument(Rules rules) {
+    @Override
+    protected Document getRootDocument(Rules rules) {
         List<Rule> ruleList = null;
-        if (rules == null){
+        if (rules == null) {
             rules = new ObjectFactory().createRules();
-        } else if (rules.isSetRule()){
+        } else if (rules.isSetRule()) {
             ruleList = rules.getRule();
             rules.unsetRule();
         }
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){
-            XMLStreamWriter tmpWriter = XMLOutputFactory.newFactory().createXMLStreamWriter(outputStream);
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            XMLStreamWriter tmpWriter = newFactory().createXMLStreamWriter(outputStream);
             tmpWriter = new IndentingXMLStreamWriter(tmpWriter);
             Marshaller marshaller = initMarshaller();
             marshaller.marshal(rules, tmpWriter);
@@ -113,29 +94,14 @@ public class URMLRuleWriter implements URMLWriter<Rules, Rule> {
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                 return dBuilder.parse(newInput);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new IllegalArgumentException("Conversion failed for document root", e);
         }
     }
 
-    private void writeRoot(Document doc, XMLStreamWriter writer) throws XMLStreamException {
-        writer.setDefaultNamespace(URMLConstants.URML_RULE_NAMESPACE);
-        writer.writeStartDocument();
-        writer.writeStartElement(URMLConstants.URML_RULE_NAMESPACE, doc.getDocumentElement().getNodeName());
-
-        NamedNodeMap attributes = doc.getDocumentElement().getAttributes();
-        for (int i = 0; i < attributes.getLength(); i++) {
-            Node attribute = attributes.item(i);
-            if (attribute.getNamespaceURI() == null) {
-                writer.writeAttribute(attribute.getNodeName(), attribute.getNodeValue());
-            } else {
-                writer.writeNamespace(attribute.getLocalName(), attribute.getNodeValue());
-            }
-        }
-    }
-
-    private Marshaller initMarshaller() throws JAXBException {
-        Marshaller marshaller = jc.createMarshaller();
+    @Override
+    protected Marshaller initMarshaller() throws JAXBException {
+        Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new RuleNamespaceMapper());
         return marshaller;

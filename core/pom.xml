@@ -73,6 +73,12 @@
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- CXF plugin - alternative to the JVNET one in case migration to Java 9 is faster -->
         <!--<dependency>-->
         <!--<groupId>org.apache.cxf.xjcplugins</groupId>-->
