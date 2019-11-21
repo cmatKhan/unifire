@@ -16,15 +16,15 @@
 
 package uk.ac.ebi.uniprot.urml.core.xml.writers;
 
-import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
-import org.apache.commons.lang3.ArrayUtils;
-import org.uniprot.urml.facts.Fact;
-import org.uniprot.urml.facts.FactSet;
-import org.uniprot.urml.facts.ObjectFactory;
-import org.w3c.dom.Document;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.mappers.FactNamespaceMapper;
 
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -35,11 +35,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
+import org.apache.commons.lang3.ArrayUtils;
+import org.uniprot.urml.facts.Fact;
+import org.uniprot.urml.facts.FactSet;
+import org.uniprot.urml.facts.ObjectFactory;
+import org.w3c.dom.Document;
 
 import static javax.xml.stream.XMLOutputFactory.newFactory;
 import static uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants.URML_FACT_NAMESPACE;
