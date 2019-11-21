@@ -1,17 +1,17 @@
 package uk.ac.ebi.uniprot.urml.core.xml.writers;
 
-import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.JAXBContextInitializationException;
 
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+import java.io.OutputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.OutputStream;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 import static javax.xml.stream.XMLOutputFactory.newFactory;
 
