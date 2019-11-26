@@ -60,7 +60,7 @@ $ ./distribution/bin/unifire.sh -r samples/saas-urml-latest.xml -i samples/input
 $ ./distribution/bin/pirsr.sh -i ./samples/pirsr_data/PIRSR-input-iprscan.xml -o ~/ -a <path-to-hmmalign-command> -d ./samples/pirsr_data
 ```
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/unirule.pirsr-latest.xml  -i ~/PIRSR-input-iprscan-urml.xml -s XML -t samples/pirsr_data/PIRSR_templates.xml -o ~/pirsr_unifire_annotation.csv
+$ ./distribution/bin/unifire.sh -r samples/unirule.pirsr-urml-latest.xml  -i ~/PIRSR-input-iprscan-urml.xml -s XML -t samples/pirsr_data/PIRSR_templates.xml -o ~/pirsr_unifire_annotation.csv
 ```
 
 _Note_: With all rule systems, it is possible that a protein get the exact same annotation from different rules due to overlap in condition spaces.
