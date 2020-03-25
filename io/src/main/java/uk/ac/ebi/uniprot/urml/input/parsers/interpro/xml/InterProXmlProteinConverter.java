@@ -16,8 +16,8 @@
 
 package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
 
-import uk.ac.ebi.interpro.scan.model.*;
 import uk.ac.ebi.interpro.scan.model.Protein;
+import uk.ac.ebi.interpro.scan.model.*;
 import uk.ac.ebi.uniprot.urml.input.parsers.fasta.header.FastaHeaderData;
 import uk.ac.ebi.uniprot.urml.input.parsers.fasta.header.FastaHeaderParser;
 
@@ -25,8 +25,8 @@ import java.util.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.uniprot.urml.facts.*;
 import org.uniprot.urml.facts.Signature;
+import org.uniprot.urml.facts.*;
 
 /**
  * Iterates over {@link Protein} and convert them to {@link org.uniprot.urml.facts.FactSet}.
@@ -35,63 +35,67 @@ import org.uniprot.urml.facts.Signature;
  */
 public class InterProXmlProteinConverter implements Iterator<FactSet>{
 
-    private final static Logger logger = LoggerFactory.getLogger(InterProXmlProteinConverter.class);
+    private static final Logger logger = LoggerFactory.getLogger(InterProXmlProteinConverter.class);
 
     private final Iterator<Protein> sourceIterator;
     private final Map<String, Organism> organismMap;
     private final FastaHeaderParser uniProtFastaHeaderParser;
+    private final Queue<FactSet> factSetQueue;
 
 
     public InterProXmlProteinConverter(ProteinMatchesHolder proteinMatches){
         this.sourceIterator = proteinMatches.getProteins().iterator();
         this.organismMap = new HashMap<>();
         this.uniProtFastaHeaderParser = new FastaHeaderParser();
+        this.factSetQueue = new LinkedList<>();
     }
 
     @Override
     public boolean hasNext() {
-        return sourceIterator.hasNext();
+        return !factSetQueue.isEmpty() || sourceIterator.hasNext();
     }
 
     @Override
     public FactSet next() {
-        if (!sourceIterator.hasNext()){
+        if (factSetQueue.isEmpty() && !sourceIterator.hasNext()){
             throw new NoSuchElementException();
         } else {
-            return convertProteinMatches(sourceIterator.next());
+            if (factSetQueue.isEmpty()) {
+                convertProteinMatches(sourceIterator.next());
+            }
+            return factSetQueue.poll();
         }
     }
 
-    private FactSet convertProteinMatches(Protein ipsProtein){
-        FactSet.Builder<Void> factSetBuilder = FactSet.builder();
-        org.uniprot.urml.facts.Protein protein;
-        org.uniprot.urml.facts.Protein.Builder proteinBuilder = org.uniprot.urml.facts.Protein.builder();
-        if (ipsProtein.getCrossReferences().size() > 0) {
+    private void convertProteinMatches(Protein ipsProtein){
+
+        if (!ipsProtein.getCrossReferences().isEmpty()) {
             Iterator<ProteinXref> xrefIterator = ipsProtein.getCrossReferences().iterator();
-            ProteinXref proteinXref = xrefIterator.next();
+            while (xrefIterator.hasNext()) {
+                ProteinXref proteinXref = xrefIterator.next();
+                FastaHeaderData fastaHeaderData = uniProtFastaHeaderParser.parse(proteinXref.getName());
+                FactSet.Builder<Void> factSetBuilder = FactSet.builder();
 
-            FastaHeaderData fastaHeaderData = uniProtFastaHeaderParser.parse(proteinXref.getName());
+                org.uniprot.urml.facts.Protein.Builder<Void> proteinBuilder = org.uniprot.urml.facts.Protein.builder();
+                buildProtein(proteinBuilder, fastaHeaderData, ipsProtein);
+                buildGeneInformation(proteinBuilder, fastaHeaderData);
+                Organism organism = buildOrganism(factSetBuilder, fastaHeaderData);
 
-            buildProtein(proteinBuilder, fastaHeaderData, ipsProtein);
-            buildGeneInformation(proteinBuilder, fastaHeaderData);
-            Organism organism = buildOrganism(factSetBuilder, fastaHeaderData);
+                proteinBuilder.withOrganism(organism);
+                org.uniprot.urml.facts.Protein protein = proteinBuilder.build();
+                factSetBuilder.addFact(protein);
 
-            proteinBuilder.withOrganism(organism);
-            protein = proteinBuilder.build();
-            factSetBuilder.addFact(protein);
+                for (Match match : ipsProtein.getMatches()) {
+                    buildProteinSignature(factSetBuilder, protein, match);
+                }
 
-            if (xrefIterator.hasNext()) {
-                logger.warn("Unexpected: more than one xref for ipsProtein {}", proteinXref.getIdentifier());
+                factSetQueue.add(factSetBuilder.build());
             }
         } else {
             throw new InterProScanXmlFormatException(
                     String.format("Missing xref tag for ipsProtein md5=%s", ipsProtein.getMd5()));
         }
-        for (Match match : ipsProtein.getMatches()) {
-            buildProteinSignature(factSetBuilder, protein, match);
 
-        }
-        return factSetBuilder.build();
     }
 
     private void buildProteinSignature(FactSet.Builder<Void> factSetBuilder, org.uniprot.urml.facts.Protein protein,
