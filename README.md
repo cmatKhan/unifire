@@ -1,19 +1,111 @@
 # UniFIRE Project
 
-UniFIRE (The UniProt Functional annotation Inference Rule Engine) is an engine to execute rules in the UniProt Rule Markup Language (URML) format.
-It can be used to execute the UniProt annotation rules (UniRule and SAAS).
+UniFIRE (The UniProt Functional annotation Inference Rule Engine) is an engine to execute rules in the UniProt Rule
+ Markup Language (URML) format. It can be used to execute the UniProt annotation rules (UniRule and SAAS).
 
-This project is a work in progress, open for private collaboration only. Please do not share this code without explicit authorization.
+This project is a work in progress, open for collaboration.
 
-Introducing presentation: [UniFIRE-URML.pptx](misc/media/UniFIRE-URML.pptx)  
+Introducing presentation: [UniFIRE-URML.pptx](misc/media/UniFIRE-URML.pptx)
 
-## Getting Started
+There are two different ways to run UniFIRE:
+1. **Downloading and running the UniFIRE *Docker* image**<br/> The UniFIRE Docker image allows to run the whole UniFIRE
+ workflow including all dependencies like InterProScan and HMMER with a single command. The only necessary
+  software dependency is an installation of Docker.
+ Therefore we recommend this way of running UniFIRE to new users.
+ Because the large InterProScan package and its dependencies are included in the Docker image, a user
+  needs to download ~25 GB and allow ~100 GB disk space on the system. <br/><br/> 
+2. **Running UniFIRE after building it from its source**<br/>
+ This way requires more manual interaction of the user. Each step of a UniFIRE workflow has to
+ be executed separately or combined by a script. Also some steps require external software like InterProScan or HMMER,
+ which may need to be installed by the user separately or started through a web-interface. Therefore we recommend this
+ approach to advanced users who would like to create a particular workflow, e.g. who would like to run the heavy
+ InterProScan within a separate procedure.
+ 
+This documentation uses scripts and sample data which are provided by the UniFIRE Gitlab repository. Therefore please
+ make sure you have checked out a local copy of UniFIRE Gitlab repository. This is done by the
+ command below, which requires git to be installed on your system:
+```
+$ git clone https://gitlab.ebi.ac.uk/uniprot-public/unifire.git
+```
+
+## 1. Using the Docker image
+
+### Prerequisites
+#### Hardware
+A machine with at least 4 GB of memory and ~100 GB of available disk space.
+
+#### Operating system support
+The Docker image is expected to run on any operating system 
+
+#### Software
+A recent version of Docker is necessary to start the UniFIRE docker image as a new container. It has been tested
+ successfully on Ubuntu 18.04 and Docker version 19.03.6.
+
+### Data preparation
+The only input data that need to be provided are the protein sequence data in multi-FASTA format for which 
+ functional predictions should be created. The FASTA header needs to follow the UniProtKB conventions 
+ ([https://www.uniprot.org/help/fasta-headers](https://www.uniprot.org/help/fasta-headers))
+ 
+ The minimal structure of the header is:
+```
+>{id}|{name} {flags}
+```
+* `{id}` must be a unique string amongst the processed sequences
+* `{name}`:
+    * can be any string starting from the previous separator, that should not contain any flag
+    * might contains `(Fragment)` if applicable (e.g "`ACN2_ACAGO Acanthoscurrin-2 (Fragment)`")
+* `{flags}` \[mandatory]: to be considered a valid header, only the following flags should be provided:
+    * OX=`{taxonomy Id}`
+* `{flags}` \[optional]: If possible / applicable, you should also provide:
+    * OS=`{organism name}`
+    * GN=`{recommended gene name}`
+    * GL=`{recommended ordered locus name (OLN) or Open Reading Frame (OLN) name}`
+    * OG=`{gene location(s), comma-separated if multiple}` ([cf. organelle ontology](https://www.ebi.ac.uk/ena/WebFeat/qualifiers/organelle.html))
+
+### Usage
+```
+usage: run_unifire_docker.sh -i <INPUT_FILE> -i <OUTPUT_FOLDER> [-v <VERSION> [-w <WORKING_FOLDER [-c]]]
+    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least
+            OX=<taxid>. (Required)
+        -o: Path to output folder. All output files with predictions in TSV format will be available in this
+            folder at the end of the procedure. (Required)
+        -v: Version of the docker image to use, e.g. 2020.2. Available versions are listed under
+            https://gitlab.ebi.ac.uk/uniprot-public/unifire/container_registry. (Optional), DEFAULT: 2020.2
+        -w: Path to an empty working directory.  If this option is not given, then a temporary folder will be
+            created and used to store intermediate files. (Optional)
+        -c: Clean up temporary files. If set, then all temporary files will be cleaned up at the end of the
+            procedure. If no working directory is provided through option -w then the temporary files are cleaned
+            up by default
+```
+
+### Example
+This is a simple example, which shows how to use the UniFIRE Docker image to run the whole UniFIRE workflow on some
+ sample protein data.
+ 
+**Warning:** The first time this command is run, it will download the ~25 GB large UniFIRE Docker image from the
+ docker container registry and extract it on the local machine. Depending on the speed of your network and your CPU
+ this can take a few hours.  
+```bash
+./docker/bin/run_unifire_docker.sh -i samples/proteins.fasta -o .
+```
+This command will use as input the file samples/proteins.fasta which is in multi-FASTA format with the header in
+ the format as describes above. It will run the whole UniFIRE workflow to predict functional annotations from UniRule
+ and SAAS rules. The resulting functional predictions will be written into these files in the current working
+ directory:
+```
+predictions_unirule.out
+predictions_unirule-pirsr.out
+predictions_saas.out
+```
+<br/>
+
+## 2. Run UniFIRE after building it from its source code
 
 ### Prerequisites
 
 #### Hardware
 
-A machine with at least 2 Go of memory.
+A machine with at least 4 GB of memory.
 
 #### Operating system support
 
@@ -36,34 +128,55 @@ $ <Path to UniFIRE parent folder>/build.sh
 
 Depending on the speed of your internet connection, it will take a few minutes to download all dependencies through 
 maven. You will require in total ~500 MB disk space in UniFIRE folder and in your local maven cache. The script also 
-downloads the latest UniRule and SAAS rules in URML format and UniRule template alignments in fact XML format from 
-EBI FTP into samples/ folder.   
-
+downloads the latest UniRule, UniRule-PIRSR and SAAS rules in URML format and UniRule template
+alignments in fact XML format from EBI FTP into samples/ folder. Additionally it downloads data neccassary to run
+UniRule-PIRSR rules from https://proteininformationresource.org/pirsr/pirsr_data_latest.tar.gz and places them
+underneath the folder samples/pirsr_data. 
+   
 ### Usage
 
 We provide some sample files in the [sample](samples) folder to test the software.
+<br/>
 
 **Example with UniRule rules & InterProScan XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/input_ipr.fasta.xml -t samples/unirule-templates-latest.xml -o ~/output_unirule_annotations.csv
+$ ./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/input_ipr.fasta.xml -t samples/unirule-templates-latest.xml -o output_unirule_annotations.csv
 ```
 
 *Note: To be able to predict the UniRule positional annotations, a template file is provided (`samples/unirule-templates-2018_05.xml`) (optional.)*
+<br/>
 
 **Example with SAAS rules & Fact XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/saas-urml-latest.xml -i samples/input_facts.xml -s XML -o ~/output_saas_annotations.csv
+$ ./distribution/bin/unifire.sh -r samples/saas-urml-latest.xml -i samples/input_facts.xml -s XML -o output_saas_annotations.csv
+```
+<br/>
+
+**Example with PIRSR rules and protein data in InterProScan XML format:**
+
+In order to use UniRule-PIRSR rules to annotate protein input data, alignments of the protein sequences against
+ SRHMM signatures need to be calculated in a preparation step. This requires *HMMER*, in particular an
+  installation of the executable *hmmalign*. With Ubuntu 18.04 *hmmeralign* can be installed at /usr/bin/hmmalign
+   by the command below:
+``` bash 
+$ sudo apt-get install hmmer
+```
+As an alternative, *hmmer* source code can be downloaded from the http://hmmer.org/. In the example below we
+ assume hmmalign binary is available at this path on the filesystem: /usr/bin/hmmalign
+
+Running UniRule-PIRSR rules is a two step process:
+First, calculate the alignment(s) of your protein(s) against all SRHMM signatures, combine data from the input in
+ InterProScan XML format with these alignments and write the output to the Fact XML file PIRSR-input-iprscan-urml.xml:   
+``` bash
+$ ./distribution/bin/pirsr.sh -i ./samples/pirsr_data/PIRSR-input-iprscan.xml -o . -a /usr/bin/hmmalign -d ./samples/pirsr_data
+```
+Second run UniFIRE with UniRule-PIRSR rules and PIRSR-templates on the protein data in PIRSR-input-iprscan-urml.xml:
+``` bash
+$ ./distribution/bin/unifire.sh -r samples/unirule.pirsr-urml-latest.xml  -i ./PIRSR-input-iprscan-urml.xml -s XML -t samples/pirsr_data/PIRSR_templates.xml -o ./pirsr_unifire_annotation.csv
 ```
 
-**Example with PIRSR rules & InterProScan XML input:**
-``` bash
-$ ./distribution/bin/pirsr.sh -i ./samples/pirsr_data/PIRSR-input-iprscan.xml -o ~/ -a <path-to-hmmalign-command> -d ./samples/pirsr_data
-```
-``` bash
-$ ./distribution/bin/unifire.sh -r samples/unirule.pirsr-urml-latest.xml  -i ~/PIRSR-input-iprscan-urml.xml -s XML -t samples/pirsr_data/PIRSR_templates.xml -o ~/pirsr_unifire_annotation.csv
-```
-
-_Note_: With all rule systems, it is possible that a protein get the exact same annotation from different rules due to overlap in condition spaces.
+_Note_: With all rule systems, it is possible that a protein gets the exact same annotation from different rules due
+ to overlap in condition spaces.
 
 #### Options
 
@@ -101,7 +214,8 @@ usage: unifire -i <INPUT_FILE> -o <OUTPUT_FILE> -r <RULE_URML_FILE> [-f <OUTPUT_
 
 ## Data preparation
 
-This section is a walkthrough on how to prepare your data, assuming you are starting from scratch: from a set of sequences (multifasta) that you would like to annotate.
+This section is a walk through on how to prepare your data, assuming you are starting from scratch: from a set of
+ sequences (multifasta) that you would like to annotate.
 
 More advanced users / developers with an existing bioinformatics pipeline already integrating InterProScan results should try to load their existing data into the fact model described on the Developer Guide below.
 
@@ -135,32 +249,32 @@ Also note that any additional flags will also be ignored.
 
 #### Examples of valid headers:
 
-From UniProt:
+The standard header used in UniProt:
 ```
 >tr|Q3SA23|Q3SA23_9HIV1 Protein Nef (Fragment) OS=Human immunodeficiency virus 1  OX=11676 GN=nef PE=3 SV=1
 ```
 
-From UniProt, customized with additional flags:
+The standard UniProt header, customized with additional flags:
 ```
 >tr|A0A0D6DT88|A0A0D6DT88_BRADI Maturase K (Fragment) OS=Brachypodium distachyon OX=15368 GN=matK GL=BN3904_34004 OG=Plastid,Chloroplast PE=3 SV=1
 ```
 
-Customized minimal:
+Customized minimal header:
 ```
 >123|Mystery protein OX=62977
 ```
 
-Customized full:
+Customized full header:
 ```
 >MyPlantDB|P987|Photosystem II protein D1 OS=Lolium multiflorum OX=4521 GN=psbA GL=LomuCp001 OG=Plastid
 ```
 
 ### Fetching the full lineages
 
-From the previously described multifasta format, you can use the following scripts to fetch the full NCBI taxonomy id lineage.
+From the previously described multifasta format, you can use the following scripts to fetch the full NCBI taxonomy id lineage. Both scripts have dependencies which are detailed at the start of the script
 
-* [fetchLineageLocal.py](misc/taxonomy/fetchLineageLocal.py) `<input` `<output>`  - for large amount of data on multiple species
-* [fetchLineageRemote.py](misc/taxonomy/fetchLineageRemote.py) `<input` `<output>`   - for one-off usage / few species
+* python [./misc/taxonomy/fetchLineageLocal.py](misc/taxonomy/fetchLineageLocal.py) `<input>` `<output>`  - for large amount of data on multiple species
+* python [./misc/taxonomy/fetchLineageRemote.py](misc/taxonomy/fetchLineageRemote.py) `<input>` `<output>`   - for one-off usage / few species
 
 Both scripts will simply replace the OX={taxId} by OX={fullLineage}.
 
@@ -180,7 +294,7 @@ The script also print out warnings if an important data (e.g organism name) is m
 ### Running InterProScan
 
 Once the multifasta file is ready (cf. previous steps), you can find the matches of all sequences using InterProScan.
-It is advised to download the last version from [https://www.ebi.ac.uk/interpro/download.html](https://www.ebi.ac.uk/interpro/download.html) and keep it up-to-date.
+It is advised to download the last version from [https://www.ebi.ac.uk/interpro/download.html](https://www.ebi.ac.uk/interpro/download.html) and keep it up-to-date. The current version of InterProScan (5.42-78.0) requires Java 11 to run. 
 
 The output format must be XML to be accepted as a valid input for UniFIRE.
 
@@ -272,7 +386,7 @@ This tool translates the URML rules into the Drools language, converts the input
 ## Limitations
 
 ### Memory
-A minimum of 2 Go of memory is required for this software to run.
+A minimum of 4 GB of memory is required for this software to run.
 For a large number of protein to process, it is advised to split them into chunks of approx. 1000 proteins per rule evaluation to keep the memory usage low.
 This is automatically handled by the `-n / --chunksize` option of UniFIRE (by default 1000).
 
@@ -290,13 +404,18 @@ This is automatically handled by the `-n / --chunksize` option of UniFIRE (by de
 
 ## Issues & Suggestions
 
-Please do not hesitate to raise new issues if you experience any bugs or you have improvement suggestions on the software, the models, the helper scripts, the documentation, etc...
+If you have any questions regarding this software, if you experience any bugs or have suggestions for improvements on
+ the software, the models, the helper scripts, the documentation, etc, please contact us through the UniFIRE mailing
+  list
+  
+  * **UniFIRE Mailing List** - [unifire@ebi.ac.uk](mailto:unifire:ebi.ac.uk)
 
-[UniFIRE Issue Tracker](https://gitlabci.ebi.ac.uk/uniprot.aa/UniFIRE/issues)
 
 ## Authors
 
 * **Alexandre Renaux**
+* **Chuming Chen**
+* **Hermann Zellner**
 
 ## Contact
 
