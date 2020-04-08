@@ -89,7 +89,7 @@ This is a simple example, which shows how to use the UniFIRE Docker image to run
 ./docker/bin/run_unifire_docker.sh -i samples/proteins.fasta -o .
 ```
 This command will use as input the file samples/proteins.fasta which is in multi-FASTA format with the header in
- the format as describes above. It will run the whole UniFIRE workflow to predict functional annotations from UniRule
+ the format as described above. It will run the whole UniFIRE workflow to predict functional annotations from UniRule
  and SAAS rules. The resulting functional predictions will be written into these files in the current working
  directory:
 ```
