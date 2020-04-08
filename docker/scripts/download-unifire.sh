@@ -16,29 +16,16 @@
 #    limitations under the License.
 ############################################################################
 
-get_script_dir () {
-     SOURCE="${BASH_SOURCE[0]}"
+set -e
+set -u
 
-     while [ -h "$SOURCE" ]; do
-          DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-          SOURCE="$( readlink "$SOURCE" )"
+GIT_REPO="/opt/git"
 
-          [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
-     done
+echo "Downloading and building UniFIRE..."
+mkdir -p ${GIT_REPO}
+cd ${GIT_REPO}
+git clone https://gitlab.ebi.ac.uk/uniprot-public/unifire.git
+cd unifire
+./build.sh
 
-     DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-     echo "$DIR"
-}
-
-SCRIPT_DIR=$(get_script_dir)
-
-function run {
-    local cmdArgs="${@}"
-    java -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" uk.ac.ebi.uniprot.unifire.validators.fasta.MultiFastaValidatorApp ${cmdArgs}
-}
-
-function main {
-    run "${@}"
-}
-
-main "${@}"
+echo "Done building UniFIRE."

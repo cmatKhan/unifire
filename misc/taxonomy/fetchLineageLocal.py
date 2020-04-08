@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -14,7 +14,7 @@ This local storage can be updated using the following Python lines:
     NCBITaxa().update_taxonomy_database()
 
 Library dependencies (via pip / conda / ...):
-    * ete3
+    * ete3  (pip install ete3  /  conda install -c etetoolkit ete3)
     * biopython
 """
 from ete3 import NCBITaxa

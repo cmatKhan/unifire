@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python
 
 ############################################################################
 #    Copyright (c) 2018 European Molecular Biology Laboratory
@@ -16,29 +16,6 @@
 #    limitations under the License.
 ############################################################################
 
-get_script_dir () {
-     SOURCE="${BASH_SOURCE[0]}"
+from ete3 import NCBITaxa
 
-     while [ -h "$SOURCE" ]; do
-          DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-          SOURCE="$( readlink "$SOURCE" )"
-
-          [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
-     done
-
-     DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-     echo "$DIR"
-}
-
-SCRIPT_DIR=$(get_script_dir)
-
-function run {
-    local cmdArgs="${@}"
-    java -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" uk.ac.ebi.uniprot.unifire.validators.fasta.MultiFastaValidatorApp ${cmdArgs}
-}
-
-function main {
-    run "${@}"
-}
-
-main "${@}"
+ncbi = NCBITaxa()
