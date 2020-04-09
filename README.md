@@ -97,6 +97,11 @@ predictions_unirule.out
 predictions_unirule-pirsr.out
 predictions_saas.out
 ```
+
+### Runtime
+The application of the UniFIRE Docker image on a complete bacterial proteome with ~4,500 proteins requires
+ a runtime of 6 h on an Intel Core i5-4690 CPU with 4 Cores. 98% of this runtime is necessary for the InterProScan
+ procedure.
 <br/>
 
 ## 2. Run UniFIRE after building it from its source code
