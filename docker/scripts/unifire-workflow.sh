@@ -17,7 +17,7 @@
 ############################################################################
 
 UNIFIRE_REPO="/opt/git/unifire"
-INTERPROSCAN_REPO="/opt/interproscan-5.41-78.0"
+INTERPROSCAN_REPO="/opt/interproscan-5.44-79.0"
 
 VOLUME=/volume
 infilename=infile.fasta

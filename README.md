@@ -65,7 +65,7 @@ The only input data that need to be provided are the protein sequence data in mu
 ### Usage
 ```
 usage: run_unifire_docker.sh -i <INPUT_FILE> -i <OUTPUT_FOLDER> [-v <VERSION> [-w <WORKING_FOLDER [-c]]]
-    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least
+        -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least
             OX=<taxid>. (Required)
         -o: Path to output folder. All output files with predictions in TSV format will be available in this
             folder at the end of the procedure. (Required)
