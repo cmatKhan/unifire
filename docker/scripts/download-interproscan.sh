@@ -25,13 +25,13 @@ DOWNLOAD_FOLDER="/opt/download"
 mkdir -p ${DOWNLOAD_FOLDER}
 cd ${DOWNLOAD_FOLDER}
 echo "Downloading InterProScan..."
-wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.41-78.0/interproscan-5.41-78.0-64-bit.tar.gz
+wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.44-79.0/interproscan-5.44-79.0-64-bit.tar.gz
 echo "Done."
-wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.41-78.0/interproscan-5.41-78.0-64-bit.tar.gz.md5
+wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.44-79.0/interproscan-5.44-79.0-64-bit.tar.gz.md5
 
-ipr_check=`md5sum -c interproscan-5.41-78.0-64-bit.tar.gz.md5`
+ipr_check=`md5sum -c interproscan-5.44-79.0-64-bit.tar.gz.md5`
 
-if [[ ${ipr_check} != "interproscan-5.41-78.0-64-bit.tar.gz: OK" ]]
+if [[ ${ipr_check} != "interproscan-5.44-79.0-64-bit.tar.gz: OK" ]]
 then
 	exit 11
 fi
@@ -39,7 +39,7 @@ fi
 mkdir -p ${ROOT_FOLDER}
 cd ${ROOT_FOLDER}
 echo "Extracting InterProScan..."
-tar -pxzf ${DOWNLOAD_FOLDER}/interproscan-5.41-78.0-64-bit.tar.gz
+tar -pxzf ${DOWNLOAD_FOLDER}/interproscan-5.44-79.0-64-bit.tar.gz
 echo "Done."
 
 cd ${DOWNLOAD_FOLDER}
@@ -54,13 +54,13 @@ then
 	exit 12
 fi
 
-cd ${ROOT_FOLDER}/interproscan-5.41-78.0/data
+cd ${ROOT_FOLDER}/interproscan-5.44-79.0/data
 echo "Extracting Panther data..."
 tar -pxzf ${DOWNLOAD_FOLDER}/panther-data-14.1.tar.gz
 echo "Done."
 
 # Clean up tar to reduce the size of the image
-rm -f ${DOWNLOAD_FOLDER}/interproscan-5.41-78.0-64-bit.tar.gz
-rm -f ${DOWNLOAD_FOLDER}/interproscan-5.41-78.0-64-bit.tar.gz.md5
+rm -f ${DOWNLOAD_FOLDER}/interproscan-5.44-79.0-64-bit.tar.gz
+rm -f ${DOWNLOAD_FOLDER}/interproscan-5.44-79.0-64-bit.tar.gz.md5
 rm -f ${DOWNLOAD_FOLDER}/panther-data-14.1.tar.gz
 rm -f ${DOWNLOAD_FOLDER}/panther-data-14.1.tar.gz.md5
