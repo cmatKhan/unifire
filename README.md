@@ -1,7 +1,7 @@
 # UniFIRE Project
 
 UniFIRE (The UniProt Functional annotation Inference Rule Engine) is an engine to execute rules in the UniProt Rule
- Markup Language (URML) format. It can be used to execute the UniProt annotation rules (UniRule and SAAS).
+ Markup Language (URML) format. It can be used to execute the UniProt annotation rules (UniRule and ARBA).
 
 This project is a work in progress, open for collaboration.
 
@@ -90,12 +90,12 @@ This is a simple example, which shows how to use the UniFIRE Docker image to run
 ```
 This command will use as input the file samples/proteins.fasta which is in multi-FASTA format with the header in
  the format as described above. It will run the whole UniFIRE workflow to predict functional annotations from UniRule
- and SAAS rules. The resulting functional predictions will be written into these files in the current working
+ and ARBA rules. The resulting functional predictions will be written into these files in the current working
  directory:
 ```
 predictions_unirule.out
 predictions_unirule-pirsr.out
-predictions_saas.out
+predictions_arba.out
 ```
 
 ### Runtime
@@ -133,7 +133,7 @@ $ <Path to UniFIRE parent folder>/build.sh
 
 Depending on the speed of your internet connection, it will take a few minutes to download all dependencies through 
 maven. You will require in total ~500 MB disk space in UniFIRE folder and in your local maven cache. The script also 
-downloads the latest UniRule, UniRule-PIRSR and SAAS rules in URML format and UniRule template
+downloads the latest UniRule, UniRule-PIRSR and ARBA rules in URML format and UniRule template
 alignments in fact XML format from EBI FTP into samples/ folder. Additionally it downloads data neccassary to run
 UniRule-PIRSR rules from https://proteininformationresource.org/pirsr/pirsr_data_latest.tar.gz and places them
 underneath the folder samples/pirsr_data. 
@@ -151,9 +151,10 @@ $ ./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/in
 *Note: To be able to predict the UniRule positional annotations, a template file is provided (`samples/unirule-templates-2018_05.xml`) (optional.)*
 <br/>
 
-**Example with SAAS rules & Fact XML input:**
+**Example with ARBA rules & Fact XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/saas-urml-latest.xml -i samples/input_facts.xml -s XML -o output_saas_annotations.csv
+$ ./distribution/bin/unifire.sh -r samples/arba-urml-latest.xml -i samples/input_facts.xml -s XML -o
+ output_arba_annotations.csv
 ```
 <br/>
 
@@ -195,7 +196,7 @@ usage: unifire -i <INPUT_FILE> -o <OUTPUT_FILE> -r <RULE_URML_FILE> [-f <OUTPUT_
      -o,--output <OUTPUT_FILE>              Output file (path) containing predictions in the format
                                             specified in the -f option.
      -r,--rules <RULE_URML_FILE>            Rule base file (path) provided by UniProt (e.g UniRule
-                                            or SAAS) (format: URML).
+                                            or ARBA) (format: URML).
      -f,--output-format <OUTPUT_FORMAT>     Output file format. Supported formats are:
                                             - TSV (Tab-Separated Values)
                                             - XML (URML Fact XML)

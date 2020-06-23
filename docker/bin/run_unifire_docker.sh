@@ -40,7 +40,7 @@ outdir=""
 workdir=""
 cleanworkdir=0
 docker_version="2020.3"
-predictionfiles="predictions_unirule.out predictions_saas.out predictions_unirule-pirsr.out"
+predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 while getopts "i:o:w:c:v:" optionName
 do
