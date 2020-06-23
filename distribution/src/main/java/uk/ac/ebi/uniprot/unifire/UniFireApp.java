@@ -51,7 +51,7 @@ public class UniFireApp {
         Options options = new Options();
 
         Option ruleFileOption = Option.builder("r").longOpt("rules").hasArg().argName("RULE_URML_FILE")
-                .desc("Rule base file (path) provided by UniProt (e.g UniRule or SAAS) (format: URML).")
+                .desc("Rule base file (path) provided by UniProt (e.g UniRule or ARBA) (format: URML).")
                 .type(File.class).required().build();
         Option inputFileOption = Option.builder("i").longOpt("input").hasArg().argName("INPUT_FILE")
                 .desc("Input file (path) containing the proteins to annotate and required data, in the format specified by the -s option.")

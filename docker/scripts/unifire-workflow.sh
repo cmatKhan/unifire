@@ -37,9 +37,9 @@ ${UNIFIRE_REPO}/distribution/bin/unifire.sh -r ${UNIFIRE_REPO}/samples/unirule-u
     -i ${VOLUME}/proteins_lineage-ipr.xml -t  ${UNIFIRE_REPO}/samples/unirule-templates-latest.xml \
     -o ${VOLUME}/predictions_unirule.out
 
-${UNIFIRE_REPO}/distribution/bin/unifire.sh -r ${UNIFIRE_REPO}/samples/saas-urml-latest.xml \
+${UNIFIRE_REPO}/distribution/bin/unifire.sh -r ${UNIFIRE_REPO}/samples/arba-urml-latest.xml \
     -i ${VOLUME}/proteins_lineage-ipr.xml \
-    -o ${VOLUME}/predictions_saas.out
+    -o ${VOLUME}/predictions_arba.out
 
 ${UNIFIRE_REPO}/distribution/bin/unifire.sh -n 100 -r ${UNIFIRE_REPO}/samples/unirule.pirsr-urml-latest.xml \
     -i ${VOLUME}/proteins_lineage-ipr-urml.xml -s XML -t  ${UNIFIRE_REPO}/samples/pirsr_data/PIRSR_templates.xml \
@@ -48,7 +48,7 @@ ${UNIFIRE_REPO}/distribution/bin/unifire.sh -n 100 -r ${UNIFIRE_REPO}/samples/un
 # prediction output files must belong to the same user and group as proteins.fasta input file
 ownership=`stat -c "%u:%g" ${VOLUME}/proteins.fasta`
 for outfile in  proteins_lineage.fasta proteins_lineage-ipr.xml proteins_lineage-ipr-urml.xml predictions_unirule.out \
-  predictions_saas.out predictions_unirule-pirsr.out seq aln
+  predictions_arba.out predictions_unirule-pirsr.out seq aln
 do
   chown -R ${ownership} ${VOLUME}/${outfile}
 done
