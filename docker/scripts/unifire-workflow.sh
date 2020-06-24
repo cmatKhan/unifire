@@ -37,7 +37,7 @@ ${UNIFIRE_REPO}/distribution/bin/unifire.sh -r ${UNIFIRE_REPO}/samples/unirule-u
     -i ${VOLUME}/proteins_lineage-ipr.xml -t  ${UNIFIRE_REPO}/samples/unirule-templates-latest.xml \
     -o ${VOLUME}/predictions_unirule.out
 
-${UNIFIRE_REPO}/distribution/bin/unifire.sh -r ${UNIFIRE_REPO}/samples/arba-urml-latest.xml \
+${UNIFIRE_REPO}/distribution/bin/unifire.sh -n 500 -r ${UNIFIRE_REPO}/samples/arba-urml-latest.xml \
     -i ${VOLUME}/proteins_lineage-ipr.xml \
     -o ${VOLUME}/predictions_arba.out
 
