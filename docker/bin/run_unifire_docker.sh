@@ -19,6 +19,13 @@
 set -e
 set -u
 
+infile=""
+outdir=""
+workdir=""
+cleanworkdir=0
+docker_version="2020.4"
+predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
+
 function usage() {
     echo "usage: $0 -i <INPUT_FILE> -i <OUTPUT_FOLDER> [-v <VERSION> [-w <WORKING_FOLDER [-c]]]"
     echo "    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least"
@@ -26,7 +33,7 @@ function usage() {
     echo "    -o: Path to output folder. All output files with predictions in TSV format will be available in this"
     echo "        folder at the end of the procedure. (Required)"
     echo "    -v: Version of the docker image to use, e.g. 2020.2. Available versions are listed under"
-    echo "        https://gitlab.ebi.ac.uk/uniprot-public/unifire/container_registry. (Optional), DEFAULT: 2020.3"
+    echo "        https://gitlab.ebi.ac.uk/uniprot-public/unifire/container_registry. (Optional), DEFAULT: ${docker_version}"
     echo "    -w: Path to an empty working directory.  If this option is not given, then a temporary folder will be"
     echo "        created and used to store intermediate files. (Optional)"
     echo "    -c: Clean up temporary files. If set, then all temporary files will be cleaned up at the end of the"
@@ -34,13 +41,6 @@ function usage() {
     echo "        up by default"
     exit 1
 }
-
-infile=""
-outdir=""
-workdir=""
-cleanworkdir=0
-docker_version="2020.4"
-predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 while getopts "i:o:w:c:v:" optionName
 do
