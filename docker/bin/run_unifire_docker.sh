@@ -23,7 +23,7 @@ infile=""
 outdir=""
 workdir=""
 cleanworkdir=0
-docker_version="2020.4"
+docker_version="2020.4.1"
 predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 function usage() {
