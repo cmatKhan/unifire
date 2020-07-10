@@ -50,7 +50,10 @@ ownership=`stat -c "%u:%g" ${VOLUME}/proteins.fasta`
 for outfile in  proteins_lineage.fasta proteins_lineage-ipr.xml proteins_lineage-ipr-urml.xml predictions_unirule.out \
   predictions_arba.out predictions_unirule-pirsr.out seq aln
 do
-  chown -R ${ownership} ${VOLUME}/${outfile}
+  if [[ -e ${VOLUME}/${outfile} ]]
+  then
+    chown -R ${ownership} ${VOLUME}/${outfile}
+  fi
 done
 
 
