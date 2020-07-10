@@ -27,7 +27,7 @@ docker_version="2020.4.1"
 predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 function usage() {
-    echo "usage: $0 -i <INPUT_FILE> -i <OUTPUT_FOLDER> [-v <VERSION> [-w <WORKING_FOLDER [-c]]]"
+    echo "usage: $0 -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-v <VERSION> [-w <WORKING_FOLDER [-c]]]"
     echo "    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least"
     echo "        OX=<taxid>. (Required)"
     echo "    -o: Path to output folder. All output files with predictions in TSV format will be available in this"
