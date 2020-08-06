@@ -64,18 +64,24 @@ The only input data that need to be provided are the protein sequence data in mu
 
 ### Usage
 ```
-usage: run_unifire_docker.sh -i <INPUT_FILE> -i <OUTPUT_FOLDER> [-v <VERSION> [-w <WORKING_FOLDER [-c]]]
-        -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least
-            OX=<taxid>. (Required)
-        -o: Path to output folder. All output files with predictions in TSV format will be available in this
-            folder at the end of the procedure. (Required)
-        -v: Version of the docker image to use, e.g. 2020.2. Available versions are listed under
-            https://gitlab.ebi.ac.uk/uniprot-public/unifire/container_registry. (Optional), DEFAULT: 2020.2
-        -w: Path to an empty working directory.  If this option is not given, then a temporary folder will be
-            created and used to store intermediate files. (Optional)
-        -c: Clean up temporary files. If set, then all temporary files will be cleaned up at the end of the
-            procedure. If no working directory is provided through option -w then the temporary files are cleaned
-            up by default
+usage: ./docker/bin/run_unifire_docker.sh -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-v <VERSION>] [-w <WORKING_FOLDER] [-c]
+          [-s docker|singularity|podman]
+    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least
+        OX=<taxid>. (Required)
+    -o: Path to output folder. All output files with predictions in TSV format will be available in this
+        folder at the end of the procedure. (Required)
+    -v: Version of the docker image to use, e.g. 2020.2. Available versions are listed under
+        https://gitlab.ebi.ac.uk/uniprot-public/unifire/container_registry. (Optional), DEFAULT: 2020.4.1
+    -w: Path to an empty working directory.  If this option is not given, then a temporary folder will be
+        created and used to store intermediate files. (Optional)
+    -c: Clean up temporary files. If set, then all temporary files will be cleaned up at the end of the
+        procedure. If no working directory is provided through option -w then the temporary files are cleaned
+        up by default
+    -s: Container software to be used. (Optional), DEFAULT: docker
+        Allowed values:
+        docker: Use Docker to run UniFIRE Docker image
+        singularity: Use Singularity to run UniFIRE Docker image
+        podman: Use Podman to run UniFIRE Docker image
 ```
 
 ### Example
@@ -103,6 +109,51 @@ The application of the UniFIRE Docker image on a complete bacterial proteome wit
  a runtime of 6 h on an Intel Core i5-4690 CPU with 4 Cores. 98% of this runtime is necessary for the InterProScan
  procedure.
 <br/>
+
+### Alternatives to Docker
+For various reasons Docker is not a reasonable solution in a multi-user environment like most HPC clusters. Therefore
+ alternatives like *Singularity* and *Podman* have been tested to run the UniFIRE Docker image. 
+
+#### Singularity
+Instead of Docker, an available Singularity installation can be used to run the UniFIRE docker image. The executable
+"singularity" must be available in the PATH environment variable. The UniFIRE Docker image has been tested successfully
+with Singularity version 3.6.1.
+
+Because the UniFIRE image is big, you may want to use a folder with enough free disk-space
+ (~200 GB) available for temporary and cached files:
+```
+export SINGULARITY_CACHEDIR=/path/to/cache/folder
+export SINGULARITY_TMPDIR=/path/to/tmp/folder
+export SINGULARITY_LOCALCACHEDIR=/path/to/localcache/folder
+```
+
+Run the Docker image with Singularity:
+```
+./docker/bin/run_unifire_docker.sh -i samples/proteins.fasta -o . -s singularity
+```
+    
+ 
+#### Podman
+Instead of Docker, an available Podman installation can be used to run the UniFIRE docker image. The executable
+"podman" must be available in the PATH environment variable. The UniFIRE Docker image has been tested successfully
+with Podman version 2.0.3.
+
+Because the UniFIRE image is big, you may want to use a folder with a larger amount of free disk-space
+ (~200 GB) available for temporary and cached files:
+```
+export TMPDIR=/path/to/tmp/folder
+```
+Run the Docker image with Podman:
+```
+./docker/bin/run_unifire_docker.sh -i samples/proteins.fasta -o . -s podman
+```
+
+For both cases, Singularity and Podman, the resulting output filder will be located in ${run_folder} with the filenames
+```
+predictions_unirule.out
+predictions_unirule-pirsr.out
+predictions_arba.out
+```
 
 ## 2. Run UniFIRE after building it from its source code
 

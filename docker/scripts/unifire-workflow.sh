@@ -18,12 +18,13 @@
 
 UNIFIRE_REPO="/opt/git/unifire"
 INTERPROSCAN_REPO="/opt/interproscan-5.45-80.0"
+ETE3FOLDER="/opt/ete3"
 
 VOLUME=/volume
 infilename=infile.fasta
 
-cd ${UNIFIRE_REPO}
-./misc/taxonomy/fetchLineageLocal.py ${VOLUME}/proteins.fasta ${VOLUME}/proteins_lineage.fasta
+${UNIFIRE_REPO}/misc/taxonomy/fetchTaxonomicLineage.py -i ${VOLUME}/proteins.fasta -o ${VOLUME}/proteins_lineage.fasta \
+  -t ${ETE3FOLDER}/taxa.sqlite
 
 ${INTERPROSCAN_REPO}/interproscan.sh -f xml -dp -i ${VOLUME}/proteins_lineage.fasta \
     --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,ProDom,PIRSF,PANTHER,SUPERFAMILY" \
