@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ############################################################################
 #    Copyright (c) 2018 European Molecular Biology Laboratory
 #
@@ -14,23 +16,14 @@
 #    limitations under the License.
 ############################################################################
 
-FROM ubuntu:18.04
+set -e
+set -u
 
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+SCRIPT_PATH=`dirname $0`
+ETE3FOLDER="/opt/ete3"
 
-RUN apt-get update \
-    && apt-get install -y wget openjdk-8-jdk maven git coreutils hmmer python-numpy python-qt4 python-lxml python-six \
-     python-pip python-biopython python-requests python3 ncbi-data libdw1
-RUN pip install --upgrade ete3
+${SCRIPT_PATH}/update-taxonomy-cache.py
 
-COPY scripts /opt/scripts/bin
-RUN chmod 775 /opt/scripts/bin/*.sh
-
-RUN /opt/scripts/bin/update-taxonomy-cache.sh
-RUN /opt/scripts/bin/download-interproscan.sh
-RUN /opt/scripts/bin/download-unifire.sh
-
-RUN mkdir /volume
-VOLUME /volume
-
-CMD /opt/scripts/bin/unifire-workflow.sh
+mkdir -p ${ETE3FOLDER}
+mv ~/.etetoolkit/taxa.sqlite ${ETE3FOLDER}/
+chmod 644 ${ETE3FOLDER}/taxa.sqlite

@@ -23,11 +23,13 @@ infile=""
 outdir=""
 workdir=""
 cleanworkdir=0
+container_software="docker"
 docker_version="2020.4.1"
 predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 function usage() {
-    echo "usage: $0 -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-v <VERSION> [-w <WORKING_FOLDER [-c]]]"
+    echo "usage: $0 -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-v <VERSION>] [-w <WORKING_FOLDER] [-c]"
+    echo "          [-s docker|singularity|podman]"
     echo "    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least"
     echo "        OX=<taxid>. (Required)"
     echo "    -o: Path to output folder. All output files with predictions in TSV format will be available in this"
@@ -39,10 +41,15 @@ function usage() {
     echo "    -c: Clean up temporary files. If set, then all temporary files will be cleaned up at the end of the"
     echo "        procedure. If no working directory is provided through option -w then the temporary files are cleaned"
     echo "        up by default"
+    echo "    -s: Container software to be used. (Optional), DEFAULT: docker"
+    echo "        Allowed values:"
+    echo "        docker: Use Docker to run UniFIRE Docker image"
+    echo "        singularity: Use Singularity to run UniFIRE Docker image"
+    echo "        podman: Use Podman to run UniFIRE Docker image"
     exit 1
 }
 
-while getopts "i:o:w:c:v:" optionName
+while getopts "i:o:w:c:v:s:" optionName
 do
   case "${optionName}" in
     i) infile=${OPTARG};;
@@ -50,8 +57,25 @@ do
     w) workdir=${OPTARG};;
     v) docker_version=${OPTARG};;
     c) cleanworkdir=1;;
+    s) container_software=${OPTARG};;
   esac
 done
+
+if [ ${container_software} != "docker" ] && [ ${container_software} != "singularity" ] && \
+[ ${container_software} != "podman" ]
+then
+    echo "Invalid container software ${container_software} given!"
+    printf "This script supports docker, singularity or podman only at this time.\n\n"
+    usage
+fi
+
+if ! command -v ${container_software} &> /dev/null
+then
+    echo "${container_software} executable could not be found. Please make sure ${container_software} is installed and available"
+    printf "in the PATH environment variable. Exiting.\n\n"
+    usage
+fi
+
 
 # infile
 function check_infile() {
@@ -119,9 +143,22 @@ function check_workdir() {
 # Run the docker image on $the prepared {workdir}
 function run_docker_image() {
     cp ${infile} ${workdir}/proteins.fasta
-    docker run \
-        --mount type=bind,source=${workdir},target=/volume \
-        dockerhub.ebi.ac.uk/uniprot-public/unifire:${docker_version}
+    if [ ${container_software} == "docker" ]
+    then
+      docker run \
+          --mount type=bind,source=${workdir},target=/volume \
+          dockerhub.ebi.ac.uk/uniprot-public/unifire:${docker_version}
+    elif [ ${container_software} == "singularity" ]
+    then
+      singularity run \
+          --bind ${workdir}:/volume \
+          docker://dockerhub.ebi.ac.uk/uniprot-public/unifire:${docker_version}
+    elif [ ${container_software} == "podman" ]
+    then
+      podman run \
+          --mount type=bind,source=${workdir},target=/volume \
+          docker://dockerhub.ebi.ac.uk/uniprot-public/unifire:${docker_version}
+    fi
 }
 
 # Move output files from ${workdir} to ${outdir}
