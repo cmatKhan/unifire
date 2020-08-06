@@ -153,8 +153,7 @@ $ ./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/in
 
 **Example with ARBA rules & Fact XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/arba-urml-latest.xml -i samples/input_facts.xml -s XML -o
- output_arba_annotations.csv
+$ ./distribution/bin/unifire.sh -r samples/arba-urml-latest.xml -i samples/input_facts.xml -s XML -o output_arba_annotations.csv
 ```
 <br/>
 

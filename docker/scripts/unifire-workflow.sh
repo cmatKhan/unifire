@@ -41,7 +41,7 @@ ${UNIFIRE_REPO}/distribution/bin/unifire.sh -n 500 -r ${UNIFIRE_REPO}/samples/ar
     -i ${VOLUME}/proteins_lineage-ipr.xml \
     -o ${VOLUME}/predictions_arba.out
 
-${UNIFIRE_REPO}/distribution/bin/unifire.sh -n 100 -r ${UNIFIRE_REPO}/samples/unirule.pirsr-urml-latest.xml \
+${UNIFIRE_REPO}/distribution/bin/unifire.sh -r ${UNIFIRE_REPO}/samples/unirule.pirsr-urml-latest.xml \
     -i ${VOLUME}/proteins_lineage-ipr-urml.xml -s XML -t  ${UNIFIRE_REPO}/samples/pirsr_data/PIRSR_templates.xml \
     -o ${VOLUME}/predictions_unirule-pirsr.out
 

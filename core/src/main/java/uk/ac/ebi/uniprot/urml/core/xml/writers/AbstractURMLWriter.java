@@ -3,6 +3,7 @@ package uk.ac.ebi.uniprot.urml.core.xml.writers;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.JAXBContextInitializationException;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -44,7 +45,7 @@ public abstract class AbstractURMLWriter<S, E> implements URMLWriter<S, E> {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException, XMLStreamException {
         os.close();
         xmlStreamWriter.close();
     }
