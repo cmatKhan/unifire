@@ -1,27 +1,19 @@
 package org.proteininformationresource.pirsr;
 
-import static com.google.common.primitives.Booleans.trueFirst;
-import static java.lang.System.exit;
+import uk.ac.ebi.uniprot.urml.core.utils.SelectorEnum;
+import uk.ac.ebi.uniprot.urml.input.InputType;
 
+import com.google.common.base.Strings;
 import java.io.File;
 import java.util.Comparator;
 import java.util.function.Function;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.MissingArgumentException;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.*;
 import org.drools.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
-
-import uk.ac.ebi.uniprot.urml.input.InputType;
+import static com.google.common.primitives.Booleans.trueFirst;
+import static java.lang.System.exit;
 
 /**
  * Entry point for the PIRSR application
@@ -40,6 +32,11 @@ public class PIRSRApp {
 		Option inputFileOption = Option.builder("i").longOpt("input_file").hasArg().argName("INPUT_FILE")
 				.desc("Input file (path) containing the proteins to annotate and required data in " + DEFAULT_INPUT_TYPE.getDescription() + " format.")
 				.type(File.class).required().build();
+		Option inputTypeOption = Option.builder("t").longOpt("input_type").hasArg().argName("INPUT_TYPE")
+				.desc(String.format("Type of the input file provided by -i option. Supported Input types are " +
+								"\n%s\n%s %s", prettyPrint(InputType.INTERPROSCAN_XML),
+						prettyPrint(InputType.FACT_XML), printDefault(InputType.INTERPROSCAN_XML)))
+				.type(InputType.class).optionalArg(true).build();
 		Option pirsrDataDirOption = Option.builder("d").longOpt("pirsr_data_dir").hasArg().argName("PIRSR_DATA_DIR").desc("Directory for PIRSR data.")
 				.type(File.class).required().build();
 		Option outputDirOption = Option.builder("o").longOpt("output_dir").hasArg().argName("OUTPUT_DIR")
@@ -50,6 +47,7 @@ public class PIRSRApp {
 
 		options.addOption(pirsrDataDirOption);
 		options.addOption(inputFileOption);
+		options.addOption(inputTypeOption);
 		options.addOption(hmmalignOption);
 		options.addOption(outputDirOption);
 		options.addOption(helpOption);
@@ -67,9 +65,12 @@ public class PIRSRApp {
 			File outputDirectory = parseOption(cmd, outputDirOption, File::new, null);
 			File pirsrDataDirectory = parseOption(cmd, pirsrDataDirOption, FileCreatorChecker::createAndCheck, null);
 			File inputFactFile = parseOption(cmd, inputFileOption, FileCreatorChecker::createAndCheck, null);
+			InputType inputType = parseOption(cmd, inputTypeOption, InputTypeChecker::check,
+					InputType.INTERPROSCAN_XML);
 			File hmmalignCommand = parseOption(cmd, hmmalignOption, FileCreatorChecker::createAndCheck, null);
 			
-			pirsrRunner = new PIRSRRunner(pirsrDataDirectory, inputFactFile, outputDirectory, hmmalignCommand);
+			pirsrRunner = new PIRSRRunner(pirsrDataDirectory, inputFactFile, inputType, outputDirectory,
+					hmmalignCommand);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			displayUsage(options);
@@ -125,5 +126,33 @@ public class PIRSRApp {
             }
         }
     }
+
+    private static class InputTypeChecker {
+		static InputType check(String type) {
+			if ( type == null || type.equals("InterProScan") ) {
+				return InputType.INTERPROSCAN_XML;
+			}
+			else if (type.equals("XML")) {
+				return InputType.FACT_XML;
+			}
+			else {
+				throw new IllegalArgumentException(
+						String.format("Invalid input type %s. Must be InterProScan or XML", type));
+			}
+		}
+	}
+
+	private static String prettyPrint(SelectorEnum selectorEnum){
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(" - ").append(selectorEnum.getCode()).append(" (").append(selectorEnum.getDescription())
+					.append(")\n");
+		return stringBuilder.toString();
+	}
+
+	private static String printDefault(SelectorEnum defaultValue) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("(default: ").append(defaultValue.getCode()).append(")");
+		return stringBuilder.toString();
+	}
 
 }

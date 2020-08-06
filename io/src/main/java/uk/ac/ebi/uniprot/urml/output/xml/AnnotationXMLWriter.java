@@ -16,16 +16,17 @@
 
 package uk.ac.ebi.uniprot.urml.output.xml;
 
-import org.uniprot.urml.facts.FactSet;
-import org.uniprot.urml.facts.ProteinAnnotation;
 import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLFactWriter;
 import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLWriter;
 import uk.ac.ebi.uniprot.urml.output.FactSetWriter;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.OutputStream;
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
+import org.uniprot.urml.facts.Fact;
+import org.uniprot.urml.facts.FactSet;
+import org.uniprot.urml.facts.ProteinAnnotation;
 
 /**
  * Writes {@link ProteinAnnotation}s from a {@link FactSet} into XML format.
@@ -34,7 +35,7 @@ import java.io.OutputStream;
  */
 public class AnnotationXMLWriter implements FactSetWriter<ProteinAnnotation> {
 
-    private final URMLWriter urmlFactWriter;
+    private final URMLWriter<FactSet, Fact> urmlFactWriter;
 
     public AnnotationXMLWriter(OutputStream outputStream) {
         try {
@@ -49,28 +50,22 @@ public class AnnotationXMLWriter implements FactSetWriter<ProteinAnnotation> {
     @Override
     public void write(FactSet factSet) {
         factSet.getFact().forEach(f -> write(((ProteinAnnotation) f)));
-        try {
-            urmlFactWriter.completeWrite();
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void write(ProteinAnnotation proteinAnnotation) {
         try {
             urmlFactWriter.writeElementWise(proteinAnnotation);
-            urmlFactWriter.completeWrite();
-        } catch (JAXBException e) {
+        } 
+        catch (JAXBException e) {
             throw new IllegalArgumentException("Error writing annotation " + proteinAnnotation, e);
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public void close() throws IOException {
         try {
+            urmlFactWriter.completeWrite();
             urmlFactWriter.close();
         } catch (XMLStreamException e) {
             throw new IOException(e);
