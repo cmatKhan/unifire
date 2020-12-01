@@ -17,7 +17,7 @@
 ############################################################################
 
 UNIFIRE_REPO="/opt/git/unifire"
-INTERPROSCAN_REPO="/opt/interproscan-5.45-80.0"
+INTERPROSCAN_REPO="/opt/interproscan-5.47-82.0"
 ETE3FOLDER="/opt/ete3"
 
 VOLUME=/volume
@@ -27,7 +27,7 @@ ${UNIFIRE_REPO}/misc/taxonomy/fetchTaxonomicLineage.py -i ${VOLUME}/proteins.fas
   -t ${ETE3FOLDER}/taxa.sqlite
 
 ${INTERPROSCAN_REPO}/interproscan.sh -f xml -dp -i ${VOLUME}/proteins_lineage.fasta \
-    --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,ProDom,PIRSF,PANTHER,SUPERFAMILY" \
+    --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY" \
     -o ${VOLUME}/proteins_lineage-ipr.xml
 
 PATH="/usr/lib/jvm/java-8-openjdk-amd64/bin:${PATH}"
