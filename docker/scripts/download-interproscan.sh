@@ -21,17 +21,18 @@ set -u
 
 ROOT_FOLDER="/opt"
 DOWNLOAD_FOLDER="/opt/download"
+IPRS_VERSION="5.48-83.0"
 
 mkdir -p ${DOWNLOAD_FOLDER}
 cd ${DOWNLOAD_FOLDER}
 echo "Downloading InterProScan..."
-wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.47-82.0/interproscan-5.47-82.0-64-bit.tar.gz
+wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
 echo "Done."
-wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.47-82.0/interproscan-5.47-82.0-64-bit.tar.gz.md5
+wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5
 
-ipr_check=`md5sum -c interproscan-5.47-82.0-64-bit.tar.gz.md5`
+ipr_check=`md5sum -c interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5`
 
-if [[ ${ipr_check} != "interproscan-5.47-82.0-64-bit.tar.gz: OK" ]]
+if [[ ${ipr_check} != "interproscan-${IPRS_VERSION}-64-bit.tar.gz: OK" ]]
 then
 	exit 11
 fi
@@ -39,14 +40,15 @@ fi
 mkdir -p ${ROOT_FOLDER}
 cd ${ROOT_FOLDER}
 echo "Extracting InterProScan..."
-tar -pxzf ${DOWNLOAD_FOLDER}/interproscan-5.47-82.0-64-bit.tar.gz
+tar -pxzf ${DOWNLOAD_FOLDER}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
+ln -s interproscan-5.48-83.0 interproscan
 echo "Done."
 
 echo "Initializing InerProScan..."
-cd /opt/interproscan-5.47-82.0
+cd /opt/interproscan
 python3 initial_setup.py
 echo "Done iitializing InterProScan"
 
 # Clean up tar to reduce the size of the image
-rm -f ${DOWNLOAD_FOLDER}/interproscan-5.47-82.0-64-bit.tar.gz
-rm -f ${DOWNLOAD_FOLDER}/interproscan-5.47-82.0-64-bit.tar.gz.md5
+rm -f ${DOWNLOAD_FOLDER}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
+rm -f ${DOWNLOAD_FOLDER}/interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5

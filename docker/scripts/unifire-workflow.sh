@@ -17,7 +17,7 @@
 ############################################################################
 
 UNIFIRE_REPO="/opt/git/unifire"
-INTERPROSCAN_REPO="/opt/interproscan-5.47-82.0"
+INTERPROSCAN_REPO="/opt/interproscan"
 ETE3FOLDER="/opt/ete3"
 
 VOLUME=/volume
