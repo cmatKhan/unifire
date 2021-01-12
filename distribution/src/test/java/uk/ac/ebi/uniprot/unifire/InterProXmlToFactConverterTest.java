@@ -1,55 +1,60 @@
+/*
+ * Copyright (c) 2018 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package uk.ac.ebi.uniprot.unifire;
 
-import org.junit.jupiter.api.Disabled;
+import matchers.NodeMatcherBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.xmlunit.builder.DiffBuilder;
-import org.xmlunit.diff.Diff;
+import org.xmlunit.matchers.CompareMatcher;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author Vishal Joshi
  */
-@Disabled("I have to disable this test because despite of the fact the generated and expected XMLs are effectively equal;\n" +
-        "the subtle differences like change in order of xml tags in the generated fact xml & presence of xmlns:xsi attribute in" +
-        "each <fact> tag is making it different which is not a real equality check!\n " +
-        "I will try to find some other way to test generated XML")
 class InterProXmlToFactConverterTest {
 
     @TempDir
     File tempDir;
 
     @Test
-    public void testShouldVerifyThatInterproXmlIsConvertedToFactXmlCorrectly() throws JAXBException, IOException, XMLStreamException {
+    void testShouldVerifyThatInterproXmlIsConvertedToFactXmlCorrectly() throws IOException {
 
         //given
         InterProXmlToFactConverter converter = new InterProXmlToFactConverter();
 
         ClassLoader classLoader = getClass().getClassLoader();
-        String expectedFileName = "correct_facts.xml";
-        File expectedFile = new File(classLoader.getResource(expectedFileName).getFile());
         String inputFileName = "iprscan.xml";
         File inputFile = new File(classLoader.getResource(inputFileName).getFile());
         String absolutePath = inputFile.getAbsolutePath();
 
         String outputFileName = tempDir.getAbsolutePath() + "/output.xml";
-        //String outputFileName = "/Users/vjoshi/output.xml";
+        File expectedFile = Paths.get(classLoader.getResource("correct_facts.xml").getPath()).toFile();
 
         //when
         converter.convertToXml(absolutePath, outputFileName);
 
         //then
-        Diff diff = DiffBuilder.compare(expectedFile).withTest(new File(outputFileName))
-                .checkForSimilar()
-                .build();
-        diff.getDifferences().forEach(difference -> System.out.println(difference.toString()));
-        assertFalse(diff.hasDifferences());
+        assertThat(new File(outputFileName), CompareMatcher.isSimilarTo(expectedFile).ignoreWhitespace().normalizeWhitespace().withNodeMatcher(NodeMatcherBuilder.factXMLNodeMatcher()).withNodeFilter(node -> !node.getNodeName().equals("#comment")));
     }
 
 }

@@ -1,0 +1,322 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright (c) 2018 European Molecular Biology Laboratory
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<facts xmlns="http://uniprot.org/urml/facts" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="Gene3D">G3DSA:1.10.760.10</signature>
+    <frequency>1</frequency>
+    <positionStart>36</positionStart>
+    <positionEnd>110</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="PROSITE">PS51008</signature>
+    <frequency>1</frequency>
+    <positionStart>46</positionStart>
+    <positionEnd>165</positionEnd>
+    <alignment>DDPAACVNCHIMGPYYatwfhsshsRNATCNDCHVPHEnpvkkwvfkgmdgmrhvavfltrgekdvlrankesaEVIMNNCIRCHTQLNTEfvntgridymmsqvgEGKACWDCHRDVPH</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="InterPro">IPR024717</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>177</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="SCOP Superfamily">SSF46626</signature>
+    <frequency>1</frequency>
+    <positionStart>10</positionStart>
+    <positionEnd>110</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PIR Superfamily">PIRSF000005</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>207</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="Gene3D">G3DSA:1.10.760.10</signature>
+    <frequency>1</frequency>
+    <positionStart>115</positionStart>
+    <positionEnd>207</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="InterPro">IPR011031</signature>
+    <frequency>1</frequency>
+    <positionStart>46</positionStart>
+    <positionEnd>165</positionEnd>
+    <alignment>DDPAACVNCHIMGPYYatwfhsshsRNATCNDCHVPHEnpvkkwvfkgmdgmrhvavfltrgekdvlrankesaEVIMNNCIRCHTQLNTEfvntgridymmsqvgEGKACWDCHRDVPH</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="SRHMM">SRHMM000013-2</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>195</positionEnd>
+    <alignment>mki----------REYIQWLL-PSHKWKVLAIIFLGMVvgGGALFLYMLRAHTYLTDDPAACVNCHIMG-----PYYATWFHSSHSR-NATCNDCHVPHENpVKKWVFKgMDGMRHVAVFLT--------RGEKDVLRANKESAEVIMNN---CIRCHTQLNTEFVNTGRIDYMM--SQVGEGKACWDCHRDVPHG--------------gsnsaastpdalvpypdsptpewlrkmie</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PFAM">PF00034</signature>
+    <frequency>1</frequency>
+    <positionStart>139</positionStart>
+    <positionEnd>206</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="SCOP Superfamily">SSF48695</signature>
+    <frequency>1</frequency>
+    <positionStart>17</positionStart>
+    <positionEnd>165</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="SRHMM">SRHMM000013-1</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>195</positionEnd>
+    <alignment>mki----------REYIQWLL-PSHKWKVLAIIFLGMVvgGGALFLYMLRAHTYLTDDPAACVNCHIMG-----PYYATWFHSSHSR-NATCNDCHVPHENpVKKWVFKgMDGMRHVAVFLT--------RGEKDVLRANKESAEVIMNN---CIRCHTQLNTEFVNTGRIDYMM--SQVGEGKACWDCHRDVPHG--------------gsnsaastpdalvpypdsptpewlrkmie</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="SRHMM">SRHMM000005-1</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>208</positionEnd>
+    <alignment>mlmaavlaapafpafsaget----------------PAAPTKAAAK---PDLVKGEASFTAVCAACHGADGNSAIAANPKLSAQHPEYLVKQLQEFKSG---KRNDPVMKGFAMALSDEDMKNIAYWVTAK-AAKPGFAKDKALVSLGERIYRGGIADRQIAACAGCHSPNGAGIPAQYPRLSGQHADYTATQLVAFRDGKR-GNSLQ-MTQVAAKLNDREIKAVADYIAGLR</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PFAM">PF13442</signature>
+    <frequency>1</frequency>
+    <positionStart>33</positionStart>
+    <positionEnd>106</positionEnd>
+  </fact>
+  <fact xsi:type="Protein" id="A0A015UPS8">
+    <sequence length="195" isFragment="false">MKIREYIQWLLPSHKWKVLAIIFLGMVVGGGALFLYMLRAHTYLTDDPAACVNCHIMGPYYATWFHSSHSRNATCNDCHVPHENPVKKWVFKGMDGMRHVAVFLTRGEKDVLRANKESAEVIMNNCIRCHTQLNTEFVNTGRIDYMMSQVGEGKACWDCHRDVPHGGSNSAASTPDALVPYPDSPTPEWLRKMIE</sequence>
+    <organism>organism_1339315</organism>
+    <gene>
+      <names>nrfH</names>
+    </gene>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="Gene3D">G3DSA:1.10.3820.10</signature>
+    <frequency>1</frequency>
+    <positionStart>12</positionStart>
+    <positionEnd>177</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR024167</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>207</positionEnd>
+  </fact>
+  <fact xsi:type="Protein" id="J0U7L2">
+    <sequence length="208" isFragment="false">MLMAAVLAAPAFPAFSAGETPAAPTKAAAKPDLVKGEASFTAVCAACHGADGNSAIAANPKLSAQHPEYLVKQLQEFKSGKRNDPVMKGFAMALSDEDMKNIAYWVTAKAAKPGFAKDKALVSLGERIYRGGIADRQIAACAGCHSPNGAGIPAQYPRLSGQHADYTATQLVAFRDGKRGNSLQMTQVAAKLNDREIKAVADYIAGLR</sequence>
+    <organism>organism_1144317</organism>
+    <gene>
+      <names>PMI14_03334</names>
+    </gene>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR036909</signature>
+    <frequency>1</frequency>
+    <positionStart>115</positionStart>
+    <positionEnd>207</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PROSITE">PS51007</signature>
+    <frequency>1</frequency>
+    <positionStart>120</positionStart>
+    <positionEnd>208</positionEnd>
+    <alignment>ALVSLGERIYRggiadrqiAACAGCHSPNGAGIPAQYPRLSGQHADYTA------TQLVAFRDGKRGN-SLQMTQVAAKLNDREIKAVADYIAGLR</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="InterPro">IPR036280</signature>
+    <frequency>1</frequency>
+    <positionStart>17</positionStart>
+    <positionEnd>165</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="PIR Superfamily">PIRSF000013</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>177</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR009056</signature>
+    <frequency>1</frequency>
+    <positionStart>139</positionStart>
+    <positionEnd>206</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="PFAM">PF03264</signature>
+    <frequency>1</frequency>
+    <positionStart>13</positionStart>
+    <positionEnd>165</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR009056</signature>
+    <frequency>1</frequency>
+    <positionStart>33</positionStart>
+    <positionEnd>106</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="SCOP Superfamily">SSF46626</signature>
+    <frequency>1</frequency>
+    <positionStart>118</positionStart>
+    <positionEnd>206</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR036909</signature>
+    <frequency>1</frequency>
+    <positionStart>36</positionStart>
+    <positionEnd>110</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR009056</signature>
+    <frequency>1</frequency>
+    <positionStart>31</positionStart>
+    <positionEnd>110</positionEnd>
+    <alignment>PDLVKGEASFTAVCAACHGADGNSAIAANPKLSAQHPEYLV------KQLQEFKSGKRNDP--VMKGFAMALSDEDMKNIAYWVTAKA</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="InterPro">IPR038266</signature>
+    <frequency>1</frequency>
+    <positionStart>12</positionStart>
+    <positionEnd>177</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="InterPro">IPR017571</signature>
+    <frequency>1</frequency>
+    <positionStart>22</positionStart>
+    <positionEnd>165</positionEnd>
+  </fact>
+  <fact xsi:type="Organism" id="organism_1144317">
+    <scientificName>ACIDOVORAX SP. CF316</scientificName>
+    <lineage>
+      <ids>1 131567 2 1224 28216 80840 80864 12916 1144317</ids>
+    </lineage>
+  </fact>
+  <fact xsi:type="Organism" id="organism_1339315">
+    <scientificName>Bacteroides fragilis str. 3988T(B)14</scientificName>
+    <lineage>
+      <ids>1 131567 2 1783270 68336 976 200643 171549 815 816 817 1339315</ids>
+    </lineage>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="InterPro">IPR005126</signature>
+    <frequency>1</frequency>
+    <positionStart>13</positionStart>
+    <positionEnd>165</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR036909</signature>
+    <frequency>1</frequency>
+    <positionStart>10</positionStart>
+    <positionEnd>110</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR009056</signature>
+    <frequency>1</frequency>
+    <positionStart>120</positionStart>
+    <positionEnd>208</positionEnd>
+    <alignment>ALVSLGERIYRggiadrqiAACAGCHSPNGAGIPAQYPRLSGQHADYTA------TQLVAFRDGKRGN-SLQMTQVAAKLNDREIKAVADYIAGLR</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PRINTS">PR00605</signature>
+    <frequency>2</frequency>
+    <positionStart>42</positionStart>
+    <positionEnd>53</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR008168</signature>
+    <frequency>2</frequency>
+    <positionStart>182</positionStart>
+    <positionEnd>204</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>A0A015UPS8</protein>
+    <signature type="TIGRFAM">TIGR03153</signature>
+    <frequency>1</frequency>
+    <positionStart>22</positionStart>
+    <positionEnd>165</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="SRHMM">SRHMM000005-2</signature>
+    <frequency>1</frequency>
+    <positionStart>1</positionStart>
+    <positionEnd>208</positionEnd>
+    <alignment>mlmaavlaapafpafsaget----------------PAAPTKAAAK---PDLVKGEASFTAVCAACHGADGNSAIAANPKLSAQHPEYLVKQLQEFKSG---KRNDPVMKGFAMALSDEDMKNIAYWVTAK-AAKPGFAKDKALVSLGERIYRGGIADRQIAACAGCHSPNGAGIPAQYPRLSGQHADYTATQLVAFRDGKR-GNSLQ-MTQVAAKLNDREIKAVADYIAGLR</alignment>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR008168</signature>
+    <frequency>2</frequency>
+    <positionStart>42</positionStart>
+    <positionEnd>53</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PRINTS">PR00605</signature>
+    <frequency>2</frequency>
+    <positionStart>182</positionStart>
+    <positionEnd>204</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="InterPro">IPR036909</signature>
+    <frequency>1</frequency>
+    <positionStart>118</positionStart>
+    <positionEnd>206</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PROSITE">PS51007</signature>
+    <frequency>1</frequency>
+    <positionStart>31</positionStart>
+    <positionEnd>110</positionEnd>
+    <alignment>PDLVKGEASFTAVCAACHGADGNSAIAANPKLSAQHPEYLV------KQLQEFKSGKRNDP--VMKGFAMALSDEDMKNIAYWVTAKA</alignment>
+  </fact>
+</facts>
