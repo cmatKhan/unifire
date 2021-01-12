@@ -20,7 +20,6 @@ package uk.ac.ebi.uniprot.urml.output.xml;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.TemporaryFolder;
 import org.uniprot.urml.facts.*;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
@@ -31,8 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * Created by Hermann Zellner on 05/08/2020.
  */
 public class AnnotationXMLWriterTest {
-
-    public TemporaryFolder folder= new TemporaryFolder();
 
     private final static String ACCESSION_1 = "P12345";
     private final static String ACCESSION_2 = "P12346";
