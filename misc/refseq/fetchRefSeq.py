@@ -5,6 +5,21 @@
 The fetchRefSeq.py script take a one / a list of RefSeq ID(s) as input and fetches data from the UniProt Protein API.
 The generated output is a valid UniFIRE input file in Fact XML format.
 """
+#  Copyright (c) 2018 European Molecular Biology Laboratory
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
 import requests, json, sys, re, io, math
 from lxml.etree import Element, SubElement, Comment, ElementTree, fromstring, XMLParser
 import os.path

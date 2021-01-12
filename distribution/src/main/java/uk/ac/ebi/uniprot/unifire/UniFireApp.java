@@ -16,18 +16,18 @@
 
 package uk.ac.ebi.uniprot.unifire;
 
-import uk.ac.ebi.uniprot.urml.core.utils.SelectorEnum;
-import uk.ac.ebi.uniprot.urml.input.InputType;
-import uk.ac.ebi.uniprot.urml.output.OutputFormat;
-
 import com.google.common.base.Strings;
-import java.io.File;
-import java.util.Comparator;
-import java.util.function.Function;
 import org.apache.commons.cli.*;
 import org.drools.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.uniprot.urml.core.utils.SelectorEnum;
+import uk.ac.ebi.uniprot.urml.input.InputType;
+import uk.ac.ebi.uniprot.urml.output.OutputFormat;
+
+import java.io.File;
+import java.util.Comparator;
+import java.util.function.Function;
 
 import static com.google.common.primitives.Booleans.trueFirst;
 import static java.lang.System.exit;
@@ -50,30 +50,14 @@ public class UniFireApp {
     public static void main(String[] args) throws Exception {
         Options options = new Options();
 
-        Option ruleFileOption = Option.builder("r").longOpt("rules").hasArg().argName("RULE_URML_FILE")
-                .desc("Rule base file (path) provided by UniProt (e.g UniRule or ARBA) (format: URML).")
-                .type(File.class).required().build();
-        Option inputFileOption = Option.builder("i").longOpt("input").hasArg().argName("INPUT_FILE")
-                .desc("Input file (path) containing the proteins to annotate and required data, in the format specified by the -s option.")
-                .type(File.class).required().build();
-        Option outputFileOption = Option.builder("o").longOpt("output").hasArg().argName("OUTPUT_FILE")
-                .desc("Output file (path) containing predictions in the format specified in the -f option.")
-                .type(File.class).required().build();
-        Option inputSourceOption = Option.builder("s").longOpt("input-source").hasArg().argName("INPUT_SOURCE")
-                .desc("Input source type. Supported input sources are:\n"+ prettyPrint(InputType.values(), DEFAULT_INPUT_TYPE)+".")
-                .type(String.class).build();
-        Option outputFormatOption = Option.builder("f").longOpt("output-format").hasArg().argName("OUTPUT_FORMAT")
-                .desc("Output file format. Supported formats are:\n"+prettyPrint(OutputFormat.values(), DEFAULT_OUTPUT_FORMAT)+".")
-                .type(String.class).build();
-        Option templateFileOption = Option.builder("t").longOpt("templates").hasArg().argName("TEMPLATE_FACTS")
-                .desc("UniRule template sequence matches, provided by UniProt (format: Fact Model XML).")
-                .type(File.class).build();
-        Option inputChunkSizeOption = Option.builder("n").longOpt("chunksize").hasArg().argName("INPUT_CHUNK_SIZE")
-                .desc("Chunk size (number of proteins) to be batch processed simultaneously \n(default: "+DEFAULT_CHUNK_SIZE+").")
-                .type(Integer.class).build();
-        Option memoryOption = Option.builder("m").hasArg().argName("MAX_MEMORY")
-                .desc("Max size of the memory allocation pool in MB (JVM -Xmx) \n(default: "+DEFAULT_MAX_MEMORY+" MB).")
-                .type(Integer.class).build();
+        Option ruleFileOption = Option.builder("r").longOpt("rules").hasArg().argName("RULE_URML_FILE").desc("Rule base file (path) provided by UniProt (e.g UniRule or ARBA) (format: URML).").type(File.class).required().build();
+        Option inputFileOption = Option.builder("i").longOpt("input").hasArg().argName("INPUT_FILE").desc("Input file (path) containing the proteins to annotate and required data, in the format specified by the -s option.").type(File.class).required().build();
+        Option outputFileOption = Option.builder("o").longOpt("output").hasArg().argName("OUTPUT_FILE").desc("Output file (path) containing predictions in the format specified in the -f option.").type(File.class).required().build();
+        Option inputSourceOption = Option.builder("s").longOpt("input-source").hasArg().argName("INPUT_SOURCE").desc("Input source type. Supported input sources are:\n" + prettyPrint(InputType.values(), DEFAULT_INPUT_TYPE) + ".").type(String.class).build();
+        Option outputFormatOption = Option.builder("f").longOpt("output-format").hasArg().argName("OUTPUT_FORMAT").desc("Output file format. Supported formats are:\n" + prettyPrint(OutputFormat.values(), DEFAULT_OUTPUT_FORMAT) + ".").type(String.class).build();
+        Option templateFileOption = Option.builder("t").longOpt("templates").hasArg().argName("TEMPLATE_FACTS").desc("UniRule template sequence matches, provided by UniProt (format: Fact Model XML).").type(File.class).build();
+        Option inputChunkSizeOption = Option.builder("n").longOpt("chunksize").hasArg().argName("INPUT_CHUNK_SIZE").desc("Chunk size (number of proteins) to be batch processed simultaneously \n(default: " + DEFAULT_CHUNK_SIZE + ").").type(Integer.class).build();
+        Option memoryOption = Option.builder("m").hasArg().argName("MAX_MEMORY").desc("Max size of the memory allocation pool in MB (JVM -Xmx) \n(default: " + DEFAULT_MAX_MEMORY + " MB).").type(Integer.class).build();
         Option helpOption = Option.builder("h").longOpt("help").desc("Print this usage.").build();
 
         options.addOption(ruleFileOption);
@@ -86,9 +70,9 @@ public class UniFireApp {
         options.addOption(memoryOption);
         options.addOption(helpOption);
 
-        UniFireRunner uniFireRunner = null;
+        UniFireRunner uniFireRunner;
 
-        if (hasHelp(helpOption, args)){
+        if (hasHelp(helpOption, args)) {
             displayUsage(options);
             exit(0);
         }
@@ -106,13 +90,14 @@ public class UniFireApp {
             File templateFactFile = parseOption(cmd, templateFileOption, FileCreatorChecker::createAndCheck, null);
 
             uniFireRunner = new UniFireRunner(ruleBaseFile, inputFactFile, outputFactFile, inputSource, outputFormat, inputChunkSize, templateFactFile);
-        } catch (Exception e){
+            uniFireRunner.run();
+        } catch (ParseException e) {
             logger.error(e.getMessage());
             displayUsage(options);
-            exit(1);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
 
-        uniFireRunner.run();
     }
 
     private static void displayUsage(Options options){

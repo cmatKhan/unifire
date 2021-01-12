@@ -1,0 +1,28 @@
+Evidence	ProteinId	AnnotationType	Value	Start	End
+UR000106745	ABIZv1_0003	comment.catalytic_activity	Reaction=GDP-beta-L-fucose + NADP(+) = GDP-4-dehydro-alpha-D-rhamnose + H(+) + NADPH; Xref=Rhea:RHEA:18885, ChEBI:CHEBI:15378, ChEBI:CHEBI:57273, ChEBI:CHEBI:57783, ChEBI:CHEBI:57964, ChEBI:CHEBI:58349; EC=1.1.1.271;		
+UR000106745	ABIZv1_0003	comment.function	Catalyzes the two-step NADP-dependent conversion of GDP-4-dehydro-6-deoxy-D-mannose to GDP-fucose, involving an epimerase and a reductase reaction		
+UR000106745	ABIZv1_0003	comment.pathway	Nucleotide-sugar biosynthesis; GDP-L-fucose biosynthesis via de novo pathway; GDP-L-fucose from GDP-alpha-D-mannose: step 2/2		
+UR000106745	ABIZv1_0003	comment.similarity	Belongs to the NAD(P)-dependent epimerase/dehydratase family. Fucose synthase subfamily		
+UR000106745	ABIZv1_0003	gene.name.primary	fcl		
+UR000106745	ABIZv1_0003	keyword	Isomerase		
+UR000106745	ABIZv1_0003	keyword	Multifunctional enzyme		
+UR000106745	ABIZv1_0003	keyword	NADP		
+UR000106745	ABIZv1_0003	keyword	Oxidoreductase		
+UR000106745	ABIZv1_0003	protein.alternativeName.fullName	GDP-4-keto-6-deoxy-D-mannose-3,5-epimerase-4-reductase		
+UR000106745	ABIZv1_0003	protein.recommendedName.ecNumber	1.1.1.271		
+UR000106745	ABIZv1_0003	protein.recommendedName.fullName	GDP-L-fucose synthase		
+UR000106745	ABIZv1_0003	xref.GO	GO:0042351		
+UR000106745	ABIZv1_0003	xref.GO	GO:0050577		
+UR000106745	ABIZv1_0003	xref.GO	GO:0070401		
+UR000106745	ABIZv1_0003	feature.NP_BIND	NADP	18	24
+UR000106745	ABIZv1_0003	feature.NP_BIND	NADP	113	116
+UR000106745	ABIZv1_0003	feature.SITE	Important for catalytic activity	115	115
+UR000106745	ABIZv1_0003	feature.SITE	Important for catalytic activity	117	117
+UR000106745	ABIZv1_0003	feature.ACT_SITE	Proton donor/acceptor	144	144
+UR000106745	ABIZv1_0003	feature.BINDING	NADP	148	148
+UR000106745	ABIZv1_0003	feature.NP_BIND	NADP	171	174
+UR000106745	ABIZv1_0003	feature.BINDING	NADP	187	187
+UR000106745	ABIZv1_0003	feature.BINDING	Substrate	195	195
+UR000106745	ABIZv1_0003	feature.BINDING	Substrate	210	210
+UR000106745	ABIZv1_0003	feature.BINDING	Substrate	217	217
+UR000106745	ABIZv1_0003	feature.BINDING	Substrate	277	277

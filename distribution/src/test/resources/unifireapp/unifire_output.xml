@@ -1,0 +1,206 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright (c) 2018 European Molecular Biology Laboratory
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<facts xmlns="http://uniprot.org/urml/facts" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.SITE</type>
+    <value>Important for catalytic activity</value>
+    <positionStart>117</positionStart>
+    <positionEnd>117</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.BINDING</type>
+    <value>NADP</value>
+    <positionStart>187</positionStart>
+    <positionEnd>187</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>xref.GO</type>
+    <value>GO:0050577</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>keyword</type>
+    <value>NADP</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.BINDING</type>
+    <value>Substrate</value>
+    <positionStart>195</positionStart>
+    <positionEnd>195</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>comment.catalytic_activity</type>
+    <value>Reaction=GDP-beta-L-fucose + NADP(+) = GDP-4-dehydro-alpha-D-rhamnose + H(+) + NADPH; Xref=Rhea:RHEA:18885, ChEBI:CHEBI:15378, ChEBI:CHEBI:57273, ChEBI:CHEBI:57783, ChEBI:CHEBI:57964, ChEBI:CHEBI:58349; EC=1.1.1.271;</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.NP_BIND</type>
+    <value>NADP</value>
+    <positionStart>18</positionStart>
+    <positionEnd>24</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.SITE</type>
+    <value>Important for catalytic activity</value>
+    <positionStart>115</positionStart>
+    <positionEnd>115</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.NP_BIND</type>
+    <value>NADP</value>
+    <positionStart>113</positionStart>
+    <positionEnd>116</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>protein.recommendedName.fullName</type>
+    <value>GDP-L-fucose synthase</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>keyword</type>
+    <value>Multifunctional enzyme</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>gene.name.primary</type>
+    <value>fcl</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.BINDING</type>
+    <value>Substrate</value>
+    <positionStart>210</positionStart>
+    <positionEnd>210</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.BINDING</type>
+    <value>NADP</value>
+    <positionStart>148</positionStart>
+    <positionEnd>148</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.BINDING</type>
+    <value>Substrate</value>
+    <positionStart>217</positionStart>
+    <positionEnd>217</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>comment.pathway</type>
+    <value>Nucleotide-sugar biosynthesis; GDP-L-fucose biosynthesis via de novo pathway; GDP-L-fucose from GDP-alpha-D-mannose: step 2/2</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>protein.alternativeName.fullName</type>
+    <value>GDP-4-keto-6-deoxy-D-mannose-3,5-epimerase-4-reductase</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>keyword</type>
+    <value>Isomerase</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.NP_BIND</type>
+    <value>NADP</value>
+    <positionStart>171</positionStart>
+    <positionEnd>174</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.BINDING</type>
+    <value>Substrate</value>
+    <positionStart>277</positionStart>
+    <positionEnd>277</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>keyword</type>
+    <value>Oxidoreductase</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>comment.similarity</type>
+    <value>Belongs to the NAD(P)-dependent epimerase/dehydratase family. Fucose synthase subfamily</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>xref.GO</type>
+    <value>GO:0042351</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>feature.ACT_SITE</type>
+    <value>Proton donor/acceptor</value>
+    <positionStart>144</positionStart>
+    <positionEnd>144</positionEnd>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>protein.recommendedName.ecNumber</type>
+    <value>1.1.1.271</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>xref.GO</type>
+    <value>GO:0070401</value>
+  </fact>
+  <fact xsi:type="ProteinAnnotation">
+    <protein>ABIZv1_0003</protein>
+    <evidence>UR000106745</evidence>
+    <type>comment.function</type>
+    <value>Catalyzes the two-step NADP-dependent conversion of GDP-4-dehydro-6-deoxy-D-mannose to GDP-fucose, involving an epimerase and a reductase reaction</value>
+  </fact>
+</facts>

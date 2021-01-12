@@ -1,0 +1,505 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ Copyright (c) 2018 European Molecular Biology Laboratory
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<rules name="org.uniprot.unirule" version="2020_06" xmlns="http://uniprot.org/urml/rules" xmlns:fact="http://uniprot.org/urml/facts">
+  <rule id="UR000106745_main" group="UR000106745">
+    <meta>
+      <information type="CREATOR">crivoire</information>
+      <information type="CREATED_ON">2013-04-12+01:00</information>
+      <information type="MODIFIED_BY">ecastro</information>
+      <information type="MODIFIED_ON">2020-08-26+01:00</information>
+      <information type="STATUS">Apply</information>
+      <information type="REVISION_NO">7</information>
+      <information type="LEGACY_NAME">MF_00956</information>
+      <information type="INDC">Protein</information>
+      <information type="TEMPLATE">P32055</information>
+      <information type="PROTEIN_NAME">FCL</information>
+      <information type="INPL">SINFN</information>
+      <information type="MOTIF_NAMES">GDP_fucose_synth</information>
+    </meta>
+    <conditions>
+      <AND>
+        <condition on="fact:Protein" bind="protein">
+          <filter on="sequence.isFragment" negative="true"/>
+        </condition>
+        <condition on="fact:Organism" bind="organism" of="protein">
+          <filter on="lineage.ids">
+            <contains operator="any">
+              <value description="Bacteria">2</value>
+              <value description="Archaea">2157</value>
+            </contains>
+          </filter>
+        </condition>
+        <condition on="fact:ProteinSignature" with="protein">
+          <filter on="signature">
+            <field attribute="type">HAMAP</field>
+            <field attribute="value">MF_00956</field>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">protein.recommendedName.fullName</field>
+          <field attribute="value">GDP-L-fucose synthase</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">protein.recommendedName.ecNumber</field>
+          <field attribute="value">1.1.1.271</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">protein.alternativeName.fullName</field>
+          <field attribute="value">GDP-4-keto-6-deoxy-D-mannose-3,5-epimerase-4-reductase</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">comment.catalytic_activity</field>
+          <field attribute="value">Reaction=GDP-beta-L-fucose + NADP(+) = GDP-4-dehydro-alpha-D-rhamnose + H(+) + NADPH; Xref=Rhea:RHEA:18885, ChEBI:CHEBI:15378, ChEBI:CHEBI:57273, ChEBI:CHEBI:57783, ChEBI:CHEBI:57964, ChEBI:CHEBI:58349; EC=1.1.1.271;</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">comment.function</field>
+          <field attribute="value">Catalyzes the two-step NADP-dependent conversion of GDP-4-dehydro-6-deoxy-D-mannose to GDP-fucose, involving an epimerase and a reductase reaction</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">comment.pathway</field>
+          <field attribute="value">Nucleotide-sugar biosynthesis; GDP-L-fucose biosynthesis via de novo pathway; GDP-L-fucose from GDP-alpha-D-mannose: step 2/2</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">comment.similarity</field>
+          <field attribute="value">Belongs to the NAD(P)-dependent epimerase/dehydratase family. Fucose synthase subfamily</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">keyword</field>
+          <field attribute="value">Isomerase</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">keyword</field>
+          <field attribute="value">Multifunctional enzyme</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">keyword</field>
+          <field attribute="value">NADP</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">keyword</field>
+          <field attribute="value">Oxidoreductase</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">gene.name.primary</field>
+          <field attribute="value">fcl</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">xref.GO</field>
+          <field attribute="value">GO:0042351</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">xref.GO</field>
+          <field attribute="value">GO:0050577</field>
+        </fact>
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">xref.GO</field>
+          <field attribute="value">GO:0070401</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_preconditions_1" extends="UR000106745_main" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalProteinSignature" bind="targetMatch">
+          <filter on="signature.value">
+            <value>MF_00956</value>
+          </filter>
+        </condition>
+        <condition on="fact:TemplateProteinSignature" bind="templateMatch">
+          <filter on="protein.id">
+            <value>P32055</value>
+          </filter>
+          <filter on="signature.value">
+            <value>MF_00956</value>
+          </filter>
+        </condition>
+        <condition on="fact:Protein" bind="protein" of="targetMatch"/>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="protein targetMatch templateMatch">
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">109</field>
+          <field attribute="templateEnd">109</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">10</field>
+          <field attribute="templateEnd">16</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">179</field>
+          <field attribute="templateEnd">179</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">140</field>
+          <field attribute="templateEnd">140</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">163</field>
+          <field attribute="templateEnd">166</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">209</field>
+          <field attribute="templateEnd">209</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">202</field>
+          <field attribute="templateEnd">202</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">278</field>
+          <field attribute="templateEnd">278</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">105</field>
+          <field attribute="templateEnd">108</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">187</field>
+          <field attribute="templateEnd">187</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">107</field>
+          <field attribute="templateEnd">107</field>
+        </fact>
+        <fact type="fact:PositionalMapping">
+          <field attribute="templateStart">136</field>
+          <field attribute="templateEnd">136</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_1" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>109</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>109</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>C</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.SITE</field>
+          <field attribute="value">Important for catalytic activity</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_2" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>10</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>16</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>G..G..G</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.NP_BIND</field>
+          <field attribute="value">NADP</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_3" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>179</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>179</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>H</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.BINDING</field>
+          <field attribute="value">NADP</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_4" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>140</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>140</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>K</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.BINDING</field>
+          <field attribute="value">NADP</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_5" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>163</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>166</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>P.N[IVL]</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.NP_BIND</field>
+          <field attribute="value">NADP</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_6" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>209</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>209</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>R</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.BINDING</field>
+          <field attribute="value">Substrate</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_7" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>202</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>202</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>W</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.BINDING</field>
+          <field attribute="value">Substrate</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_8" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>278</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>278</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>[DE]</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.BINDING</field>
+          <field attribute="value">Substrate</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_9" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>105</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>108</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>[MILV][GA][ST][ST]</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.NP_BIND</field>
+          <field attribute="value">NADP</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_10" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>187</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>187</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>[RK]</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.BINDING</field>
+          <field attribute="value">Substrate</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_11" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>107</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>107</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>[ST]</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.SITE</field>
+          <field attribute="value">Important for catalytic activity</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+  <rule id="UR000106745_positional_1_feature_12" extends="UR000106745_positional_preconditions_1" group="UR000106745">
+    <conditions>
+      <AND>
+        <condition on="fact:PositionalMapping" bind="pm" with="protein targetMatch templateMatch">
+          <filter on="isValid"/>
+          <filter on="templateStart">
+            <value>136</value>
+          </filter>
+          <filter on="templateEnd">
+            <value>136</value>
+          </filter>
+          <filter on="mappedSequence">
+            <matches>[YF]</matches>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'UR000106745' positionEnd:pm.mappedEnd positionStart:pm.mappedStart protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">feature.ACT_SITE</field>
+          <field attribute="value">Proton donor/acceptor</field>
+        </fact>
+      </action>
+    </actions>
+  </rule>
+</rules>

@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2018 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package org.proteininformationresource.pirsr;
 
 import uk.ac.ebi.uniprot.urml.core.utils.SelectorEnum;
@@ -57,7 +74,7 @@ public class PIRSRApp {
 			exit(0);
 		}
 
-		PIRSRRunner pirsrRunner = null;
+		PIRSRRunner pirsrRunner;
 		try {
 			CommandLineParser parser = new DefaultParser();
 			CommandLine cmd = parser.parse(options, args);
@@ -68,15 +85,15 @@ public class PIRSRApp {
 			InputType inputType = parseOption(cmd, inputTypeOption, InputTypeChecker::check,
 					InputType.INTERPROSCAN_XML);
 			File hmmalignCommand = parseOption(cmd, hmmalignOption, FileCreatorChecker::createAndCheck, null);
-			
-			pirsrRunner = new PIRSRRunner(pirsrDataDirectory, inputFactFile, inputType, outputDirectory,
-					hmmalignCommand);
-		} catch (Exception e) {
+
+			pirsrRunner = new PIRSRRunner(pirsrDataDirectory, inputFactFile, inputType, outputDirectory, hmmalignCommand);
+			pirsrRunner.run();
+		} catch (ParseException e) {
 			logger.error(e.getMessage());
 			displayUsage(options);
-			exit(1);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		}
-		pirsrRunner.run();
 	}
 
 	private static void displayUsage(Options options) {
