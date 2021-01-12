@@ -19,6 +19,7 @@ package org.proteininformationresource.pirsr;
 
 import matchers.NodeMatcherBuilder;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.xmlunit.matchers.CompareMatcher;
@@ -36,6 +37,9 @@ import static org.hamcrest.core.IsEqual.equalTo;
 /**
  * @author Vishal Joshi
  */
+@Disabled("Unfortunately, this test is platform dependent due to hmmalign dynamically linking to" +
+        " underlying gcc lib. It might fail for some OS which does not satisfy the hmmalign's lib dependencies, " +
+        "thus making it brittle to add to build")
 class PIRSRAppIntegrationTest {
 
     @TempDir
