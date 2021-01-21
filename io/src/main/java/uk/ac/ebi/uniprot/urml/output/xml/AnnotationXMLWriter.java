@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.uniprot.urml.facts.Fact;
 import org.uniprot.urml.facts.FactSet;
 import org.uniprot.urml.facts.ProteinAnnotation;
@@ -35,6 +37,7 @@ import org.uniprot.urml.facts.ProteinAnnotation;
  */
 public class AnnotationXMLWriter implements FactSetWriter<ProteinAnnotation> {
 
+    private static final Logger logger = LoggerFactory.getLogger(AnnotationXMLWriter.class);
     private final URMLWriter<FactSet, Fact> urmlFactWriter;
 
     public AnnotationXMLWriter(OutputStream outputStream) {
@@ -70,7 +73,7 @@ public class AnnotationXMLWriter implements FactSetWriter<ProteinAnnotation> {
         } catch (XMLStreamException e) {
             throw new IOException(e);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error while closing AnnotationXmlWriter", e);
         }
     }
 }

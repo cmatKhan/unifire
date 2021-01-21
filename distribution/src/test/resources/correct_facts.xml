@@ -188,12 +188,4 @@
     <positionStart>115</positionStart>
     <positionEnd>208</positionEnd>
   </fact>
-  <fact xsi:type="PositionalProteinSignature">
-    <protein>J0U7L2</protein>
-    <signature type="SRHMM">SRHMM000005-1</signature>
-    <frequency>1</frequency>
-    <positionStart>1</positionStart>
-    <positionEnd>208</positionEnd>
-    <alignment>mlmaavlaapafpafsaget----------------PAAPTKAAAK---PDLVKGEASFTAVCAACHGADGNSAIAANPKLSAQHPEYLVKQLQEFKSG---KRNDPVMKGFAMALSDEDMKNIAYWVTAK-AAKPGFAKDKALVSLGERIYRGGIADRQIAACAGCHSPNGAGIPAQYPRLSGQHADYTATQLVAFRDG</alignment>
-  </fact>
 </facts>
