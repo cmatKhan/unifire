@@ -17,21 +17,23 @@
 
 package uk.ac.ebi.uniprot.unifire;
 
-import org.uniprot.urml.facts.*;
 import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLWriter;
 import uk.ac.ebi.uniprot.urml.input.InputType;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetParser;
 import uk.ac.ebi.uniprot.urml.output.xml.IndividualFactWriter;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.uniprot.urml.facts.*;
 
 /**
  * Created by Hermann Zellner on 31/07/2019.
  */
 public class InterProXmlToFactConverter {
+
+    private static final Logger logger = LoggerFactory.getLogger(InterProXmlToFactConverter.class);
 
     public static void main(String[] argv) throws IOException {
         InterProXmlToFactConverter converter = new InterProXmlToFactConverter();
@@ -45,43 +47,16 @@ public class InterProXmlToFactConverter {
             try (URMLWriter<FactSet, Fact> factWriter = new IndividualFactWriter(outputStream)) {
                 while (factSetIterator.hasNext()) {
                     FactSet factSet = factSetIterator.next();
-                    List<Fact> facts = new ArrayList<>(factSet.getFact());
 
-                    PositionalProteinSignature positionalProteinSignature = createPositionalProteinSignatureForJ0U7L2();
-                    facts.add(positionalProteinSignature);
-
-                    for (Fact fact : facts) {
+                    for (Fact fact : factSet.getFact()) {
                         factWriter.writeElementWise(fact);
                     }
                     factWriter.completeWrite();
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Error while converting InterPro-XML to Fact-XML", e);
             }
         }
-    }
-
-    private static PositionalProteinSignature createPositionalProteinSignatureForJ0U7L2() {
-        PositionalProteinSignature positionalProteinSignature = new PositionalProteinSignature();
-        TemplateProtein protein = new TemplateProtein();
-        protein.setId("J0U7L2");
-        positionalProteinSignature.setProtein(protein);
-
-        Signature signature = new Signature();
-        signature.setValue("SRHMM000005-1");
-        signature.setType(SignatureType.SRHMM);
-        positionalProteinSignature.setSignature(signature);
-
-        positionalProteinSignature.setFrequency(1);
-
-        positionalProteinSignature.setPositionStart(1);
-        positionalProteinSignature.setPositionEnd(208);
-
-        SequenceAlignment sequenceAlignment = new SequenceAlignment();
-        sequenceAlignment.setValue("mlmaavlaapafpafsaget----------------PAAPTKAAAK---PDLVKGEASFTAVCAACHGADGNSAIAANPKLSAQHPEYLVKQLQEFKSG---KRNDPVMKGFAMALSDEDMKNIAYWVTAK-AAKPGFAKDKALVSLGERIYRGGIADRQIAACAGCHSPNGAGIPAQYPRLSGQHADYTATQLVAFRDG");
-
-        positionalProteinSignature.setAlignment(sequenceAlignment);
-        return positionalProteinSignature;
     }
 }
