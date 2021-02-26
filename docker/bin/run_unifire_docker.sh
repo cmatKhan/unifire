@@ -24,7 +24,7 @@ outdir=""
 workdir=""
 cleanworkdir=0
 container_software="docker"
-docker_version="2021.1.1"
+docker_version="2021.2"
 predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 function usage() {
