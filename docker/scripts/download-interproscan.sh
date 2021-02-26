@@ -47,7 +47,7 @@ echo "Done."
 echo "Initializing InerProScan..."
 cd /opt/interproscan
 python3 initial_setup.py
-echo "Done iitializing InterProScan"
+echo "Done initializing InterProScan"
 
 # Clean up tar to reduce the size of the image
 rm -f ${DOWNLOAD_FOLDER}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
