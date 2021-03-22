@@ -31,7 +31,7 @@ get_script_dir () {
 }
 
 # Environment
-JAVA_VERSION_MIN=1.8
+JAVA_VERSION_MIN=11
 SCRIPT_DIR=$(get_script_dir)
 
 # Default values
@@ -44,8 +44,8 @@ function run {
 }
 
 function checkEnv {
-    local VALID_JAVA_VERSION=$(java -version 2>&1 | head -n 1 | sed 's/^.*"\([0-9]\.[0-9]\)\..*"$/\1/g' | awk -v v=${JAVA_VERSION_MIN} '{print ($1 >= v)}')
-    if [ ${VALID_JAVA_VERSION} -eq 0 ]
+    local CURRENT_JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {split($2,a,"."); print a[1]}')
+    if [[ "${CURRENT_JAVA_VERSION}" -lt "${JAVA_VERSION_MIN}" ]]
     then
         >&2 echo "Java version must be >=$JAVA_VERSION_MIN."
         exit 1

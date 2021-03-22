@@ -24,11 +24,29 @@ function backup_file {
     fi
 }
 
+function checkEnv {
+    if ! command -v mvn &> /dev/null
+    then
+      echo "mvn could not be found. Please make sure mvn executable is in your ${PATH}."
+      exit 1
+    fi
+
+    JAVA_VERSION_MIN=11
+    CURRENT_JAVA_VERSION=`mvn -v | grep 'Java version' | awk '{split($3, a, "."); print a[1]}'`
+
+    if [[ "${CURRENT_JAVA_VERSION}" -lt "${JAVA_VERSION_MIN}" ]]
+    then
+        echo "Java version must be >=$JAVA_VERSION_MIN. Please set \$JAVA_HOME to point to a JDK installation of version >= 11"
+        exit 1
+    fi
+}
+
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DISTRIBUTION_DIR="${SCRIPT_DIR}/distribution"
 FTP_SRC="ftp://ftp.ebi.ac.uk/pub/contrib/UniProt/UniFIRE/rules/"
 
+checkEnv
 pushd ${SCRIPT_DIR} > /dev/null
 
 echo "Building UniFIRE and downloading dependencies..."

@@ -29,10 +29,6 @@
 
     <artifactId>unifire-core</artifactId>
 
-    <properties>
-        <reflections.version>0.9.10</reflections.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -67,7 +63,6 @@
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>${reflections.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
@@ -79,30 +74,10 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- CXF plugin - alternative to the JVNET one in case migration to Java 9 is faster -->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.cxf.xjcplugins</groupId>-->
-        <!--<artifactId>cxf-xjc-ts</artifactId>-->
-        <!--<version>3.2.1</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.cxf.xjc-utils</groupId>-->
-        <!--<artifactId>cxf-xjc-runtime</artifactId>-->
-        <!--<version>3.2.1</version>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<groupId>javax.xml.bind</groupId>-->
-        <!--<artifactId>jaxb-api</artifactId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
     </dependencies>
 
     <build>
         <plugins>
-            <!-- TODO: JAXB Maven plugin ; Poor Java 9 support - will be fixed any time soon...
-                 cf: https://github.com/highsource/maven-jaxb2-plugin/issues/120.
-                 Works perfectly for Java 8.-->
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
@@ -137,64 +112,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
-            <!-- TODO: JAXB Maven Plugin - Apparently, CXF has a more active support for Java 9. But get this issue:
-        https://stackoverflow.com/questions/49717155/failed-to-run-custom-xjc-extension-within-cxf-xjc-plugin-on-java-9
-             Works perfectly for Java 8. -->
-            <!--<plugin>-->
-            <!--<groupId>org.apache.cxf</groupId>-->
-            <!--<artifactId>cxf-xjc-plugin</artifactId>-->
-            <!--<version>3.2.1</version>-->
-            <!--<configuration>-->
-            <!--<extensions>-->
-            <!--<extension>org.jvnet.jaxb2_commons:jaxb2-basics:0.7.0</extension>-->
-            <!--<extension>org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.0.4</extension>-->
-            <!--<extension>net.codesup.util:jaxb2-rich-contract-plugin:1.18.0</extension>-->
-            <!--<extension>org.jvnet.jaxb2_commons:jaxb2-default-value:1.1</extension>-->
-            <!--</extensions>-->
-            <!--</configuration>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>generate-sources</id>-->
-            <!--<phase>generate-sources</phase>-->
-            <!--<goals>-->
-            <!--<goal>xsdtojava</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<sourceRoot>${basedir}/target/generated-sources/src/main/java</sourceRoot>-->
-            <!--<xsdOptions>-->
-            <!--<xsdOption>-->
-            <!--<extension>true</extension>-->
-            <!--<xsdDir>${project.basedir}/src/main/resources/schemas/xsd</xsdDir>-->
-            <!--<bindingFile>${project.basedir}/src/main/resources/schemas/bindings/urml-bindings.xjb</bindingFile>-->
-            <!--<extensionArgs>-->
-            <!--<extensionArg>-XtoString</extensionArg>-->
-            <!--<extensionArg>-Xequals</extensionArg>-->
-            <!--<extensionArg>-XhashCode</extensionArg>-->
-            <!--<extensionArg>-Xannotate</extensionArg>-->
-            <!--<extensionArg>-Xsetters</extensionArg>-->
-            <!--<extensionArg>-Xinheritance</extensionArg>-->
-            <!--<extensionArg>-Xfluent-builder</extensionArg>-->
-            <!--<extensionArg>-enableIntrospection</extensionArg>-->
-            <!--<extensionArg>-Xdefault-value</extensionArg>-->
-            <!--</extensionArgs>-->
-            <!--</xsdOption>-->
-            <!--</xsdOptions>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>javax.activation</groupId>-->
-            <!--<artifactId>activation</artifactId>-->
-            <!--<version>1.1.1</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-            <!--<groupId>org.jvnet.jaxb2_commons</groupId>-->
-            <!--<artifactId>jaxb2-basics</artifactId>-->
-            <!--<version>${jaxb2-basics.version}</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
