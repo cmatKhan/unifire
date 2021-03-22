@@ -19,7 +19,8 @@
 UNIFIRE_REPO="/opt/git/unifire"
 INTERPROSCAN_REPO="/opt/interproscan"
 ETE3FOLDER="/opt/ete3"
-
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH="${JAVA_HOME}/bin:${PATH}"
 VOLUME=/volume
 infilename=infile.fasta
 
@@ -30,7 +31,7 @@ ${INTERPROSCAN_REPO}/interproscan.sh -f xml -dp -i ${VOLUME}/proteins_lineage.fa
     --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY" \
     -o ${VOLUME}/proteins_lineage-ipr.xml
 
-PATH="/usr/lib/jvm/java-8-openjdk-amd64/bin:${PATH}"
+
 ${UNIFIRE_REPO}/distribution/bin/pirsr.sh -i ${VOLUME}/proteins_lineage-ipr.xml \
     -o ${VOLUME} -a /usr/bin/hmmalign -d ${UNIFIRE_REPO}/samples/pirsr_data
 

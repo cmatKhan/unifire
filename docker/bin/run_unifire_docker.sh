@@ -24,7 +24,7 @@ outdir=""
 workdir=""
 cleanworkdir=0
 container_software="docker"
-docker_version="2021.2"
+docker_version="2021.2.1"
 predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 function usage() {
@@ -95,7 +95,7 @@ function check_outdir() {
       mkdir -p ${outdir}
        if [[ $? == 0 ]]
       then
-        echo "Successfullt created output directory ${outdir}."
+        echo "Successfully created output directory ${outdir}."
       else
         echo "Failed to create output directory ${outdir}."
         usage
@@ -118,7 +118,7 @@ function check_workdir() {
       mkdir -p ${workdir}
       if [[ $? == 0 ]]
       then
-        echo "Successfullt created working directory ${workdir}"
+        echo "Successfully created working directory ${workdir}"
       else
         usemktmp=1
         echo "Failed to create working directory ${workdir}. Creating temporary directory."

@@ -25,7 +25,7 @@ This documentation uses scripts and sample data which are provided by the UniFIR
  make sure you have checked out a local copy of UniFIRE Gitlab repository. This is done by the
  command below, which requires git to be installed on your system:
 ```
-$ git clone https://gitlab.ebi.ac.uk/uniprot-public/unifire.git
+git clone https://gitlab.ebi.ac.uk/uniprot-public/unifire.git
 ```
 
 ## 1. Using the Docker image
@@ -170,7 +170,7 @@ Scripts are only provided for Linux and Mac OS.
 
 #### Software
 
-- Java (>=1.8)
+- Java 11 (e.g. OpenJDK 11)
 - Bash
 - Maven (version 3.6.0 has been tested successfully)
 
@@ -179,7 +179,7 @@ In order to build the software and download the latest rules and templates into 
 please execute below command. 
 
 ```
-$ <Path to UniFIRE parent folder>/build.sh
+<Path to UniFIRE parent folder>/build.sh
 ```
 
 Depending on the speed of your internet connection, it will take a few minutes to download all dependencies through 
@@ -196,7 +196,7 @@ We provide some sample files in the [sample](samples) folder to test the softwar
 
 **Example with UniRule rules & InterProScan XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/input_ipr.fasta.xml -t samples/unirule-templates-latest.xml -o output_unirule_annotations.csv
+./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/input_ipr.fasta.xml -t samples/unirule-templates-latest.xml -o output_unirule_annotations.csv
 ```
 
 *Note: To be able to predict the UniRule positional annotations, a template file is provided (`samples/unirule-templates-2018_05.xml`) (optional.)*
@@ -204,7 +204,7 @@ $ ./distribution/bin/unifire.sh -r samples/unirule-urml-latest.xml -i samples/in
 
 **Example with ARBA rules & Fact XML input:**
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/arba-urml-latest.xml -i samples/input_facts.xml -s XML -o output_arba_annotations.csv
+./distribution/bin/unifire.sh -r samples/arba-urml-latest.xml -i samples/input_facts.xml -s XML -o output_arba_annotations.csv
 ```
 <br/>
 
@@ -215,7 +215,7 @@ In order to use UniRule-PIRSR rules to annotate protein input data, alignments o
   installation of the executable *hmmalign*. With Ubuntu 18.04 *hmmeralign* can be installed at /usr/bin/hmmalign
    by the command below:
 ``` bash 
-$ sudo apt-get install hmmer
+sudo apt-get install hmmer
 ```
 As an alternative, *hmmer* source code can be downloaded from the http://hmmer.org/. In the example below we
  assume hmmalign binary is available at this path on the filesystem: /usr/bin/hmmalign
@@ -224,11 +224,11 @@ Running UniRule-PIRSR rules is a two step process:
 First, calculate the alignment(s) of your protein(s) against all SRHMM signatures, combine data from the input in
  InterProScan XML format with these alignments and write the output to the Fact XML file PIRSR-input-iprscan-urml.xml:   
 ``` bash
-$ ./distribution/bin/pirsr.sh -i ./samples/pirsr_data/PIRSR-input-iprscan.xml -o . -a /usr/bin/hmmalign -d ./samples/pirsr_data
+./distribution/bin/pirsr.sh -i ./samples/pirsr_data/PIRSR-input-iprscan.xml -o . -a /usr/bin/hmmalign -d ./samples/pirsr_data
 ```
 Second run UniFIRE with UniRule-PIRSR rules and PIRSR-templates on the protein data in PIRSR-input-iprscan-urml.xml:
 ``` bash
-$ ./distribution/bin/unifire.sh -r samples/unirule.pirsr-urml-latest.xml  -i ./PIRSR-input-iprscan-urml.xml -s XML -t samples/pirsr_data/PIRSR_templates.xml -o ./pirsr_unifire_annotation.csv
+./distribution/bin/unifire.sh -r samples/unirule.pirsr-urml-latest.xml  -i ./PIRSR-input-iprscan-urml.xml -s XML -t samples/pirsr_data/PIRSR_templates.xml -o ./pirsr_unifire_annotation.csv
 ```
 
 _Note_: With all rule systems, it is possible that a protein gets the exact same annotation from different rules due
@@ -341,7 +341,7 @@ Having the full lineage is necessary for the majority of the rules to be execute
 If you want to ensure the headers are in the correct format, you can run the following script:
 
 ``` bash
-$ ./distribution/bin/fasta-header-validator.sh multifasta_sequences.fasta
+./distribution/bin/fasta-header-validator.sh multifasta_sequences.fasta
 ```
 
 You will get an error message if at least one sequence's header is invalid.
@@ -416,12 +416,17 @@ The corresponding Java classes are built in the [core](core) module under the pa
 #### Requirement
 
 - Maven (>= 3.0)
-- Java (=1.8 required, cf. limitations)
+- Java (>=11 required, cf. limitations)
 
+Please make sure your JAVA_HOME environment variable points to the root folder of your JDK 11 installation, e.g.
+
+```
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+```
 #### Command
 
 ``` bash
-$ ./build.sh
+./build.sh
 ```
 
 This script is installing some libraries in your local maven repository (temporary solution before publishing the artifacts on a public repository).

@@ -34,32 +34,34 @@
     </modules>
 
     <properties>
-        <uniprot-dependencies.version>2019.6</uniprot-dependencies.version>
+        <uniprot-dependencies.version>1.0</uniprot-dependencies.version>
         <logback.version>1.1.7</logback.version>
         <commons-collections.version>3.2</commons-collections.version>
-        <commons-lang.version>3.7</commons-lang.version>
-        <mockito.version>1.9.5</mockito.version>
-        <hamcrest.version>1.3</hamcrest.version>
+        <commons-lang.version>3.11</commons-lang.version>
+        <mockito.version>3.6.0</mockito.version>
+        <hamcrest.version>2.2</hamcrest.version>
         <guava.version>23.0</guava.version>
         <slf4j.version>1.7.25</slf4j.version>
         <junit.version>5.5.2</junit.version>
-        <maven-jaxb.version>0.13.3</maven-jaxb.version>
+        <maven-jaxb.version>0.14.0</maven-jaxb.version>
         <javax-activation.version>1.1</javax-activation.version>
         <jaxb.version>2.3.0</jaxb.version>
         <jaxb2-basics.version>0.7.0</jaxb2-basics.version>
         <jaxb-basics-annotate.version>1.0.4</jaxb-basics-annotate.version>
         <jaxb-default-value.version>1.1</jaxb-default-value.version>
         <jaxb-rich-contract.version>1.18.0</jaxb-rich-contract.version>
+        <jaxb2-rich-contract-plugin.version>2.0.1</jaxb2-rich-contract-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
-        <maven-failsafe-version>2.22.1</maven-failsafe-version>
+        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-failsafe-version>3.0.0-M3</maven-failsafe-version>
         <maven.source.version>3.0.1</maven.source.version>
         <junit-platform-surefire-provider.version>1.2.0</junit-platform-surefire-provider.version>
         <junit.runner.version>1.2.0</junit.runner.version>
         <junit-platform-surefire.version>1.3.2</junit-platform-surefire.version>
-        <jacoco.maven.version>0.8.1</jacoco.maven.version>
+        <jacoco.maven.version>0.8.5</jacoco.maven.version>
         <xmlunit.core.version>2.6.3</xmlunit.core.version>
         <xmlunit.matchers.version>2.6.3</xmlunit.matchers.version>
+        <reflections.version>0.9.10</reflections.version>
 
         <!-- Test coverage -->
         <jacoco.outputDir>${project.build.directory}</jacoco.outputDir>
@@ -80,12 +82,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>${hamcrest.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -116,8 +112,20 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -192,6 +200,11 @@
                 <version>${javax-activation.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.junit.platform</groupId>
                 <artifactId>junit-platform-runner</artifactId>
                 <version>${junit.runner.version}</version>
@@ -221,7 +234,7 @@
 
             <dependency>
                 <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
+                <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -251,18 +264,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.junit.platform</groupId>
-                            <artifactId>junit-platform-surefire-provider</artifactId>
-                            <version>${junit-platform-surefire.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.junit.jupiter</groupId>
-                            <artifactId>junit-jupiter-engine</artifactId>
-                            <version>${junit.version}</version>
-                        </dependency>
-                    </dependencies>
                     <configuration>
                         <systemProperties>
                             <property>
@@ -281,6 +282,15 @@
                     <groupId>org.jvnet.jaxb2.maven2</groupId>
                     <artifactId>maven-jaxb2-plugin</artifactId>
                     <version>${maven-jaxb.version}</version>
+                    <configuration>
+                        <plugins>
+                            <plugin>
+                                <groupId>net.codesup.util</groupId>
+                                <artifactId>jaxb2-rich-contract-plugin</artifactId>
+                                <version>${jaxb2-rich-contract-plugin.version}</version>
+                            </plugin>
+                        </plugins>
+                    </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>org.jvnet.jaxb2_commons</groupId>
@@ -296,11 +306,6 @@
                             <groupId>org.jvnet.jaxb2_commons</groupId>
                             <artifactId>jaxb2-basics</artifactId>
                             <version>${jaxb2-basics.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>net.codesup.util</groupId>
-                            <artifactId>jaxb2-rich-contract-plugin</artifactId>
-                            <version>${jaxb-rich-contract.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -332,10 +337,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                   <release>11</release>
                 </configuration>
             </plugin>
             <plugin>

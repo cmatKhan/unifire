@@ -44,7 +44,7 @@ tar -pxzf ${DOWNLOAD_FOLDER}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
 ln -s interproscan-5.48-83.0 interproscan
 echo "Done."
 
-echo "Initializing InerProScan..."
+echo "Initializing InterProScan..."
 cd /opt/interproscan
 python3 initial_setup.py
 echo "Done initializing InterProScan"
