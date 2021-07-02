@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package uk.ac.ebi.uniprot.urml.input.parsers.facts.xml;
+package uk.ac.ebi.uniprot.urml.input.parsers.xml.facts;
 
 import uk.ac.ebi.uniprot.urml.core.xml.readers.URMLFactReader;
 import uk.ac.ebi.uniprot.urml.input.collections.ProteinFactSetAggregator;

@@ -17,9 +17,9 @@
 package uk.ac.ebi.uniprot.urml.input.parsers;
 
 import uk.ac.ebi.uniprot.urml.input.InputType;
-import uk.ac.ebi.uniprot.urml.input.parsers.facts.xml.FactXmlParser;
-import uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml.InterProXmlProteinParser;
-import uk.ac.ebi.uniprot.urml.input.parsers.uniparc.xml.UniParcXmlParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.facts.FactXmlParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.uniparc.UniParcXmlParser;
 
 import java.io.IOException;
 import java.io.InputStream;

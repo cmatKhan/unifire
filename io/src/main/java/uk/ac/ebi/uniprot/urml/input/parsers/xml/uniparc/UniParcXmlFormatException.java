@@ -14,28 +14,28 @@
  *  limitations under the License.
  */
 
-package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
+package uk.ac.ebi.uniprot.urml.input.parsers.xml.uniparc;
 
 /**
- * Exception raised when the InterProScan format is incorrect or an important information is missing.
+ * Exception raised when the UniParc format is incorrect or an important information is missing.
  *
  * @author Alexandre Renaux
  */
-public class InterProScanXmlFormatException extends RuntimeException {
+public class UniParcXmlFormatException extends RuntimeException {
 
-    public InterProScanXmlFormatException(String message) {
+    public UniParcXmlFormatException(String message) {
         super(message);
     }
 
-    public InterProScanXmlFormatException(String message, Throwable cause) {
+    public UniParcXmlFormatException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public InterProScanXmlFormatException(Throwable cause) {
+    public UniParcXmlFormatException(Throwable cause) {
         super(cause);
     }
 
-    protected InterProScanXmlFormatException(String message, Throwable cause, boolean enableSuppression,
+    public UniParcXmlFormatException(String message, Throwable cause, boolean enableSuppression,
             boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }

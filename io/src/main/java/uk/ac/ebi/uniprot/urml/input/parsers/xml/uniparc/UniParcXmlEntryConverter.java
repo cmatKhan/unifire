@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package uk.ac.ebi.uniprot.urml.input.parsers.uniparc.xml;
+package uk.ac.ebi.uniprot.urml.input.parsers.xml.uniparc;
 
 import com.google.common.base.Splitter;
 import com.google.common.primitives.Ints;
@@ -33,7 +33,7 @@ import org.uniprot.urml.facts.*;
  */
 public class UniParcXmlEntryConverter implements Iterator<FactSet> {
 
-    private final static Logger logger = LoggerFactory.getLogger(UniParcXmlEntryConverter.class);
+    private static final Logger logger = LoggerFactory.getLogger(UniParcXmlEntryConverter.class);
     private final Iterator<Entry> sourceIterator;
     private final Map<String, Organism> organismMap;
 

@@ -14,43 +14,39 @@
  *  limitations under the License.
  */
 
-package uk.ac.ebi.uniprot.urml.input.parsers.uniparc.xml;
+package uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro;
 
+import uk.ac.ebi.interpro.scan.model.ProteinMatchesHolder;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetParser;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import javax.xml.bind.JAXBException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.uniprot.uniparc.Uniparc;
 import org.uniprot.urml.facts.FactSet;
 
 /**
- * Parses the UniParc XML and provides an iterator of {@link FactSet}
+ * Parses the InterProScan XML output and provides an iterator of {@link FactSet}
  *
  * @author Alexandre Renaux
  */
-public class UniParcXmlParser implements FactSetParser {
+public class InterProXmlProteinParser implements FactSetParser {
 
-    private final static Logger logger = LoggerFactory.getLogger(UniParcXmlParser.class);
+    private final InterProScanXmlOutputUnmarshaller interProXMLUnmarshaller;
 
-    private final UniParcXmlUnmarshaller uniparcXmlUnmarshaller;
-
-    public UniParcXmlParser() {
-        this.uniparcXmlUnmarshaller = new UniParcXmlUnmarshaller();
+    public InterProXmlProteinParser() {
+        this.interProXMLUnmarshaller = new InterProScanXmlOutputUnmarshaller();
     }
 
     public Iterator<FactSet> parse(InputStream inputStream) throws IOException {
-        Uniparc uniparcEntries;
+        ProteinMatchesHolder proteinMatches;
         try {
-            uniparcEntries = uniparcXmlUnmarshaller.read(inputStream);
+            proteinMatches = interProXMLUnmarshaller.read(inputStream);
         } catch (JAXBException e) {
             throw new IOException("Cannot parse the input source", e);
         }
 
-        return new UniParcXmlEntryConverter(uniparcEntries);
+        return new InterProXmlProteinConverter(proteinMatches);
     }
 
 }

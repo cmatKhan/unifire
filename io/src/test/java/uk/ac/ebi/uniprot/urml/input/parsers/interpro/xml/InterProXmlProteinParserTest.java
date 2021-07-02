@@ -16,6 +16,8 @@
 
 package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
 
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinParser;
+
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Iterator;

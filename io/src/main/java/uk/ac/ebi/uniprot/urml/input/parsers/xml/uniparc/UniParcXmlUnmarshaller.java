@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
+package uk.ac.ebi.uniprot.urml.input.parsers.xml.uniparc;
 
-import uk.ac.ebi.interpro.scan.model.ProteinMatchesHolder;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.JAXBContextInitializationException;
 
 import java.io.IOException;
@@ -26,32 +25,33 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.uniprot.uniparc.Uniparc;
 
 /**
- * Unmarshalls the InterProScan output XML using the interpro schema model (cf. {@link uk.ac.ebi.interpro.scan.model})
+ * Unmarshalls the UniParc XML using the UniParc schema model (cf. {@link org.uniprot.uniparc})
  *
  * @author Alexandre Renaux
  */
-public class InterProScanXmlOutputUnmarshaller {
+public class UniParcXmlUnmarshaller {
 
-    private final Logger logger = LoggerFactory.getLogger(InterProScanXmlOutputUnmarshaller.class);
+    private final Logger logger = LoggerFactory.getLogger(UniParcXmlUnmarshaller.class);
 
     private Unmarshaller unmarshaller;
 
-    public InterProScanXmlOutputUnmarshaller() {
+    public UniParcXmlUnmarshaller() {
         try {
-            JAXBContext context = JAXBContext.newInstance(ProteinMatchesHolder.class);
+            JAXBContext context = JAXBContext.newInstance(Uniparc.class);
             unmarshaller = context.createUnmarshaller();
         } catch (JAXBException e){
             throw new JAXBContextInitializationException("Cannot initialize "+this.getClass().getSimpleName(), e);
         }
     }
 
-    public ProteinMatchesHolder read(InputStream inputStream) throws JAXBException, IOException {
+    public Uniparc read(InputStream inputStream) throws JAXBException, IOException {
         if (inputStream == null){
             throw new IOException("Null input stream");
         }
-        return ((ProteinMatchesHolder) unmarshaller.unmarshal(inputStream));
+        return ((Uniparc) unmarshaller.unmarshal(inputStream));
     }
 
 

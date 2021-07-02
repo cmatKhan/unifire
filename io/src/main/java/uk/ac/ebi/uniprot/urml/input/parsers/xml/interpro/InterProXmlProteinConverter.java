@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
+package uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro;
 
 import uk.ac.ebi.interpro.scan.model.Protein;
 import uk.ac.ebi.interpro.scan.model.*;
@@ -44,7 +44,11 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
 
 
     public InterProXmlProteinConverter(ProteinMatchesHolder proteinMatches){
-        this.sourceIterator = proteinMatches.getProteins().iterator();
+        this(proteinMatches.getProteins());
+    }
+
+    public InterProXmlProteinConverter(Collection<Protein> proteins) {
+        this.sourceIterator = proteins.iterator();
         this.organismMap = new HashMap<>();
         this.uniProtFastaHeaderParser = new FastaHeaderParser();
         this.factSetQueue = new LinkedList<>();
