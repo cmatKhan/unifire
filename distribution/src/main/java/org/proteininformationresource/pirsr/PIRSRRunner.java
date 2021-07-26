@@ -20,6 +20,7 @@ package org.proteininformationresource.pirsr;
 import uk.ac.ebi.uniprot.urml.core.utils.FactMerger;
 import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLFactWriter;
 import uk.ac.ebi.uniprot.urml.input.InputType;
+import uk.ac.ebi.uniprot.urml.input.parsers.FactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetParser;
 
 import java.io.*;
@@ -84,16 +85,19 @@ public class PIRSRRunner {
 				OutputStream outputStream = new FileOutputStream(this.outputDirectory + "/" + outFile);
 				URMLFactWriter factWriter = new URMLFactWriter(outputStream)) {
 
-			Iterator<FactSet> factSetIterator = FactSetParser.of(inputType).parse(factInputStream);
 			FactMerger factMerger = new FactMerger();
-			FactSet updatedFactSet = new FactSet();
-			logger.info("Merging facts...");
-			updatedFactSet.setFact(factMerger.merge(factSetIterator, matchedProteinFacts));
-			logger.info("Done merging facts. In total we have {} facts.", updatedFactSet.getFact().size());
+			FactSetChunkParser parser = FactSetChunkParser.of(inputType, factInputStream);
+			while (parser.hasNext()) {
+				Iterator<FactSet> factSetIterator = parser.nextChunk();
+				FactSet updatedFactSet = new FactSet();
+				logger.info("Merging facts...");
+				updatedFactSet.setFact(factMerger.merge(factSetIterator, matchedProteinFacts));
+				logger.info("Done merging facts. In total we have {} facts.", updatedFactSet.getFact().size());
 
-			logger.info("Writing facts...");
-			factWriter.write(updatedFactSet);
-			logger.info("Done writing facts.");
+				logger.info("Writing facts...");
+				factWriter.write(updatedFactSet);
+				logger.info("Done writing facts.");
+			}
 		}
 		catch (IOException | JAXBException | XMLStreamException e) {
 			logger.error(e.getMessage());

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018 European Molecular Biology Laboratory
+ *  Copyright (c) 2021 European Molecular Biology Laboratory
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,41 +16,122 @@
 
 package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
 
-import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinChunkParser;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
 import org.uniprot.urml.facts.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-/**
- * Unit tests for {@link InterProXmlProteinParser}
- *
- * @author Alexandre Renaux
- */
-public class InterProXmlProteinParserTest {
+public class InterProXmlProteinChunkParserTest {
 
     private static final String BASE_PATH = "/samples/interpro.xml/";
 
     @Test
-    public void parseOneProteinOneXref() throws Exception {
+    public void parseOneProteinOneXrefChunkParser() throws Exception {
         Iterator<FactSet> parsedFactSet;
         try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_matches.xml")) {
-            InterProXmlProteinParser interProXmlProteinParser = new InterProXmlProteinParser();
-            parsedFactSet = interProXmlProteinParser.parse(interproXmlIS);
+            InterProXmlProteinChunkParser interProXmlChunkProteinParser = new InterProXmlProteinChunkParser(interproXmlIS);
+            assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(true));
+            parsedFactSet = interProXmlChunkProteinParser.nextChunk();
+            assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(false));
         }
 
-        ConvertedInterProDataChecker checker = new ConvertedInterProDataChecker() {
+        ConvertedInterProDataChecker checker = createCheckerForOneProteinOneXref();
+
+        int proteinCounter = 0;
+        while (parsedFactSet.hasNext()) {
+            FactSet factSet = parsedFactSet.next();
+            for (Fact fact : factSet.getFact()) {
+                if (fact instanceof Protein) {
+                    ++proteinCounter;
+                }
+            }
+            checker.check(factSet);
+        }
+        assertThat(proteinCounter, Is.is(1));
+    }
+
+    @Test
+    public void parseOneProteinTwoXrefsChunkParser() throws Exception {
+        Iterator<FactSet> parsedFactSet;
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_two_xrefs.xml")) {
+            InterProXmlProteinChunkParser interProXmlChunkProteinParser =
+                    new InterProXmlProteinChunkParser(interproXmlIS);
+            assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(true));
+            parsedFactSet = interProXmlChunkProteinParser.nextChunk();
+            assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(false));
+        }
+
+        ConvertedInterProDataChecker checker = createCheckerForOneProteinTwoXrefs();
+
+        int proteinCounter = 0;
+        while (parsedFactSet.hasNext()) {
+            FactSet factSet = parsedFactSet.next();
+            for (Fact fact : factSet.getFact()) {
+                if (fact instanceof Protein) {
+                    ++proteinCounter;
+                }
+            }
+            checker.check(factSet);
+        }
+        assertThat(proteinCounter, Is.is(2));
+    }
+
+    @Test
+    public void test() throws IOException, XMLStreamException, JAXBException {
+        Iterator<FactSet> parsedFactSet;
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"UP000307542-ipr-100.xml")) {
+
+            InterProXmlProteinChunkParser interProXmlChunkProteinParser =
+                    new InterProXmlProteinChunkParser(interproXmlIS, 10);
+
+            int i=0;
+            while (interProXmlChunkProteinParser.hasNext()) {
+                parsedFactSet = interProXmlChunkProteinParser.nextChunk();
+                System.out.println("Chunk : " + ++i);
+                //ToDo
+                assertFalse(true);
+            }
+        }
+    }
+
+
+
+    @Test
+    public void oneProteinMatches() throws IOException, XMLStreamException, JAXBException {
+        try (InputStream inputStream = getClass().getResourceAsStream(BASE_PATH + "one_protein_matches.xml")) {
+            InterProXmlProteinChunkParser interProXmlProteinChunkParser =
+                    new InterProXmlProteinChunkParser(inputStream);
+
+            assertThat(interProXmlProteinChunkParser.hasNext(), is(true));
+            Iterator<FactSet> facts = interProXmlProteinChunkParser.nextChunk();
+            assertThat(interProXmlProteinChunkParser.hasNext(), is(false));
+            assertThat(facts.hasNext(), is(true));
+
+            ConvertedInterProDataChecker checker = createCheckerForOneProteinOneXref();
+            checker.check(facts.next());
+
+            assertThat(facts.hasNext(), is(false));
+        }
+    }
+
+    private ConvertedInterProDataChecker createCheckerForOneProteinOneXref() {
+        return new ConvertedInterProDataChecker() {
             protected int expectedNumberOfProteins() {
                 return 1;
             }
@@ -68,50 +149,34 @@ public class InterProXmlProteinParserTest {
 
             protected void checkOrganism(Organism organism) {
                 assertTrue(organism.isSetId());
-                assertThat(organism.getLineage().getIds(), containsInAnyOrder(1,131567,2,1783257,74201,203494,48461,203557,2735,2736,240016));
+                assertThat(organism.getLineage().getIds(),
+                        containsInAnyOrder(1, 131567, 2, 1783257, 74201, 203494, 48461, 203557, 2735, 2736,
+                                240016));
                 assertThat(organism.getScientificName(), equalTo("Verrucomicrobium spinosum DSM 4136"));
             }
 
             protected void checkProteinSignature(ProteinSignature proteinSignature) {
                 assertTrue(proteinSignature.isSetSignature() && proteinSignature.getSignature().isSetValue());
-                switch (proteinSignature.getSignature().getValue()){
-                    case "PF01370": case "IPR001509":
+                switch (proteinSignature.getSignature().getValue()) {
+                    case "PF01370":
+                    case "IPR001509":
                         checkInterProSignatureType(proteinSignature, SignatureType.PFAM);
                         assertThat(proteinSignature.getFrequency(), equalTo(1));
                         break;
-                    case "MF_00956":case "IPR028614":
+                    case "MF_00956":
+                    case "IPR028614":
                         checkInterProSignatureType(proteinSignature, SignatureType.HAMAP);
                         assertThat(proteinSignature.getFrequency(), equalTo(1));
                         break;
                     default:
-                        fail("Unexpected protein signature"+proteinSignature);
+                        fail("Unexpected protein signature" + proteinSignature);
                 }
             }
-
         };
-
-        int proteinCounter = 0;
-        while (parsedFactSet.hasNext()) {
-            FactSet factSet = parsedFactSet.next();
-            for (Fact fact : factSet.getFact()) {
-                if (fact instanceof Protein) {
-                    ++proteinCounter;
-                }
-            }
-            checker.check(factSet);
-        }
-        assertThat(proteinCounter, is(1));
     }
 
-    @Test
-    public void parseOneProteinTwoXrefs() throws Exception {
-        Iterator<FactSet> parsedFactSet;
-        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_two_xrefs.xml")) {
-            InterProXmlProteinParser interProXmlProteinParser = new InterProXmlProteinParser();
-            parsedFactSet = interProXmlProteinParser.parse(interproXmlIS);
-        }
-
-        ConvertedInterProDataChecker checker = new ConvertedInterProDataChecker() {
+    private ConvertedInterProDataChecker createCheckerForOneProteinTwoXrefs() {
+        return new ConvertedInterProDataChecker() {
             private List<String> expectedProteinNames = Arrays.asList(
                     // We have 4 signature matches for each protein, so the protein name is checked 5 times: once for
                     // ProteinFact and 4 times for ProteinSignatures
@@ -161,18 +226,5 @@ public class InterProXmlProteinParserTest {
             }
 
         };
-
-        int proteinCounter = 0;
-        while (parsedFactSet.hasNext()) {
-            FactSet factSet = parsedFactSet.next();
-            for (Fact fact : factSet.getFact()) {
-                if (fact instanceof Protein) {
-                    ++proteinCounter;
-                }
-            }
-            checker.check(factSet);
-        }
-        assertThat(proteinCounter, is(2));
     }
-
 }
