@@ -16,18 +16,20 @@
 
 package uk.ac.ebi.uniprot.unifire;
 
-import com.google.common.base.Strings;
-import org.apache.commons.cli.*;
-import org.drools.core.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.ebi.uniprot.urml.core.utils.SelectorEnum;
 import uk.ac.ebi.uniprot.urml.input.InputType;
 import uk.ac.ebi.uniprot.urml.output.OutputFormat;
 
+import com.google.common.base.Strings;
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.function.Function;
+import org.apache.commons.cli.*;
+import org.drools.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.google.common.primitives.Booleans.trueFirst;
 import static java.lang.System.exit;
@@ -48,6 +50,8 @@ public class UniFireApp {
     private static final String USAGE_SEPARATOR = StringUtils.repeat("-", 44);
 
     public static void main(String[] args) throws Exception {
+        disableAccessWarnings();
+
         Options options = new Options();
 
         Option ruleFileOption = Option.builder("r").longOpt("rules").hasArg().argName("RULE_URML_FILE").desc("Rule base file (path) provided by UniProt (e.g UniRule or ARBA) (format: URML).").type(File.class).required().build();
@@ -160,5 +164,22 @@ public class UniFireApp {
         }
         stringBuilder.append("(default: ").append(defaultValue.getCode()).append(")");
         return stringBuilder.toString();
+    }
+
+    public static void disableAccessWarnings() {
+        try {
+            Class unsafeClass = Class.forName("sun.misc.Unsafe");
+            Field field = unsafeClass.getDeclaredField("theUnsafe");
+            field.setAccessible(true);
+            Object unsafe = field.get((Object)null);
+            Method putObjectVolatile = unsafeClass.getDeclaredMethod("putObjectVolatile", Object.class, Long.TYPE, Object.class);
+            Method staticFieldOffset = unsafeClass.getDeclaredMethod("staticFieldOffset", Field.class);
+            Class loggerClass = Class.forName("jdk.internal.module.IllegalAccessLogger");
+            Field loggerField = loggerClass.getDeclaredField("logger");
+            Long offset = (Long)staticFieldOffset.invoke(unsafe, loggerField);
+            putObjectVolatile.invoke(unsafe, loggerClass, offset, null);
+        } catch (Exception var8) {
+        }
+
     }
 }

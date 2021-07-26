@@ -34,6 +34,8 @@ import org.uniprot.urml.facts.PositionalMapping;
  */
 public class PositionalMapper {
 
+    private PositionalMapper(){}
+
     private static final Logger logger = LoggerFactory.getLogger(PositionalMapper.class);
 
     public static void map(PositionalMapping positionalMapping){
@@ -50,7 +52,11 @@ public class PositionalMapper {
             positionalMapping.setMappedSequence(sequenceRange.extractSubstring(positionalMapping.getProtein().getSequence().getValue()));
             positionalMapping.setIsMapped(true);
             positionalMapping.setIsValid(true);
-        } catch (PositionalFeatureMappingException | ReplacementResolverException | InvalidPositionalMappingDataException e) {
+        }
+        catch (PositionalFeatureMappingException e) {
+            logger.debug(e.getMessage());
+        }
+        catch (ReplacementResolverException | InvalidPositionalMappingDataException e) {
             positionalMapping.setIsMapped(true);
             positionalMapping.setIsValid(false);
             logger.warn(e.getMessage());
