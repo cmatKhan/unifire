@@ -17,14 +17,18 @@
 package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
 
 import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinChunkParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinParser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.StreamSupport;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
 import org.uniprot.urml.facts.*;
@@ -93,21 +97,33 @@ public class InterProXmlProteinChunkParserTest {
     }
 
     @Test
-    public void test() throws IOException, XMLStreamException, JAXBException {
-        Iterator<FactSet> parsedFactSet;
+    public void sameResultAsInterProXmlProteinParser() throws IOException, XMLStreamException, JAXBException {
+        List<Fact> factsFromChunkParser = new ArrayList<>();
         try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"UP000307542-ipr-100.xml")) {
-
             InterProXmlProteinChunkParser interProXmlChunkProteinParser =
                     new InterProXmlProteinChunkParser(interproXmlIS, 10);
-
-            int i=0;
             while (interProXmlChunkProteinParser.hasNext()) {
-                parsedFactSet = interProXmlChunkProteinParser.nextChunk();
-                System.out.println("Chunk : " + ++i);
-                //ToDo
-                assertFalse(true);
+                Iterator<FactSet> parsedFactSet = interProXmlChunkProteinParser.nextChunk();
+                Iterable<FactSet> iterableFactSet = () -> parsedFactSet;
+
+                StreamSupport.stream(iterableFactSet.spliterator(), false)
+                        .map(FactSet::getFact)
+                        .forEach(factsFromChunkParser::addAll);
             }
         }
+
+        List<Fact> factsFromParser = new ArrayList<>();
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"UP000307542-ipr-100.xml")) {
+            Iterator<FactSet> parsedFactSet = new InterProXmlProteinParser().parse(interproXmlIS);
+            Iterable<FactSet> iterableFactSet = () -> parsedFactSet;
+
+            StreamSupport.stream(iterableFactSet.spliterator(), false)
+                    .map(FactSet::getFact)
+                    .forEach(factsFromParser::addAll);
+        }
+
+        assertThat(factsFromChunkParser.size(), is(factsFromParser.size()));
+        assertThat(factsFromChunkParser, IsIterableContainingInAnyOrder.containsInAnyOrder(factsFromParser.toArray()));
     }
 
 
