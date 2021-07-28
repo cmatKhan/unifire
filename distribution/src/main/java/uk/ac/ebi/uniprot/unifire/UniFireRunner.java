@@ -22,6 +22,7 @@ import uk.ac.ebi.uniprot.urml.engine.common.RuleEngine;
 import uk.ac.ebi.uniprot.urml.engine.common.RuleEngineVendor;
 import uk.ac.ebi.uniprot.urml.engine.common.RuleExecution;
 import uk.ac.ebi.uniprot.urml.input.InputType;
+import uk.ac.ebi.uniprot.urml.input.collections.FactSetPartitioner;
 import uk.ac.ebi.uniprot.urml.input.collections.TemplateProteinSignatureRetriever;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetParser;
@@ -72,9 +73,6 @@ public class UniFireRunner {
 
     public void run() throws IOException, JAXBException {
         try (InputStream factInputStream = new FileInputStream(inputFactFile)){
-            /* Ingest input data & partition them */
-            FactSetChunkParser factSetChunkParser = FactSetChunkParser.of(inputType, factInputStream, inputChunkSize);
-
 
             /* Ingest rules & build rule engine */
             URMLRuleReader urmlRuleReader = new URMLRuleReader();
@@ -88,19 +86,28 @@ public class UniFireRunner {
             RuleExecution ruleExecution = new RuleExecution(factRetriever);
             if (templatesProvided) initTemplateRetriever();
 
+
             /* Execute rules for each partition & output annotations */
             try (FactSetWriter factSetWriter = FactSetWriter.of(new FileOutputStream(outputFactFile), outputFormat)) {
-                while(factSetChunkParser.hasNext()) {
-                    FactSet factSet = mergeFactSets(factSetChunkParser.nextChunk());
-                    ruleEngine.start();
-                    if (templatesProvided) {
-                        templateRetriever.retrieveFor(factSet).forEach(ruleEngine::insert);
+                // URML-FACT input cannot be read chunk-by-chunk, because facts are dependend on each other an
+                // therefore the XML cannot be splitted
+                // e.g. a protein depends on a organism. If the organism-fact is in a different chunk than the
+                // protein, then the protein has no organism.
+                if (InputType.FACT_XML == inputType) {
+                    Iterator<FactSet> factSetIterator = FactSetParser.of(inputType).parse(factInputStream);
+                    FactSetPartitioner factSetPartitioner = new FactSetPartitioner(factSetIterator, inputChunkSize);
+                    factSetPartitioner.forEachRemaining(partition -> {
+                        processFactSet(ruleEngine, ruleExecution, factSetWriter, partition.getFactSet());
+                    });
+                }
+                else {
+                    /* Ingest input data & partition them */
+                    FactSetChunkParser factSetChunkParser =
+                            FactSetChunkParser.of(inputType, factInputStream, inputChunkSize);
+                    while (factSetChunkParser.hasNext()) {
+                        FactSet factSet = mergeFactSets(factSetChunkParser.nextChunk());
+                        processFactSet(ruleEngine, ruleExecution, factSetWriter, factSet);
                     }
-                    logger.info("Fire all rules on {} protein(s)", factSet.getFact().size());
-                    FactSet outputFacts = ruleExecution.apply(ruleEngine, factSet);
-                    logger.info("Write {} prediction(s)", outputFacts.getFact().size());
-                    factSetWriter.write(outputFacts);
-                    ruleEngine.dispose();
                 }
 
             } catch (XMLStreamException e) {
@@ -109,6 +116,19 @@ public class UniFireRunner {
                 ruleEngine.dispose();
             }
         }
+    }
+
+    private void processFactSet(RuleEngine ruleEngine, RuleExecution ruleExecution, FactSetWriter factSetWriter,
+            FactSet factSet) {
+        ruleEngine.start();
+        if (templatesProvided) {
+            templateRetriever.retrieveFor(factSet).forEach(ruleEngine::insert);
+        }
+        logger.info("Fire all rules on {} fact(s)", factSet.getFact().size());
+        FactSet outputFacts = ruleExecution.apply(ruleEngine, factSet);
+        logger.info("Write {} prediction(s)", outputFacts.getFact().size());
+        factSetWriter.write(outputFacts);
+        ruleEngine.dispose();
     }
 
     private FactSet mergeFactSets(Iterator<FactSet> factSetIterator) {

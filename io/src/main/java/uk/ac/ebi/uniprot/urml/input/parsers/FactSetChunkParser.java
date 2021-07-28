@@ -17,7 +17,6 @@
 package uk.ac.ebi.uniprot.urml.input.parsers;
 
 import uk.ac.ebi.uniprot.urml.input.InputType;
-import uk.ac.ebi.uniprot.urml.input.parsers.xml.facts.UrmlXmlFactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlFactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.xml.uniparc.UniParcXmlFactSetChunkParser;
 
@@ -40,7 +39,7 @@ public interface FactSetChunkParser {
         if (chunksize == null ) {
             switch (inputType) {
                 case FACT_XML:
-                    return new UrmlXmlFactSetChunkParser(inputStream);
+                    throw new UnsupportedOperationException("FACT-XML cannot be parsed chunk-by-chunk.");
                 case INTERPROSCAN_XML:
                     return new InterProXmlFactSetChunkParser(inputStream);
                 case UNIPARC_XML:
@@ -52,7 +51,7 @@ public interface FactSetChunkParser {
         else {
             switch (inputType) {
                 case FACT_XML:
-                    return new UrmlXmlFactSetChunkParser(inputStream, chunksize);
+                    throw new UnsupportedOperationException("FACT-XML cannot be parsed chunk-by-chunk.");
                 case INTERPROSCAN_XML:
                     return new InterProXmlFactSetChunkParser(inputStream, chunksize);
                 case UNIPARC_XML:
