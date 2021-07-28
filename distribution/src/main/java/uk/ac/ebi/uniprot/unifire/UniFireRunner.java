@@ -22,7 +22,9 @@ import uk.ac.ebi.uniprot.urml.engine.common.RuleEngine;
 import uk.ac.ebi.uniprot.urml.engine.common.RuleEngineVendor;
 import uk.ac.ebi.uniprot.urml.engine.common.RuleExecution;
 import uk.ac.ebi.uniprot.urml.input.InputType;
+import uk.ac.ebi.uniprot.urml.input.collections.FactSetAggregator;
 import uk.ac.ebi.uniprot.urml.input.collections.FactSetPartitioner;
+import uk.ac.ebi.uniprot.urml.input.collections.ProteinFactSetAggregator;
 import uk.ac.ebi.uniprot.urml.input.collections.TemplateProteinSignatureRetriever;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetParser;
@@ -32,6 +34,7 @@ import uk.ac.ebi.uniprot.urml.procedures.ProcedureRuleInjector;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.stream.StreamSupport;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import org.slf4j.Logger;
@@ -132,10 +135,15 @@ public class UniFireRunner {
     }
 
     private FactSet mergeFactSets(Iterator<FactSet> factSetIterator) {
+        FactSetAggregator factSetAggregator = new ProteinFactSetAggregator();
+        Iterable<FactSet> factSetIterable = () -> factSetIterator;
+        StreamSupport.stream(factSetIterable.spliterator(), false)
+                .flatMap(fs -> fs.getFact().stream())
+                .forEach(factSetAggregator::addFact);
+
         FactSet.Builder<Void> factSetBuilder = FactSet.builder();
-        while (factSetIterator.hasNext()){
-            factSetBuilder.addFact(factSetIterator.next().getFact());
-        }
+        factSetAggregator.getFactSets().forEach( f -> factSetBuilder.addFact(f.getFact()));
+
         return factSetBuilder.build();
     }
 
