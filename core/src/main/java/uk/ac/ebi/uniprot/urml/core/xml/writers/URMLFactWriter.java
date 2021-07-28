@@ -20,10 +20,7 @@ import uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.mappers.FactNamespaceMapper;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -65,7 +62,6 @@ public class URMLFactWriter extends AbstractURMLWriter<FactSet, Fact> {
                 throw new IllegalArgumentException("Error writing fact " + fact, e);
             }
         });
-        completeWrite();
     }
 
     @Override
@@ -87,6 +83,12 @@ public class URMLFactWriter extends AbstractURMLWriter<FactSet, Fact> {
         } catch (JAXBException | RuntimeException e) {
             throw new JAXBException("Cannot marshall fact: " + fact, e);
         }
+    }
+
+    @Override
+    public void close() throws XMLStreamException, IOException {
+        completeWrite();
+        super.close();
     }
 
     @Override

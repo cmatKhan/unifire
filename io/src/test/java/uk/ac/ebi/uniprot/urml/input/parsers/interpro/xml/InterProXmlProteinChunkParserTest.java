@@ -126,26 +126,6 @@ public class InterProXmlProteinChunkParserTest {
         assertThat(factsFromChunkParser, IsIterableContainingInAnyOrder.containsInAnyOrder(factsFromParser.toArray()));
     }
 
-
-
-    @Test
-    public void oneProteinMatches() throws IOException, XMLStreamException, JAXBException {
-        try (InputStream inputStream = getClass().getResourceAsStream(BASE_PATH + "one_protein_matches.xml")) {
-            InterProXmlProteinChunkParser interProXmlProteinChunkParser =
-                    new InterProXmlProteinChunkParser(inputStream);
-
-            assertThat(interProXmlProteinChunkParser.hasNext(), is(true));
-            Iterator<FactSet> facts = interProXmlProteinChunkParser.nextChunk();
-            assertThat(interProXmlProteinChunkParser.hasNext(), is(false));
-            assertThat(facts.hasNext(), is(true));
-
-            ConvertedInterProDataChecker checker = createCheckerForOneProteinOneXref();
-            checker.check(facts.next());
-
-            assertThat(facts.hasNext(), is(false));
-        }
-    }
-
     private ConvertedInterProDataChecker createCheckerForOneProteinOneXref() {
         return new ConvertedInterProDataChecker() {
             protected int expectedNumberOfProteins() {

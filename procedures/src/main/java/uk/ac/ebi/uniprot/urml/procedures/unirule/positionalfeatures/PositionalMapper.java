@@ -54,6 +54,8 @@ public class PositionalMapper {
             positionalMapping.setIsValid(true);
         }
         catch (PositionalFeatureMappingException e) {
+            positionalMapping.setIsMapped(true);
+            positionalMapping.setIsValid(false);
             logger.debug(e.getMessage());
         }
         catch (ReplacementResolverException | InvalidPositionalMappingDataException e) {
