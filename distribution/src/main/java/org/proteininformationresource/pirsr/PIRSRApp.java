@@ -17,6 +17,7 @@
 
 package org.proteininformationresource.pirsr;
 
+import uk.ac.ebi.uniprot.unifire.UniFireApp;
 import uk.ac.ebi.uniprot.urml.core.utils.SelectorEnum;
 import uk.ac.ebi.uniprot.urml.input.InputType;
 
@@ -45,6 +46,8 @@ public class PIRSRApp {
 	private static final String USAGE_SEPARATOR = StringUtils.repeat("-", 100);
 
 	public static void main(String[] args) throws Exception {
+		UniFireApp.disableAccessWarnings();
+		
 		Options options = new Options();
 		Option inputFileOption = Option.builder("i").longOpt("input_file").hasArg().argName("INPUT_FILE")
 				.desc("Input file (path) containing the proteins to annotate and required data in " + DEFAULT_INPUT_TYPE.getDescription() + " format.")
