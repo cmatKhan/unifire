@@ -80,6 +80,7 @@ public class PIRSRRunner {
 
 	private void addPositionalProteinSignature(List<PositionalProteinSignature> matchedProteinFacts) {
 
+		logger.info("Merging PIRSR alignments and writing URML Facts file...");
 		String outFile = this.inputFactFile.getName().replaceAll("(?i).xml$", "-urml.xml");
 		try (InputStream factInputStream = new FileInputStream(this.inputFactFile);
 				OutputStream outputStream = new FileOutputStream(this.outputDirectory + "/" + outFile);
@@ -90,18 +91,15 @@ public class PIRSRRunner {
 			while (parser.hasNext()) {
 				Iterator<FactSet> factSetIterator = parser.nextChunk();
 				FactSet updatedFactSet = new FactSet();
-				logger.info("Merging facts...");
 				updatedFactSet.setFact(factMerger.merge(factSetIterator, matchedProteinFacts));
-				logger.info("Done merging facts. In total we have {} facts.", updatedFactSet.getFact().size());
 
-				logger.info("Writing facts...");
 				factWriter.write(updatedFactSet);
-				logger.info("Done writing facts.");
 			}
 		}
 		catch (IOException | JAXBException | XMLStreamException e) {
 			logger.error(e.getMessage());
 		}
+		logger.info("Done Merging and writing URML Facts file");
 	}
 
 	private Map<Protein, Set<PIRSR>> getTriggerProteins(Map<String, Set<PIRSR>> pirsrTriggerMap)
