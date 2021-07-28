@@ -50,7 +50,7 @@ public class UniParcXmlParser implements FactSetParser {
             throw new IOException("Cannot parse the input source", e);
         }
 
-        return new UniParcXmlEntryConverter(uniparcEntries);
+        return new UniParcXmlEntryConverter(uniparcEntries.getEntry());
     }
 
 }

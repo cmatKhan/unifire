@@ -90,8 +90,10 @@ public class PIRSRRunner {
 			FactSetChunkParser parser = FactSetChunkParser.of(inputType, factInputStream);
 			while (parser.hasNext()) {
 				Iterator<FactSet> factSetIterator = parser.nextChunk();
-				FactSet updatedFactSet = new FactSet();
-				updatedFactSet.setFact(factMerger.merge(factSetIterator, matchedProteinFacts));
+
+				FactSet updatedFactSet = FactSet.builder()
+						.addFact(factMerger.merge(factSetIterator, matchedProteinFacts))
+						.build();
 
 				factWriter.write(updatedFactSet);
 			}

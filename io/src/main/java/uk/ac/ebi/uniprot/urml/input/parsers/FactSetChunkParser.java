@@ -17,7 +17,9 @@
 package uk.ac.ebi.uniprot.urml.input.parsers;
 
 import uk.ac.ebi.uniprot.urml.input.InputType;
-import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinChunkParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.facts.UrmlXmlFactSetChunkParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlFactSetChunkParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.uniparc.UniParcXmlFactSetChunkParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,15 +33,33 @@ public interface FactSetChunkParser {
     boolean hasNext() throws XMLStreamException;
 
     static FactSetChunkParser of(InputType inputType, InputStream inputStream) throws IOException {
-        switch (inputType){
-//            case FACT_XML:
-//                return new FactXmlParser();
-            case INTERPROSCAN_XML:
-                return new InterProXmlProteinChunkParser(inputStream);
-//            case UNIPARC_XML:
-//                return new UniParcXmlParser();
-            default:
-                throw new IllegalArgumentException("Unsupported input type "+inputType);
+        return of(inputType, inputStream, null);
+    }
+
+    static FactSetChunkParser of(InputType inputType, InputStream inputStream, Integer chunksize) throws IOException {
+        if (chunksize == null ) {
+            switch (inputType) {
+                case FACT_XML:
+                    return new UrmlXmlFactSetChunkParser(inputStream);
+                case INTERPROSCAN_XML:
+                    return new InterProXmlFactSetChunkParser(inputStream);
+                case UNIPARC_XML:
+                    return new UniParcXmlFactSetChunkParser(inputStream);
+                default:
+                    throw new IllegalArgumentException("Unsupported input type " + inputType);
+            }
+        }
+        else {
+            switch (inputType) {
+                case FACT_XML:
+                    return new UrmlXmlFactSetChunkParser(inputStream, chunksize);
+                case INTERPROSCAN_XML:
+                    return new InterProXmlFactSetChunkParser(inputStream, chunksize);
+                case UNIPARC_XML:
+                    return new UniParcXmlFactSetChunkParser(inputStream, chunksize);
+                default:
+                    throw new IllegalArgumentException("Unsupported input type " + inputType);
+            }
         }
     }
 }

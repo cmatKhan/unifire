@@ -16,7 +16,7 @@
 
 package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
 
-import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinChunkParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlFactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinParser;
 
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class InterProXmlProteinChunkParserTest {
     public void parseOneProteinOneXrefChunkParser() throws Exception {
         Iterator<FactSet> parsedFactSet;
         try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_matches.xml")) {
-            InterProXmlProteinChunkParser interProXmlChunkProteinParser = new InterProXmlProteinChunkParser(interproXmlIS);
+            InterProXmlFactSetChunkParser interProXmlChunkProteinParser = new InterProXmlFactSetChunkParser(interproXmlIS);
             assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(true));
             parsedFactSet = interProXmlChunkProteinParser.nextChunk();
             assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(false));
@@ -74,8 +74,8 @@ public class InterProXmlProteinChunkParserTest {
     public void parseOneProteinTwoXrefsChunkParser() throws Exception {
         Iterator<FactSet> parsedFactSet;
         try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_two_xrefs.xml")) {
-            InterProXmlProteinChunkParser interProXmlChunkProteinParser =
-                    new InterProXmlProteinChunkParser(interproXmlIS);
+            InterProXmlFactSetChunkParser interProXmlChunkProteinParser =
+                    new InterProXmlFactSetChunkParser(interproXmlIS);
             assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(true));
             parsedFactSet = interProXmlChunkProteinParser.nextChunk();
             assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(false));
@@ -100,8 +100,8 @@ public class InterProXmlProteinChunkParserTest {
     public void sameResultAsInterProXmlProteinParser() throws IOException, XMLStreamException, JAXBException {
         List<Fact> factsFromChunkParser = new ArrayList<>();
         try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"UP000307542-ipr.xml")) {
-            InterProXmlProteinChunkParser interProXmlChunkProteinParser =
-                    new InterProXmlProteinChunkParser(interproXmlIS, 10);
+            InterProXmlFactSetChunkParser interProXmlChunkProteinParser =
+                    new InterProXmlFactSetChunkParser(interproXmlIS, 10);
             while (interProXmlChunkProteinParser.hasNext()) {
                 Iterator<FactSet> parsedFactSet = interProXmlChunkProteinParser.nextChunk();
                 Iterable<FactSet> iterableFactSet = () -> parsedFactSet;

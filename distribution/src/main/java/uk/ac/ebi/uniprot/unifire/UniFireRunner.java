@@ -22,8 +22,8 @@ import uk.ac.ebi.uniprot.urml.engine.common.RuleEngine;
 import uk.ac.ebi.uniprot.urml.engine.common.RuleEngineVendor;
 import uk.ac.ebi.uniprot.urml.engine.common.RuleExecution;
 import uk.ac.ebi.uniprot.urml.input.InputType;
-import uk.ac.ebi.uniprot.urml.input.collections.FactSetPartitioner;
 import uk.ac.ebi.uniprot.urml.input.collections.TemplateProteinSignatureRetriever;
+import uk.ac.ebi.uniprot.urml.input.parsers.FactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.FactSetParser;
 import uk.ac.ebi.uniprot.urml.output.FactSetWriter;
 import uk.ac.ebi.uniprot.urml.output.OutputFormat;
@@ -32,6 +32,7 @@ import uk.ac.ebi.uniprot.urml.procedures.ProcedureRuleInjector;
 import java.io.*;
 import java.util.Iterator;
 import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uniprot.urml.facts.FactSet;
@@ -72,8 +73,8 @@ public class UniFireRunner {
     public void run() throws IOException, JAXBException {
         try (InputStream factInputStream = new FileInputStream(inputFactFile)){
             /* Ingest input data & partition them */
-            Iterator<FactSet> factSetIterator = FactSetParser.of(inputType).parse(factInputStream);
-            FactSetPartitioner factSetPartitioner = new FactSetPartitioner(factSetIterator, inputChunkSize);
+            FactSetChunkParser factSetChunkParser = FactSetChunkParser.of(inputType, factInputStream, inputChunkSize);
+
 
             /* Ingest rules & build rule engine */
             URMLRuleReader urmlRuleReader = new URMLRuleReader();
@@ -89,19 +90,33 @@ public class UniFireRunner {
 
             /* Execute rules for each partition & output annotations */
             try (FactSetWriter factSetWriter = FactSetWriter.of(new FileOutputStream(outputFactFile), outputFormat)) {
-                factSetPartitioner.forEachRemaining(partition -> {
+                while(factSetChunkParser.hasNext()) {
+                    FactSet factSet = mergeFactSets(factSetChunkParser.nextChunk());
                     ruleEngine.start();
-                    if (templatesProvided) templateRetriever.retrieveFor(partition.getFactSet()).forEach(ruleEngine::insert);
-                    logger.info("Fire all rules on {} protein(s)", partition.getSize());
-                    FactSet outputFacts = ruleExecution.apply(ruleEngine, partition.getFactSet());
+                    if (templatesProvided) {
+                        templateRetriever.retrieveFor(factSet).forEach(ruleEngine::insert);
+                    }
+                    logger.info("Fire all rules on {} protein(s)", factSet.getFact().size());
+                    FactSet outputFacts = ruleExecution.apply(ruleEngine, factSet);
                     logger.info("Write {} prediction(s)", outputFacts.getFact().size());
                     factSetWriter.write(outputFacts);
                     ruleEngine.dispose();
-                });
+                }
+
+            } catch (XMLStreamException e) {
+                e.printStackTrace();
             } finally {
                 ruleEngine.dispose();
             }
         }
+    }
+
+    private FactSet mergeFactSets(Iterator<FactSet> factSetIterator) {
+        FactSet.Builder<Void> factSetBuilder = FactSet.builder();
+        while (factSetIterator.hasNext()){
+            factSetBuilder.addFact(factSetIterator.next().getFact());
+        }
+        return factSetBuilder.build();
     }
 
     private void initTemplateRetriever() throws IOException {

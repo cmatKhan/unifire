@@ -18,6 +18,7 @@ package uk.ac.ebi.uniprot.urml.input.parsers.xml.uniparc;
 
 import com.google.common.base.Splitter;
 import com.google.common.primitives.Ints;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
     private final Iterator<Entry> sourceIterator;
     private final Map<String, Organism> organismMap;
 
-    public UniParcXmlEntryConverter(Uniparc uniparc) {
-        this.sourceIterator = uniparc.getEntry().iterator();
+    public UniParcXmlEntryConverter(Collection<Entry> entries) {
+        this.sourceIterator = entries.iterator();
         this.organismMap = new HashMap<>();
     }
 
