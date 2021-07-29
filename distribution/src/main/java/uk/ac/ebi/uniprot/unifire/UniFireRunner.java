@@ -109,6 +109,7 @@ public class UniFireRunner {
                             FactSetChunkParser.of(inputType, factInputStream, inputChunkSize);
                     while (factSetChunkParser.hasNext()) {
                         FactSet factSet = mergeFactSets(factSetChunkParser.nextChunk());
+                        logger.info("Processing {} facts for {} proteins ", factSet.getFact().size(), inputChunkSize);
                         processFactSet(ruleEngine, ruleExecution, factSetWriter, factSet);
                     }
                 }
@@ -127,11 +128,11 @@ public class UniFireRunner {
         if (templatesProvided) {
             templateRetriever.retrieveFor(factSet).forEach(ruleEngine::insert);
         }
-        logger.info("Fire all rules on {} fact(s)", factSet.getFact().size());
         FactSet outputFacts = ruleExecution.apply(ruleEngine, factSet);
         logger.info("Write {} prediction(s)", outputFacts.getFact().size());
         factSetWriter.write(outputFacts);
         ruleEngine.dispose();
+        logger.info("Done processing facts.");
     }
 
     private FactSet mergeFactSets(Iterator<FactSet> factSetIterator) {
