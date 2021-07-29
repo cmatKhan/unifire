@@ -17,7 +17,7 @@ public abstract class AbstractXmlFactSetChunkParser<T> implements FactSetChunkPa
     private final Integer chunkSize;
     private final PartialUnmarshaller<T> unmarshaller;
 
-    public AbstractXmlFactSetChunkParser(InputStream inputStream, Integer chunkSize) throws IOException {
+    protected AbstractXmlFactSetChunkParser(InputStream inputStream, Integer chunkSize) throws IOException {
         Class<T> genericsType = (Class<T>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
         this.unmarshaller = new PartialUnmarshaller<>(inputStream, genericsType, 1);
@@ -38,6 +38,11 @@ public abstract class AbstractXmlFactSetChunkParser<T> implements FactSetChunkPa
 
     @Override public boolean hasNext() throws XMLStreamException {
         return unmarshaller.hasNext();
+    }
+
+    @Override
+    public void close() {
+        unmarshaller.close();
     }
 
 }

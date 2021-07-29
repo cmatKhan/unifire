@@ -18,6 +18,7 @@ package uk.ac.ebi.uniprot.urml.input.parsers.xml;
 
 import uk.ac.ebi.uniprot.urml.core.xml.schema.JAXBContextInitializationException;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -28,6 +29,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.google.common.primitives.Ints.asList;
 import static javax.xml.stream.XMLStreamConstants.*;
@@ -38,7 +41,9 @@ import static javax.xml.stream.XMLStreamConstants.*;
  * @author Hermann Zellner
  */
 
-public class PartialUnmarshaller<T> {
+public class PartialUnmarshaller<T> implements Closeable {
+
+    private static final Logger logger = LoggerFactory.getLogger(PartialUnmarshaller.class);
 
     XMLStreamReader reader;
     Class<T> clazz;
@@ -85,8 +90,13 @@ public class PartialUnmarshaller<T> {
         return reader.hasNext();
     }
 
-    public void close() throws XMLStreamException {
-        reader.close();
+    @Override
+    public void close() {
+        try {
+            reader.close();
+        } catch (XMLStreamException e) {
+            logger.warn("XMLStreamException while closing XMLStreamReader {}", e.getMessage());
+        }
     }
 
     void skipElements(int... elements) throws XMLStreamException {

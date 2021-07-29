@@ -16,6 +16,7 @@
 
 package uk.ac.ebi.uniprot.unifire;
 
+import uk.ac.ebi.uniprot.urml.core.UniFireRuntimeException;
 import uk.ac.ebi.uniprot.urml.core.xml.readers.URMLRuleReader;
 import uk.ac.ebi.uniprot.urml.engine.common.ProteinAnnotationRetriever;
 import uk.ac.ebi.uniprot.urml.engine.common.RuleEngine;
@@ -36,7 +37,6 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.stream.StreamSupport;
 import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uniprot.urml.facts.FactSet;
@@ -107,17 +107,19 @@ public class UniFireRunner {
                 }
                 else {
                     /* Ingest input data & partition them */
-                    FactSetChunkParser factSetChunkParser =
-                            FactSetChunkParser.of(inputType, factInputStream, inputChunkSize);
-                    while (factSetChunkParser.hasNext()) {
-                        FactSet factSet = mergeFactSets(factSetChunkParser.nextChunk());
-                        logger.info("Processing {} facts for {} proteins ", factSet.getFact().size(), inputChunkSize);
-                        processFactSet(ruleEngine, ruleExecution, factSetWriter, factSet);
+                    try(FactSetChunkParser factSetChunkParser =
+                            FactSetChunkParser.of(inputType, factInputStream, inputChunkSize)) {
+                        while (factSetChunkParser.hasNext()) {
+                            FactSet factSet = mergeFactSets(factSetChunkParser.nextChunk());
+                            logger.info("Processing {} facts for {} proteins ", factSet.getFact().size(),
+                                    inputChunkSize);
+                            processFactSet(ruleEngine, ruleExecution, factSetWriter, factSet);
+                        }
+                    } catch (Exception e) {
+                        throw new UniFireRuntimeException("Error while processing input fact data in chunks.", e);
                     }
                 }
 
-            } catch (XMLStreamException e) {
-                e.printStackTrace();
             } finally {
                 ruleEngine.dispose();
             }

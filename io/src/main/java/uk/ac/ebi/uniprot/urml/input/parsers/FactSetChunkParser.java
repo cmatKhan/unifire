@@ -27,7 +27,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import org.uniprot.urml.facts.FactSet;
 
-public interface FactSetChunkParser {
+public interface FactSetChunkParser extends AutoCloseable {
     Iterator<FactSet> nextChunk() throws XMLStreamException, JAXBException;
     boolean hasNext() throws XMLStreamException;
 
