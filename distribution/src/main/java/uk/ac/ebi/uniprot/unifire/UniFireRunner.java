@@ -100,6 +100,8 @@ public class UniFireRunner {
                     Iterator<FactSet> factSetIterator = FactSetParser.of(inputType).parse(factInputStream);
                     FactSetPartitioner factSetPartitioner = new FactSetPartitioner(factSetIterator, inputChunkSize);
                     factSetPartitioner.forEachRemaining(partition -> {
+                        logger.info("Processing {} facts for {} proteins",
+                                partition.getFactSet().getFact().size(), partition.getSize());
                         processFactSet(ruleEngine, ruleExecution, factSetWriter, partition.getFactSet());
                     });
                 }
