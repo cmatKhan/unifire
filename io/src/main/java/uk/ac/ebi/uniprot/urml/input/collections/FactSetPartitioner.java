@@ -25,7 +25,7 @@ import org.uniprot.urml.facts.FactSet;
  *
  * @author Alexandre Renaux
  */
-public class FactSetPartitioner implements Iterator<FactSetPartitioner.Partition> {
+public class    FactSetPartitioner implements Iterator<FactSetPartitioner.Partition> {
 
     private final Iterator<FactSet> sourceFactSetIterator;
     private final int maxFactSets;

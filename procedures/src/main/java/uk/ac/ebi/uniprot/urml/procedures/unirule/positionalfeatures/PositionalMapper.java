@@ -52,16 +52,10 @@ public class PositionalMapper {
             positionalMapping.setMappedSequence(sequenceRange.extractSubstring(positionalMapping.getProtein().getSequence().getValue()));
             positionalMapping.setIsMapped(true);
             positionalMapping.setIsValid(true);
-        }
-        catch (PositionalFeatureMappingException e) {
+        } catch (PositionalFeatureMappingException | ReplacementResolverException | InvalidPositionalMappingDataException e) {
             positionalMapping.setIsMapped(true);
             positionalMapping.setIsValid(false);
             logger.debug(e.getMessage());
-        }
-        catch (ReplacementResolverException | InvalidPositionalMappingDataException e) {
-            positionalMapping.setIsMapped(true);
-            positionalMapping.setIsValid(false);
-            logger.warn(e.getMessage());
         }
     }
 

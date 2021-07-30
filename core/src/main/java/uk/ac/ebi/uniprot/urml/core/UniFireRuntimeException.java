@@ -20,7 +20,11 @@ package uk.ac.ebi.uniprot.urml.core;
  * Created by Hermann Zellner on 18/06/19.
  */
 public class UniFireRuntimeException extends RuntimeException{
-    public UniFireRuntimeException(String s) {
-        super(s);
+    public UniFireRuntimeException(String message) {
+        super(message);
+    }
+
+    public UniFireRuntimeException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

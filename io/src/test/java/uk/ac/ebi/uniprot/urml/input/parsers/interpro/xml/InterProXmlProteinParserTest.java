@@ -16,6 +16,8 @@
 
 package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
 
+import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinParser;
+
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -42,9 +44,11 @@ public class InterProXmlProteinParserTest {
 
     @Test
     public void parseOneProteinOneXref() throws Exception {
-        InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_matches.xml");
-        InterProXmlProteinParser interProXmlProteinParser = new InterProXmlProteinParser();
-        Iterator<FactSet> parsedFactSet = interProXmlProteinParser.parse(interproXmlIS);
+        Iterator<FactSet> parsedFactSet;
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_matches.xml")) {
+            InterProXmlProteinParser interProXmlProteinParser = new InterProXmlProteinParser();
+            parsedFactSet = interProXmlProteinParser.parse(interproXmlIS);
+        }
 
         ConvertedInterProDataChecker checker = new ConvertedInterProDataChecker() {
             protected int expectedNumberOfProteins() {
@@ -101,9 +105,11 @@ public class InterProXmlProteinParserTest {
 
     @Test
     public void parseOneProteinTwoXrefs() throws Exception {
-        InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_two_xrefs.xml");
-        InterProXmlProteinParser interProXmlProteinParser = new InterProXmlProteinParser();
-        Iterator<FactSet> parsedFactSet = interProXmlProteinParser.parse(interproXmlIS);
+        Iterator<FactSet> parsedFactSet;
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_two_xrefs.xml")) {
+            InterProXmlProteinParser interProXmlProteinParser = new InterProXmlProteinParser();
+            parsedFactSet = interProXmlProteinParser.parse(interproXmlIS);
+        }
 
         ConvertedInterProDataChecker checker = new ConvertedInterProDataChecker() {
             private List<String> expectedProteinNames = Arrays.asList(
@@ -167,57 +173,6 @@ public class InterProXmlProteinParserTest {
             checker.check(factSet);
         }
         assertThat(proteinCounter, is(2));
-    }
-
-    private abstract class ConvertedInterProDataChecker {
-
-        protected int proteinCounter = 0;
-        private int organismCounter = 0;
-        private int proteinSignatureCounter = 0;
-
-        void check(FactSet factSet){
-            organismCounter = 0;
-            proteinSignatureCounter = 0;
-            for (Fact fact : factSet.getFact()) {
-                if (fact instanceof Organism) {
-                    checkOrganism((Organism) fact);
-                    organismCounter++;
-                } else if (fact instanceof ProteinSignature) {
-                    ProteinSignature proteinSignature = (ProteinSignature) fact;
-                    checkProteinSignature(proteinSignature);
-                    checkProtein((Protein) proteinSignature.getProtein());
-                    proteinSignatureCounter++;
-                    proteinCounter++;
-                } else if (fact instanceof Protein){
-                    Protein protein = (Protein) fact;
-                    checkProtein(protein);
-                    checkOrganism(protein.getOrganism());
-                    proteinCounter++;
-                } else {
-                    fail("Unexpected fact type: "+fact);
-                }
-            }
-            assertThat(organismCounter, equalTo(organismCounter));
-            assertThat(proteinSignatureCounter, equalTo(expectedNumberOfProteinSignatures()));
-        }
-
-        protected abstract int expectedNumberOfProteins();
-
-        protected abstract int expectedNumberOfProteinSignatures();
-
-        protected abstract void checkProtein(Protein protein);
-
-        protected abstract void checkOrganism(Organism organism);
-
-        protected abstract void checkProteinSignature(ProteinSignature proteinSignature);
-
-        void checkInterProSignatureType(ProteinSignature proteinSignature, SignatureType expectedLibraryType){
-            if (proteinSignature.getSignature().getValue().startsWith("IPR")){
-                assertThat(proteinSignature.getSignature().getType(), equalTo(SignatureType.INTER_PRO));
-            } else {
-                assertThat(proteinSignature.getSignature().getType(), equalTo(expectedLibraryType));
-            }
-        }
     }
 
 }

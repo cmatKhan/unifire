@@ -17,10 +17,11 @@
 
 package org.proteininformationresource.pirsr;
 
+import uk.ac.ebi.uniprot.urml.core.UniFireRuntimeException;
 import uk.ac.ebi.uniprot.urml.core.utils.FactMerger;
 import uk.ac.ebi.uniprot.urml.core.xml.writers.URMLFactWriter;
 import uk.ac.ebi.uniprot.urml.input.InputType;
-import uk.ac.ebi.uniprot.urml.input.parsers.FactSetParser;
+import uk.ac.ebi.uniprot.urml.input.parsers.FactSetChunkParser;
 
 import java.io.*;
 import java.util.*;
@@ -84,16 +85,17 @@ public class PIRSRRunner {
 				OutputStream outputStream = new FileOutputStream(this.outputDirectory + "/" + outFile);
 				URMLFactWriter factWriter = new URMLFactWriter(outputStream)) {
 
-			Iterator<FactSet> factSetIterator = FactSetParser.of(inputType).parse(factInputStream);
 			FactMerger factMerger = new FactMerger();
-			FactSet updatedFactSet = new FactSet();
-			logger.info("Merging facts...");
-			updatedFactSet.setFact(factMerger.merge(factSetIterator, matchedProteinFacts));
-			logger.info("Done merging facts. In total we have {} facts.", updatedFactSet.getFact().size());
+			FactSetChunkParser parser = FactSetChunkParser.of(inputType, factInputStream);
+			while (parser.hasNext()) {
+				Iterator<FactSet> factSetIterator = parser.nextChunk();
 
-			logger.info("Writing facts...");
-			factWriter.write(updatedFactSet);
-			logger.info("Done writing facts.");
+				FactSet updatedFactSet = FactSet.builder()
+						.addFact(factMerger.merge(factSetIterator, matchedProteinFacts))
+						.build();
+
+				factWriter.write(updatedFactSet);
+			}
 		}
 		catch (IOException | JAXBException | XMLStreamException e) {
 			logger.error(e.getMessage());
@@ -104,33 +106,38 @@ public class PIRSRRunner {
 			throws IOException {
 		Map<Protein, Set<PIRSR>> triggeredProteins = new HashMap<>();
 		try(InputStream factInputStream = new FileInputStream(this.inputFactFile)) {
-			Iterator<FactSet> factSetIterator = FactSetParser.of(inputType).parse(factInputStream);
+			FactSetChunkParser parser = FactSetChunkParser.of(inputType, factInputStream);
 
-			while (factSetIterator.hasNext()) {
-				FactSet factSet = factSetIterator.next();
+			while(parser.hasNext()) {
+				Iterator<FactSet> factSetIterator = parser.nextChunk();
+				while (factSetIterator.hasNext()) {
+					FactSet factSet = factSetIterator.next();
 
-				List<Fact> facts = new ArrayList<>(factSet.getFact());
+					List<Fact> facts = new ArrayList<>(factSet.getFact());
 
-				Protein protein = null;
-				for (Fact fact : facts) {
-					if (fact instanceof Protein) {
-						protein = (Protein) fact;
-					}
-					if (fact instanceof ProteinSignature) {
-						ProteinSignature proteinSignature = (ProteinSignature) fact;
-						String signature = proteinSignature.getSignature().getValue();
-						Set<PIRSR> pirsrList = pirsrTriggerMap.get(signature);
-						if (pirsrList != null) {
-							Set<PIRSR> triggeredPIRSRList = triggeredProteins.get(protein);
-							if (triggeredPIRSRList == null) {
-								triggeredPIRSRList = new HashSet<>();
+					Protein protein = null;
+					for (Fact fact : facts) {
+						if (fact instanceof Protein) {
+							protein = (Protein) fact;
+						}
+						if (fact instanceof ProteinSignature) {
+							ProteinSignature proteinSignature = (ProteinSignature) fact;
+							String signature = proteinSignature.getSignature().getValue();
+							Set<PIRSR> pirsrList = pirsrTriggerMap.get(signature);
+							if (pirsrList != null) {
+								Set<PIRSR> triggeredPIRSRList = triggeredProteins.get(protein);
+								if (triggeredPIRSRList == null) {
+									triggeredPIRSRList = new HashSet<>();
+								}
+								triggeredPIRSRList.addAll(pirsrList);
+								triggeredProteins.put(protein, triggeredPIRSRList);
 							}
-							triggeredPIRSRList.addAll(pirsrList);
-							triggeredProteins.put(protein, triggeredPIRSRList);
 						}
 					}
 				}
 			}
+		} catch (XMLStreamException | JAXBException e) {
+			throw new UniFireRuntimeException("Error parsing input file in PIRSRRunner", e);
 		}
 		return triggeredProteins;
 	}
