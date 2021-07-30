@@ -92,10 +92,10 @@ public class UniFireRunner {
 
             /* Execute rules for each partition & output annotations */
             try (FactSetWriter factSetWriter = FactSetWriter.of(new FileOutputStream(outputFactFile), outputFormat)) {
-                // URML-FACT input cannot be read chunk-by-chunk, because facts are dependend on each other an
+                // URML-FACT input cannot be read chunk-by-chunk, because facts depend on each other and
                 // therefore the XML cannot be splitted
-                // e.g. a protein depends on a organism. If the organism-fact is in a different chunk than the
-                // protein, then the protein has no organism.
+                // e.g. a protein depends on an organism. If the organism-fact ends up in a different chunk than the
+                // protein, then the protein is left without taxonomy property.
                 if (InputType.FACT_XML == inputType) {
                     Iterator<FactSet> factSetIterator = FactSetParser.of(inputType).parse(factInputStream);
                     FactSetPartitioner factSetPartitioner = new FactSetPartitioner(factSetIterator, inputChunkSize);
