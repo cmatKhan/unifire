@@ -14,13 +14,13 @@
 #    limitations under the License.
 ############################################################################
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
 RUN apt-get update \
-    && apt-get install -y wget openjdk-11-jdk maven git coreutils hmmer python-numpy python-qt4 python-lxml python-six \
-     python-pip python-biopython python-requests python3 ncbi-data libdw1 libpcre3-dev
+    && DEBIAN_FRONTEND="noninteractive" apt-get install -y wget openjdk-11-jdk maven git coreutils hmmer python-numpy python-lxml python-six \
+     python3-pip python3-biopython python3-requests python3 ncbi-data libdw1 libpcre3-dev
 RUN pip install --upgrade ete3
 
 COPY scripts /opt/scripts/bin
