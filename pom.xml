@@ -69,7 +69,7 @@
         <!-- Unit test report path -->
         <jacoco.out.ut.file>jacoco-ut.exec</jacoco.out.ut.file>
         <jacoco.reportPath>${jacoco.outputDir}/${jacoco.out.ut.file}</jacoco.reportPath>
-        <http-uniprot-private-url>http://wwwdev.ebi.ac.uk/uniprot/artifactory</http-uniprot-private-url>
+        <http-uniprot-private-url>https://wwwdev.ebi.ac.uk/uniprot/artifactory</http-uniprot-private-url>
     </properties>
 
     <dependencies>
@@ -465,7 +465,7 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <url>http://wwwdev.ebi.ac.uk/uniprot/artifactory/public</url>
+            <url>https://wwwdev.ebi.ac.uk/uniprot/artifactory/public</url>
         </repository>
         <repository>
             <id>uniprot-artifactory-snapshots-plugin</id>
@@ -478,7 +478,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-            <url>http://wwwdev.ebi.ac.uk/uniprot/artifactory/snapshot</url>
+            <url>https://wwwdev.ebi.ac.uk/uniprot/artifactory/snapshot</url>
         </repository>
     </repositories>
 
