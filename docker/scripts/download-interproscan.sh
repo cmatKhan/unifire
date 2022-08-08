@@ -21,7 +21,7 @@ set -u
 
 ROOT_FOLDER="/opt"
 DOWNLOAD_FOLDER="/opt/download"
-IPRS_VERSION="5.55-88.0"
+IPRS_VERSION="5.56-89.0"
 
 mkdir -p ${DOWNLOAD_FOLDER}
 cd ${DOWNLOAD_FOLDER}
