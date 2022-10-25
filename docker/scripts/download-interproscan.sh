@@ -46,7 +46,7 @@ echo "Done."
 
 echo "Initializing InterProScan..."
 cd /opt/interproscan
-python3 initial_setup.py
+python3 setup.py
 echo "Done initializing InterProScan"
 
 # Clean up tar to reduce the size of the image
