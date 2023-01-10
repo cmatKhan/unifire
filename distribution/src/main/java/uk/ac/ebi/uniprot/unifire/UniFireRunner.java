@@ -56,7 +56,7 @@ public class UniFireRunner {
     private final InputType inputType;
     private final OutputFormat outputFormat;
     private final Integer inputChunkSize;
-    private final Boolean templatesProvided;
+    private final boolean templatesProvided;
     private TemplateProteinSignatureRetriever templateRetriever;
 
     public UniFireRunner(File ruleBaseFile, File inputFactFile, File outputFactFile, InputType inputType,

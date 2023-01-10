@@ -36,7 +36,7 @@ public class ProcedureRuleInjector {
     private final Logger logger = LoggerFactory.getLogger(ProcedureRuleInjector.class);
 
 
-    private final static String basePath = "/proceduralRules/";
+    private static final String BASE_PATH = "/proceduralRules/";
     private final URMLRuleReader urmlRuleReader;
 
     public ProcedureRuleInjector() {
@@ -49,17 +49,15 @@ public class ProcedureRuleInjector {
     }
 
     private Optional<Rules> getProceduralRules(String ruleBaseName) {
-        switch (ruleBaseName){
-            case "org.uniprot.unirule":
-                logger.debug("Add "+ruleBaseName+ " procedural rules to the rule base");
-                return Optional.of(getRules("unirule-procedural-rules.xml", ruleBaseName));
-            default:
-                return Optional.empty();
+        if (ruleBaseName.equals("org.uniprot.unirule")) {
+            logger.debug("Add {} procedural rules to the rule base", ruleBaseName);
+            return Optional.of(getRules("unirule-procedural-rules.xml", ruleBaseName));
         }
+        return Optional.empty();
     }
 
     private Rules getRules(String urmlRuleFileName, String ruleBaseName){
-        InputStream ruleIS = ProcedureRuleInjector.class.getResourceAsStream(basePath+urmlRuleFileName);
+        InputStream ruleIS = ProcedureRuleInjector.class.getResourceAsStream(BASE_PATH +urmlRuleFileName);
         try {
             return urmlRuleReader.read(ruleIS);
         } catch (JAXBException | IOException e) {

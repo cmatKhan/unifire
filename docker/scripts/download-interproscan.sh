@@ -21,7 +21,7 @@ set -u
 
 ROOT_FOLDER="/opt"
 DOWNLOAD_FOLDER="/opt/download"
-IPRS_VERSION="5.59-91.0"
+IPRS_VERSION="5.60-92.0"
 
 mkdir -p ${DOWNLOAD_FOLDER}
 cd ${DOWNLOAD_FOLDER}
@@ -30,7 +30,7 @@ wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interprosca
 echo "Done."
 wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5
 
-ipr_check=`md5sum -c interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5`
+ipr_check=$(md5sum -c interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5)
 
 if [[ ${ipr_check} != "interproscan-${IPRS_VERSION}-64-bit.tar.gz: OK" ]]
 then
