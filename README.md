@@ -480,4 +480,4 @@ If you have any questions regarding this software, if you experience any bugs or
 
 ## Contact
 
-* **UniProt Help** - [help@uniprot.org](mailto:help@uniprot.org)
+* **UniProt Help** - https://www.uniprot.org/contact
