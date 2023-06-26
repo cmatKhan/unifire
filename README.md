@@ -477,6 +477,7 @@ If you have any questions regarding this software, if you experience any bugs or
 * **Alexandre Renaux**
 * **Chuming Chen**
 * **Hermann Zellner**
+* **Vishal Joshi**
 
 ## Contact
 
