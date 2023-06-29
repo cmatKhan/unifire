@@ -247,7 +247,7 @@
   </fact>
   <fact xsi:type="PositionalProteinSignature">
     <protein>A0A015UPS8</protein>
-    <signature type="TIGRFAM">TIGR03153</signature>
+    <signature type="NCBIFAM">TIGR03153</signature>
     <frequency>1</frequency>
     <positionStart>22</positionStart>
     <positionEnd>165</positionEnd>

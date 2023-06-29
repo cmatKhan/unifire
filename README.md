@@ -359,7 +359,7 @@ The option `-dp` or `--disable-precalc` must be used to be able to get the seque
 Command:
 
 ``` bash
-./interproscan.sh -f xml -dp -i multifasta_sequences.fasta --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY"
+./interproscan.sh -f xml -dp -i multifasta_sequences.fasta --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,NCBIFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY"
 ```
 
 #### Analyses to run
@@ -368,7 +368,7 @@ Command:
 * ProSiteProfiles
 * ProSitePatterns
 * Pfam
-* TIGRFAM
+* NCBIfam
 * SMART
 * PRINTS
 * SFLD

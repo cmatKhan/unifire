@@ -67,9 +67,9 @@ public class FactMergerTest {
         protein_3 = createProtein("Q6F7U5", organism_2, sequence_2, "ACIAD3185");
         proteinSignature_1_1 = createProteinSignature(protein_1, GENE_3_D, "G3DSA:1.20.1540.10", 1);
         proteinSignature_1_2 = createProteinSignature(protein_1, PFAM, "PF01694", 1);
-        proteinSignature_2_1 = createProteinSignature(protein_2, TIGRFAM, "TIGR03902", 1);
+        proteinSignature_2_1 = createProteinSignature(protein_2, NCBIFAM, "TIGR03902", 1);
         proteinSignature_2_2 = createProteinSignature(protein_2, INTER_PRO, "IPR022764", 1);
-        proteinSignature_3_1 = createProteinSignature(protein_3, TIGRFAM, "TIGR03902", 1);
+        proteinSignature_3_1 = createProteinSignature(protein_3, NCBIFAM, "TIGR03902", 1);
         proteinSignature_3_2 = createProteinSignature(protein_3, INTER_PRO, "IPR022764", 1);
 
         positionalProteinSignature_1 = createPositionalProteinSignature(

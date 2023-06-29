@@ -28,7 +28,7 @@ ${UNIFIRE_REPO}/misc/taxonomy/fetchTaxonomicLineage.py -i ${VOLUME}/proteins.fas
   -t ${ETE3FOLDER}/taxa.sqlite
 
 ${INTERPROSCAN_REPO}/interproscan.sh -f xml -dp -i ${VOLUME}/proteins_lineage.fasta \
-    --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY" \
+    --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,NCBIFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY" \
     -o ${VOLUME}/proteins_lineage-ipr.xml
 
 ${UNIFIRE_REPO}/distribution/bin/pirsr.sh -i ${VOLUME}/proteins_lineage-ipr.xml \
