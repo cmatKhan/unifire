@@ -24,7 +24,7 @@ outdir=""
 workdir=""
 cleanworkdir=0
 container_software="docker"
-docker_version="2023.2"
+docker_version=""
 predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 function usage() {
@@ -76,6 +76,12 @@ then
     usage
 fi
 
+# set docker image version
+function set_docker_image_version() {
+  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  docker_version="$(grep -E "^UNIFIRE_DOCKER_IMAGE_VERSION=" "${SCRIPT_DIR}"/../versions.properties | cut -d '=' -f 2)"
+  echo "UniFIRE docker version to be used: ${docker_version}"
+}
 
 # infile
 function check_infile() {
@@ -103,6 +109,7 @@ function check_outdir() {
       set -e
     fi
 }
+
 
 # workdir
 function check_workdir() {
@@ -197,6 +204,7 @@ function cleanup_workdir() {
 }
 
 # main
+set_docker_image_version
 check_infile
 check_outdir
 check_workdir
