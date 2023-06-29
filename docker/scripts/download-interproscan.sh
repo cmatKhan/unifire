@@ -21,12 +21,18 @@ set -u
 
 ROOT_FOLDER="/opt"
 DOWNLOAD_FOLDER="/opt/download"
-IPRS_VERSION="5.61-93.0"
 
+function set_interpro_scan_version() {
+  local SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  IPRS_VERSION="$(grep -E "^INTERPROSCAN_VERSION=" "${SCRIPT_DIR}"/versions.properties | cut -d '=' -f 2)"
+  echo "INTERPROSCAN_VERSION: ${IPRS_VERSION}"
+}
+
+set_interpro_scan_version
 mkdir -p ${DOWNLOAD_FOLDER}
 cd ${DOWNLOAD_FOLDER}
 echo "Downloading InterProScan..."
-wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
+wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
 echo "Done."
 wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5
 

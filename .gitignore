@@ -12,3 +12,11 @@
 /.settings
 
 /**/.DS_Store
+/samples/pirsr_data/
+/samples/arba-urml-latest.xml
+/samples/pirsr_data_latest.tar.gz
+/samples/unirule.pirsr-urml-latest.xml
+
+/samples/unirule-templates-latest.xml
+
+/samples/unirule-urml-latest.xml

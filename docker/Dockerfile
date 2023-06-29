@@ -24,6 +24,7 @@ RUN apt-get update \
 RUN pip install --upgrade ete3
 
 COPY scripts /opt/scripts/bin
+COPY versions.properties /opt/scripts/bin
 RUN chmod 775 /opt/scripts/bin/*.sh
 
 RUN /opt/scripts/bin/update-taxonomy-cache.sh

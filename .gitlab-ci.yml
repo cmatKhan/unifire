@@ -1,0 +1,45 @@
+stages:
+  - test
+  - build_docker_image
+
+variables:
+  IMAGE_TAG_FILE: ${CI_PROJECT_DIR}/docker/versions.properties
+
+before_script:
+  - echo "Staring to build UniFire docker image"
+  - export UNIFIRE_IMAGE_TAG=$(grep -E "^UNIFIRE_DOCKER_IMAGE_VERSION=" "${IMAGE_TAG_FILE}" | cut -d '=' -f 2)
+  - echo "UniFire image tag will be = ${UNIFIRE_IMAGE_TAG}"
+
+.mvn:
+  image: maven:3.8.2-openjdk-11-slim
+  before_script:
+    - java --version
+    - mvn --version
+
+test:
+  extends: .mvn
+  stage: test
+  script:
+    - mvn clean verify
+
+build_docker_image:
+  stage: build_docker_image
+  image: docker:23.0.6
+  tags:
+    - dind
+  services:
+    - docker:dind
+  script:
+    - docker --version
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - CONTAINER_IMAGE=${CI_REGISTRY_IMAGE}:${UNIFIRE_IMAGE_TAG}
+    - echo "image name will be ${CONTAINER_IMAGE}"
+    - cd docker
+    - docker build -t ${CONTAINER_IMAGE} --no-cache .
+    - docker image ls
+    - docker push ${CONTAINER_IMAGE}
+    - docker rmi ${CONTAINER_IMAGE}
+    - docker logout "$CI_REGISTRY"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "pre_release" && $CI_COMMIT_TITLE =~ /^Merge branch '.*' into 'pre_release'$/
+      when: on_success

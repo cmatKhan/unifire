@@ -39,7 +39,7 @@ The Docker image is expected to run on any operating system
 
 #### Software
 A recent version of Docker is necessary to start the UniFIRE docker image as a new container. It has been tested
- successfully on Ubuntu 18.04 and Docker version 19.03.6.
+ successfully on Ubuntu 20.04 and Docker version 23.0.6.
 
 ### Data preparation
 The only input data that need to be provided are the protein sequence data in multi-FASTA format for which 
