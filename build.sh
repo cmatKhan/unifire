@@ -17,13 +17,6 @@
 ############################################################################
 
 
-function backup_file {
-    filename=$1
-    if [[ -e ${filename} ]]; then
-        mv ${filename} ${filename}_
-    fi
-}
-
 function checkEnv {
     if ! command -v mvn &> /dev/null
     then
@@ -61,14 +54,13 @@ popd > /dev/null
 echo "Downloading rule urml files..."
 for file in arba-urml-latest.xml unirule-urml-latest.xml unirule-templates-latest.xml unirule.pirsr-urml-latest.xml;
 do
-    backup_file ${SCRIPT_DIR}/samples/${file}
-    wget -q ${FTP_SRC}/${file} -O ${SCRIPT_DIR}/samples/${file}
+    wget ${FTP_SRC}/${file} -O ${SCRIPT_DIR}/samples/${file}
 done
 echo "Done downloading rule urml files."
 
 PIRSR_DATA_SRC="https://proteininformationresource.org/pirsr/pirsr_data_latest.tar.gz"
 echo "Download pirsr data files..."
-backup_file ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz
 wget -q ${PIRSR_DATA_SRC} -O ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz
-tar zxvf ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz -C ${SCRIPT_DIR}/samples/
+echo "untarring pirsr_data..."
+tar -zxf ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz -C ${SCRIPT_DIR}/samples/
 echo "Done download pirsr data files."

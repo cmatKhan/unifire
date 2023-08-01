@@ -31,7 +31,6 @@ ${INTERPROSCAN_REPO}/interproscan.sh -f xml -dp -i ${VOLUME}/proteins_lineage.fa
     --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,TIGRFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY" \
     -o ${VOLUME}/proteins_lineage-ipr.xml
 
-
 ${UNIFIRE_REPO}/distribution/bin/pirsr.sh -i ${VOLUME}/proteins_lineage-ipr.xml \
     -o ${VOLUME} -a /usr/bin/hmmalign -d ${UNIFIRE_REPO}/samples/pirsr_data
 
