@@ -4,6 +4,9 @@ stages:
 
 variables:
   IMAGE_TAG_FILE: ${CI_PROJECT_DIR}/docker/versions.properties
+  DOCKER_HOST: tcp://localhost:2375/
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
 
 before_script:
   - echo "Staring to build UniFire docker image"
