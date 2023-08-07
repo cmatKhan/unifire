@@ -37,7 +37,7 @@ function checkEnv {
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DISTRIBUTION_DIR="${SCRIPT_DIR}/distribution"
-FTP_SRC="ftp://ftp.ebi.ac.uk/pub/contrib/UniProt/UniFIRE/rules/"
+FTP_SRC="ftp://ftp.ebi.ac.uk/pub/contrib/UniProt/UniFIRE/rules"
 
 checkEnv
 pushd ${SCRIPT_DIR} > /dev/null
@@ -50,11 +50,12 @@ echo "Done building UniFIRE and downloading dependencies."
 
 popd > /dev/null
 
+unirule_version="$(grep -E "^URML_RULES_VERSION=" "${SCRIPT_DIR}"/docker/versions.properties | cut -d '=' -f 2)"
 
 echo "Downloading rule urml files..."
-for file in arba-urml-latest.xml unirule-urml-latest.xml unirule-templates-latest.xml unirule.pirsr-urml-latest.xml;
+for file_prefix in arba-urml unirule-urml unirule-templates unirule.pirsr-urml;
 do
-    wget ${FTP_SRC}/${file} -O ${SCRIPT_DIR}/samples/${file}
+    wget ${FTP_SRC}/${file_prefix}-${unirule_version}.xml -O ${SCRIPT_DIR}/samples/${file_prefix}-latest.xml
 done
 echo "Done downloading rule urml files."
 

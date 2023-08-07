@@ -76,10 +76,12 @@ then
     usage
 fi
 
-# set docker image version
-function set_docker_image_version() {
-  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-  docker_version="$(grep -E "^UNIFIRE_DOCKER_IMAGE_VERSION=" "${SCRIPT_DIR}"/../versions.properties | cut -d '=' -f 2)"
+# determine docker image version, if provided as a CLI option, use that, otherwise read from properties file
+function determine_docker_image_version() {
+  if [ -z "$docker_version" ]; then
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    docker_version="$(grep -E "^UNIFIRE_DOCKER_IMAGE_VERSION=" "${SCRIPT_DIR}"/../versions.properties | cut -d '=' -f 2)"
+  fi
   echo "UniFIRE docker version to be used: ${docker_version}"
 }
 
@@ -204,7 +206,7 @@ function cleanup_workdir() {
 }
 
 # main
-set_docker_image_version
+determine_docker_image_version
 check_infile
 check_outdir
 check_workdir
