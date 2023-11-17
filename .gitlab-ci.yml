@@ -4,12 +4,12 @@ stages:
 
 variables:
   IMAGE_TAG_FILE: ${CI_PROJECT_DIR}/docker/versions.properties
-  DOCKER_HOST: tcp://localhost:2375/
+  DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
 
 before_script:
-  - echo "Staring to build UniFire docker image"
+  - echo "Building UniFire docker image"
   - export UNIFIRE_IMAGE_TAG=$(grep -E "^UNIFIRE_DOCKER_IMAGE_VERSION=" "${IMAGE_TAG_FILE}" | cut -d '=' -f 2)
   - echo "UniFire image tag will be = ${UNIFIRE_IMAGE_TAG}"
 
