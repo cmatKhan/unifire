@@ -30,7 +30,7 @@
     <artifactId>unifire-distribution</artifactId>
 
     <properties>
-        <commons-cli.version>1.4</commons-cli.version>
+        <commons-cli.version>1.5.0</commons-cli.version>
         <maven-assembly-plugin.version>2.5.5</maven-assembly-plugin.version>
     </properties>
 

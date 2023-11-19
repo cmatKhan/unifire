@@ -206,7 +206,8 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
             case SMART:
                 return SignatureType.SMART;
             case TIGRFAM:
-                return SignatureType.TIGRFAM;
+            case NCBIFAM:
+                return SignatureType.NCBIFAM;
             case SUPERFAMILY:
                 return SignatureType.SCOP_SUPERFAMILY;
             case PROSITE_PATTERNS: case PROSITE_PROFILES:

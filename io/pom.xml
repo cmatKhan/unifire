@@ -30,7 +30,7 @@
     <artifactId>unifire-io</artifactId>
 
     <properties>
-        <interproscan-model.version>5.54-87.0</interproscan-model.version>
+        <interproscan-model.version>5.62-94.0</interproscan-model.version>
     </properties>
 
     <dependencies>
@@ -46,6 +46,10 @@
                 <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-reload4j</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

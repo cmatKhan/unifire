@@ -245,7 +245,7 @@
             <xs:enumeration value="PRINTS"/>
             <xs:enumeration value="SMART"/>
             <xs:enumeration value="SCOP Superfamily"/>
-            <xs:enumeration value="TIGRFAM"/>
+            <xs:enumeration value="NCBIFAM"/>
             <xs:enumeration value="PANTHER"/>
             <xs:enumeration value="PROSITE"/>
             <xs:enumeration value="ProDom"/>

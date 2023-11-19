@@ -187,8 +187,8 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
                 return SignatureType.SMART;
             case "SUPFAM":
                 return SignatureType.SCOP_SUPERFAMILY;
-            case "TIGRFAMs":
-                return SignatureType.TIGRFAM;
+            case "NCBIFAM":
+                return SignatureType.NCBIFAM;
             default:
                 return null;
         }

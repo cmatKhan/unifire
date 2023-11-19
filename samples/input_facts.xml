@@ -69,7 +69,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q00HT7_LEPSL</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Monodelphis_sp_2_SEP2014_1523452">
@@ -130,7 +130,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3R7H9_UROLI</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -547,7 +547,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L6R2_PROLO</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -1259,7 +1259,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>I7AEK4_URSAM</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -1322,7 +1322,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L709_LYNCA</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Rhinolophus_affinis_59477">
@@ -1387,7 +1387,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0G2YK54_CROBE</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -2644,7 +2644,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RA19_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -2716,7 +2716,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>B6RQW1_MACTH</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -3139,7 +3139,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0S2LM04_CHAVI</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="H6UBJ1_KOBLE">
@@ -3181,7 +3181,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>H6UBJ1_KOBLE</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -3246,7 +3246,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1A7TCB2_VULLA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Lontra_felina_76718">
@@ -3951,7 +3951,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>B9UMN7_CHEMA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -4579,7 +4579,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1APA1_PANTS</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -4889,7 +4889,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>B6RQW7_MACTH</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Taxidea_taxus_30554">
@@ -4947,7 +4947,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L6R8_TAXTA</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="W6A1E3_ODOHE">
@@ -5671,7 +5671,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>E2F756_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q3L715_LYNCA">
@@ -5738,7 +5738,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L715_LYNCA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -5902,7 +5902,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>U5U5L8_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR00003</signature>
+    <signature type="NCBIFAM">TIGR00003</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -6016,7 +6016,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1RSP9_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR01251</signature>
+    <signature type="NCBIFAM">TIGR01251</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Ochotona_hyperborea_130834">
@@ -6250,7 +6250,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1A7TCJ3_VULLA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0E3STP4_OCHHY">
@@ -6314,7 +6314,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>C0LLT6_MARFA</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -6837,7 +6837,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RA82_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -6995,7 +6995,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>I7B016_URSAM</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0D3R9K3_UROCI">
@@ -7169,7 +7169,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3R873_UROLI</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -7325,7 +7325,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D5MC51_GLOMA</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -7639,7 +7639,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1V1FKQ0_MUSIT</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -7788,7 +7788,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0N9QJM6_OVICA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Rhinolophus_sinicus_sinicus_1585245">
@@ -7846,7 +7846,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0U2D751_9CHIR</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Glossophaga_commissarisi_177159">
@@ -8673,7 +8673,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1APB2_PANTS</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -9053,7 +9053,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q9G1U2_EULAL</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Micoureus_paraguayanus_225729">
@@ -9813,7 +9813,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>S4UTY0_NYCBE</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -9975,7 +9975,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G4X0Q0_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Lasiurus_ega_258928">
@@ -10350,7 +10350,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3MTR1_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -10878,7 +10878,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RBG6_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="U5U631_9EUTH">
@@ -11277,7 +11277,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1QN22_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR00426</signature>
+    <signature type="NCBIFAM">TIGR00426</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1QZK9_NOMLE">
@@ -11403,7 +11403,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DGZ6_INDIN</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -11591,7 +11591,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3MTX5_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -11650,7 +11650,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0N9QB78_OVICA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q00HT3_LEPSL">
@@ -11702,7 +11702,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q00HT3_LEPSL</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q05ES7_LEPSL">
@@ -11751,7 +11751,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q05ES7_LEPSL</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0Y0BDI7_RHIFE">
@@ -11917,7 +11917,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1W5FQL1_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -12036,7 +12036,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1V1FMC8_MUSIT</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A141NXG2_MARPI">
@@ -12209,7 +12209,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RAY5_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="X2CCR9_9PRIM">
@@ -12616,7 +12616,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1UCN2_PROLO</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="E2IGA7_LASCI">
@@ -12898,7 +12898,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q8LWN7_TAMTE</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -13087,7 +13087,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D2JV46_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1S8G0_NOMLE">
@@ -13221,7 +13221,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q00H20_LEPLC</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1R5U8_NOMLE">
@@ -13615,7 +13615,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DGA6_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="H6AQG6_OVIMO">
@@ -13939,7 +13939,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1QPV1_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR02361</signature>
+    <signature type="NCBIFAM">TIGR02361</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -14007,7 +14007,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0N7BUL9_NEONE</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0E3IQK4_SORCY">
@@ -14316,7 +14316,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q05EW4_LEPLC</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1RNR2_NOMLE">
@@ -14388,7 +14388,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1RNR2_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR00337</signature>
+    <signature type="NCBIFAM">TIGR00337</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -14440,7 +14440,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RB84_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0S2LLT6_CHAVI">
@@ -14507,7 +14507,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0S2LLT6_CHAVI</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -14656,7 +14656,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D2JV40_PANTR</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -14867,7 +14867,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>C3TVV0_OVIMO</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -15042,7 +15042,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1V1FGU0_MUSIT</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -15094,7 +15094,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3R7W1_UROLI</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0A7DDY9_INDIN">
@@ -15141,7 +15141,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DDY9_INDIN</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="S4UUH9_NYCBE">
@@ -15446,7 +15446,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>B9UMM9_CHEMA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -15717,7 +15717,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DDY4_INDIN</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -16322,7 +16322,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RAN4_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -16702,7 +16702,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L6R5_PROLO</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -16773,7 +16773,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3MRC6_CHEMA</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="H6UBU3_9CETA">
@@ -16840,7 +16840,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>H6UBU3_9CETA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -16922,7 +16922,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>S4UVI7_NYCBE</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -17021,7 +17021,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L718_LYNCA</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -17068,7 +17068,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1W5FTB0_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -17351,7 +17351,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D9D9Z6_EPIMC</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -17553,7 +17553,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0N9QJV3_OVICA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Echymipera_rufescens_65611">
@@ -17623,7 +17623,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L6S6_TAXTA</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -17777,7 +17777,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0N6WDW0_NEONE</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -17829,7 +17829,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3R8P2_UROLI</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="I6XLM8_9CHIR">
@@ -18284,7 +18284,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D2JV47_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Nyctereutes_procyonoides_34880">
@@ -18596,7 +18596,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0U1XD23_VIVIN</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q00HY9_LEPLC">
@@ -18648,7 +18648,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q00HY9_LEPLC</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="B8XKH1_RHIFE">
@@ -19259,7 +19259,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1UCG6_PROLO</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1S312_NOMLE">
@@ -19681,7 +19681,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1RPK5_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR00231</signature>
+    <signature type="NCBIFAM">TIGR00231</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1RZ57_NOMLE">
@@ -19787,7 +19787,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1B1CYZ1_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -19841,7 +19841,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L6Y2_VULLA</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -20541,7 +20541,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D9DA00_EPIMC</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -20635,7 +20635,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1APA5_PANTS</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0A7DFS5_INDIN">
@@ -20739,7 +20739,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F6KVX7_SAIOE</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -21319,7 +21319,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D5MC49_GLOMA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -21490,7 +21490,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F5CAZ7_CEPCM</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -21711,7 +21711,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1B1CZ65_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="H6UBJ5_KOBLE">
@@ -21763,7 +21763,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>H6UBJ5_KOBLE</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0D3RAJ8_UROCI">
@@ -21869,7 +21869,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>I7B915_URSAM</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -22086,7 +22086,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1UCH6_PROLO</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -22427,7 +22427,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0G2YLX2_CROBE</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -23159,7 +23159,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q2Y0B6_PROLO</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -23221,7 +23221,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DF32_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Lontra_provocax_366500">
@@ -23493,7 +23493,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q678T6_NEOVI</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -23993,7 +23993,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>C3TVV5_OVIMO</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q8HBG7_PANTR">
@@ -24097,7 +24097,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>H6URA0_ATEFU</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -24186,7 +24186,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1APF8_PANTA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="H6B2S1_9CETA">
@@ -24275,7 +24275,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>E7EAF0_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -24396,7 +24396,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1APF1_PANTA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -24530,7 +24530,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1W5FV61_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0A7DGM1_9PRIM">
@@ -24582,7 +24582,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DGM1_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="D2JV41_PANTR">
@@ -24668,7 +24668,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DF85_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q9GKB5_9PRIM">
@@ -25289,7 +25289,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G4X0W6_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q9G1W3_EULFU">
@@ -25341,7 +25341,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q9G1W3_EULFU</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A7BIF0_PROLO">
@@ -25393,7 +25393,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A7BIF0_PROLO</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="D2JV42_PANTR">
@@ -25435,7 +25435,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D2JV42_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -25524,7 +25524,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G4X1B7_PANTR</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -25643,7 +25643,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>C0LLT4_MARFA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -25976,7 +25976,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q679I0_NEOSC</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -26107,7 +26107,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D5MC56_GLOMA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="D2JV39_PANTR">
@@ -26241,7 +26241,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1UCJ9_PROLO</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -26362,7 +26362,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RAX5_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="C6YXP1_9PRIM">
@@ -26414,7 +26414,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>C6YXP1_9PRIM</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A088BHD6_SORCY">
@@ -26526,7 +26526,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A8DPU9_INDIN</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q3L6S3_TAXTA">
@@ -26593,7 +26593,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q3L6S3_TAXTA</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -26905,7 +26905,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3MTL7_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -27130,7 +27130,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F4YQ06_MARFA</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q9GKB4_MACHE">
@@ -27623,7 +27623,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3RAS1_UROCI</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="F6KVW9_SAIOE">
@@ -28573,7 +28573,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F6N0R0_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -28922,7 +28922,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3MTR4_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="H6UBI9_KOBLE">
@@ -28989,7 +28989,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>H6UBI9_KOBLE</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -29056,7 +29056,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0U2GUD5_9CHIR</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A3R2L1_9CHIR">
@@ -29190,7 +29190,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F2YKJ1_RHIAV</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -29691,7 +29691,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1QWZ1_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR00121</signature>
+    <signature type="NCBIFAM">TIGR00121</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -29738,7 +29738,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A7BIE6_PROLO</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -29936,7 +29936,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A173GIK0_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Organism" id="organism_Choeroniscus_sp_BOLDAAC3416_999943">
@@ -30432,7 +30432,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0D3R7F6_UROLI</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0D3MTN3_9EUTH">
@@ -30553,7 +30553,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F6N0R4_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="F6K5R5_LEPCB">
@@ -31076,7 +31076,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0A7DEP8_INDIN</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1R8U1_NOMLE">
@@ -31279,7 +31279,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>C3UVK8_CERTR</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -31408,7 +31408,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0N9R1E9_OVICA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A1A7TCG9_VULLA">
@@ -31455,7 +31455,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A1A7TCG9_VULLA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G9IZW7_9CHIR">
@@ -31719,7 +31719,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F2YKJ3_RHIAV</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -31927,7 +31927,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q8LWN9_TAMTE</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -32009,7 +32009,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F6N0Q8_9EUTH</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -32413,7 +32413,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>C1IDU1_OCHCO</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="G1RRS5_NOMLE">
@@ -32566,7 +32566,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0N9R4B5_OVICA</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="H6UBR9_9CETA">
@@ -32608,7 +32608,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>H6UBR9_9CETA</protein>
-    <signature type="TIGRFAM">TIGR01131</signature>
+    <signature type="NCBIFAM">TIGR01131</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -32751,7 +32751,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F4YPR5_MUSNI</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0E3IR67_SORCY">
@@ -33042,7 +33042,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A140YWX3_RHIFE</protein>
-    <signature type="TIGRFAM">TIGR00815</signature>
+    <signature type="NCBIFAM">TIGR00815</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
@@ -33212,7 +33212,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>G1APH0_PANTA</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="Q0PVF2_PHACI">
@@ -33424,7 +33424,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>Q7ISX2_EULFU</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="A0A0U2GTM2_9CHIR">
@@ -33471,7 +33471,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>A0A0U2GTM2_9CHIR</protein>
-    <signature type="TIGRFAM">TIGR01974</signature>
+    <signature type="NCBIFAM">TIGR01974</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="C6YXM2_EULAL">
@@ -33591,7 +33591,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>F6K4F7_LEPCB</protein>
-    <signature type="TIGRFAM">TIGR01972</signature>
+    <signature type="NCBIFAM">TIGR01972</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="Protein" id="D4QAT8_NOMLE">
@@ -33658,7 +33658,7 @@
   </fact>
   <fact xsi:type="ProteinSignature">
     <protein>D4QAT8_NOMLE</protein>
-    <signature type="TIGRFAM">TIGR02866</signature>
+    <signature type="NCBIFAM">TIGR02866</signature>
     <frequency>1</frequency>
   </fact>
   <fact xsi:type="ProteinSignature">
