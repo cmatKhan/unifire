@@ -29,7 +29,7 @@ build_docker_image:
   stage: build_docker_image
   image: docker:23.0.6
   tags:
-    - dind-100
+    - dind
   services:
     - docker:dind
   script:
@@ -43,6 +43,6 @@ build_docker_image:
     - docker push ${CONTAINER_IMAGE}
     - docker rmi ${CONTAINER_IMAGE}
     - docker logout "$CI_REGISTRY"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "pre_release" && $CI_COMMIT_TITLE =~ /^Merge branch '.*' into 'pre_release'$/
-      when: on_success
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "pre_release" && $CI_COMMIT_TITLE =~ /^Merge branch '.*' into 'pre_release'$/
+#      when: on_success
