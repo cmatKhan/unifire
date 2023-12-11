@@ -32,9 +32,9 @@ set_interpro_scan_version
 mkdir -p ${DOWNLOAD_FOLDER}
 cd ${DOWNLOAD_FOLDER}
 echo "Downloading InterProScan..."
-wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
+wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz
 echo "Done."
-wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5
+wget -q ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${IPRS_VERSION}/interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5
 
 ipr_check=$(md5sum -c interproscan-${IPRS_VERSION}-64-bit.tar.gz.md5)
 
