@@ -21,7 +21,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 RUN apt-get update \
     && DEBIAN_FRONTEND="noninteractive" apt-get install -y wget openjdk-11-jdk maven git coreutils hmmer python-numpy python-lxml python-six \
      python3-pip python3-biopython python3-requests python3 ncbi-data libdw1 libpcre3-dev
-RUN pip install --upgrade ete3
+RUN pip install "git+https://github.com/etetoolkit/ete.git@ete3"
 
 COPY scripts /opt/scripts/bin
 COPY versions.properties /opt/scripts/bin
