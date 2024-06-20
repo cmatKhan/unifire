@@ -16,10 +16,16 @@
 
 package uk.ac.ebi.uniprot.urml.engine.drools.compiler;
 
+import org.apache.commons.lang3.ClassUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.uniprot.urml.rules.*;
 import uk.ac.ebi.uniprot.urml.core.model.facts.reflection.FactModelHelper;
 import uk.ac.ebi.uniprot.urml.core.model.facts.reflection.FactModelReflectionException;
 import uk.ac.ebi.uniprot.urml.core.xml.schema.URMLConstants;
 
+import javax.xml.namespace.QName;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -27,12 +33,6 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.xml.namespace.QName;
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.uniprot.urml.rules.*;
 
 /**
  * Transpiles URML formatted rules to the Drools Rule Language (DRL)
@@ -64,20 +64,22 @@ public class URMLToDroolsTranspiler {
     }
 
 
-    private final static String RULE_START = "rule";
-    private final static String RULE_END = "end";
-    private final static String OR = "or";
-    private final static String LHS_KEYWORD = "when";
-    private final static String RHS_KEYWORD = "then";
-    private final static String QUOTE = "\"";
-    private final static String INDENT_UNIT = "  ";
-    private final static String NEW_LINE = "\n";
-    private final static String UNIFICATION = ":=";
+    private static final String RULE_START = "rule";
+    private static final String RULE_END = "end";
+    private static final String OR = "or";
+    private static final String LHS_KEYWORD = "when";
+    private static final String RHS_KEYWORD = "then";
+    private static final String QUOTE = "\"";
+    private static final String INDENT_UNIT = "  ";
+    private static final String NEW_LINE = "\n";
+    private static final String UNIFICATION = ":=";
 
     private PrintWriter writer;
+    private final Sanitizer sanitizer;
 
-    public URMLToDroolsTranspiler(OutputStream outputStream) {
+    public URMLToDroolsTranspiler(OutputStream outputStream, CompositeSanitizer sanitizer) {
         this.writer = new PrintWriter(outputStream);
+        this.sanitizer = sanitizer;
     }
 
     public void translate(Rules rules) {
@@ -129,11 +131,11 @@ public class URMLToDroolsTranspiler {
                 writer.write(NEW_LINE);
             }
             indent(1);
-            open_parenthesis();
+            openParenthesis();
             writer.write(NEW_LINE);
             translate(conjunctiveConditionSet);
             indent(1);
-            close_parenthesis();
+            closeParenthesis();
             firstIteration = false;
         }
     }
@@ -185,19 +187,19 @@ public class URMLToDroolsTranspiler {
                 break;
             case CREATE:
                 writer.write("insertLogical");
-                open_parenthesis();
+                openParenthesis();
                 if(ruleFact.getCall() == null) {
                     translateToBuildStatement(ruleFact, action.getWith(), actionFactIds);
                 } else {
                     translate(ruleFact.getCall());
                 }
-                close_parenthesis();
+                closeParenthesis();
                 break;
             case UPDATE:
                 writer.write("update");
-                open_parenthesis();
+                openParenthesis();
                 writer.write("$"+ruleFact.getId());
-                close_parenthesis();
+                closeParenthesis();
                 newLines(1);
                 indent(2);
                 if (ruleFact.getCall() == null){
@@ -208,9 +210,9 @@ public class URMLToDroolsTranspiler {
                 break;
             case REMOVE:
                 writer.write("retract");
-                open_parenthesis();
+                openParenthesis();
                 writer.write("$"+ruleFact.getId());
-                close_parenthesis();
+                closeParenthesis();
                 break;
             default:
                 throw new IllegalStateException("Unhandled action type "+action.getType());
@@ -227,14 +229,14 @@ public class URMLToDroolsTranspiler {
         for (Field field : ruleFact.getField()) {
             writer.write(ruleFact.getId());
             writer.write(".set");
-            writer.write(capitalize_first_letter(field.getAttribute()));
-            open_parenthesis();
+            writer.write(capitalizeFirstLetter(field.getAttribute()));
+            openParenthesis();
             if (field.getIsReference()){
                 translate("$"+field.getValue(), Object.class);
             } else {
                 translate(field.getValue(), getJavaType(ruleFact.getType(), field.getAttribute()));
             }
-            close_parenthesis();
+            closeParenthesis();
             writer.write(";");
             newLines(1);
         }
@@ -266,8 +268,8 @@ public class URMLToDroolsTranspiler {
             attribute = wiredReference;
             value = wiredReference;
         }
-        writer.write(capitalize_first_letter(attribute));
-        open_parenthesis();
+        writer.write(capitalizeFirstLetter(attribute));
+        openParenthesis();
         boolean isRHSVariable = actionFactIds.contains(value);
         boolean isSimpleString = value.startsWith("'") && value.endsWith("'");
         if (isSimpleString){
@@ -278,13 +280,13 @@ public class URMLToDroolsTranspiler {
             }
             writer.write(value);
         }
-        close_parenthesis();
+        closeParenthesis();
     }
 
     private void translate(ProceduralAttachment call) {
         writer.write(extractPackage(call.getUri()));
         writer.write("."+call.getProcedure());
-        open_parenthesis();
+        openParenthesis();
         boolean firstIteration = true;
         for (ProcedureArgument procedureArgument : call.getArguments().getArgument()){
             if (!firstIteration){
@@ -296,23 +298,19 @@ public class URMLToDroolsTranspiler {
             writer.write(procedureArgument.getValue());
             firstIteration = false;
         }
-        close_parenthesis();
+        closeParenthesis();
     }
 
     private void translate(Field field, RuleFact ruleFact) {
         writer.write(".with");
-        writer.write(capitalize_first_letter(field.getAttribute()));
-        open_parenthesis();
+        writer.write(capitalizeFirstLetter(field.getAttribute()));
+        openParenthesis();
         if (field.getIsReference()){
             translate("$"+field.getValue(), Object.class);
         } else {
-            translate(escapeQuotes(field.getValue()), getJavaType(ruleFact.getType(), field.getAttribute()));
+            translate(sanitizer.sanitize(field.getValue()), getJavaType(ruleFact.getType(), field.getAttribute()));
         }
-        close_parenthesis();
-    }
-
-    private String escapeQuotes(String string){
-        return string.replace("\"", "\\\"");
+        closeParenthesis();
     }
 
     private void translate(Condition condition) {
@@ -331,7 +329,7 @@ public class URMLToDroolsTranspiler {
             writer.write("List() from collect (");
         }
         writer.write(condition.getOn().getLocalPart());
-        open_parenthesis();
+        openParenthesis();
         boolean firstIteration = true;
         for (String bindingEqualityToAttribute : condition.getWith()) {
             if (!firstIteration){
@@ -379,10 +377,10 @@ public class URMLToDroolsTranspiler {
             firstIteration = false;
         }
 
-        close_parenthesis();
+        closeParenthesis();
 
         if (condition.getCollect()){
-            close_parenthesis();
+            closeParenthesis();
         }
         newLines(1);
     }
@@ -476,7 +474,7 @@ public class URMLToDroolsTranspiler {
     }
 
     private void translate(QName on, MultiValue multiValue, Filter constraint, DroolsComparator comparator){
-        open_parenthesis();
+        openParenthesis();
         boolean firstIteration = true;
         for (SimpleValue value : multiValue.getValue()) {
             if (!firstIteration){
@@ -486,7 +484,7 @@ public class URMLToDroolsTranspiler {
             translate(on, constraint, comparator, value.getValue());
             firstIteration = false;
         }
-        close_parenthesis();
+        closeParenthesis();
     }
 
     private void translate(String value, Class<?> javaType){
@@ -525,15 +523,15 @@ public class URMLToDroolsTranspiler {
         writer.write(StringUtils.repeat(NEW_LINE, times));
     }
 
-    private void open_parenthesis(){
+    private void openParenthesis(){
         writer.write('(');
     }
 
-    private void close_parenthesis(){
+    private void closeParenthesis(){
         writer.write(')');
     }
 
-    private String capitalize_first_letter(String input){
+    private String capitalizeFirstLetter(String input){
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rules name="org.uniprot.arba" version="2024_04" xmlns="http://uniprot.org/urml/rules" xmlns:fact="http://uniprot.org/urml/facts">
+<rule id="ARBA00037344">
+    <meta>
+      <information type="CREATOR">ARBA</information>
+      <information type="CREATED_ON">2023-10-01+01:00</information>
+      <information type="MODIFIED_BY">ARBA</information>
+      <information type="MODIFIED_ON">2023-10-01+01:00</information>
+      <information type="STATUS">Apply</information>
+    </meta>
+    <conditions>
+      <AND>
+        <condition on="fact:Protein" bind="protein"/>
+        <condition on="fact:Organism" bind="organism" of="protein">
+          <filter on="lineage.ids">
+            <contains operator="any">
+              <value description="Arthropoda">6656</value>
+            </contains>
+          </filter>
+        </condition>
+        <condition on="fact:ProteinSignature" with="protein">
+          <filter on="signature">
+            <field attribute="type">PANTHER</field>
+            <field attribute="value">PTHR45767:SF2</field>
+          </filter>
+        </condition>
+        <condition on="fact:ProteinSignature" with="protein">
+          <filter on="signature">
+            <field attribute="type">InterPro</field>
+            <field attribute="value">IPR001766</field>
+          </filter>
+        </condition>
+      </AND>
+    </conditions>
+    <actions>
+      <action type="create" with="evidence:'ARBA00037344' protein">
+        <fact type="fact:ProteinAnnotation">
+          <field attribute="type">comment.function</field>
+          <field attribute="value">Consistently activates both the downstream target Thor\d4EBP and the feedback control target InR</field>
+        </fact>
+      </action>
+    </actions>
+</rule>
+</rules>

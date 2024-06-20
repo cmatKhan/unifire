@@ -26,7 +26,7 @@ mkdir -p ${GIT_REPO}
 cd ${GIT_REPO}
 git clone https://gitlab.ebi.ac.uk/uniprot-public/unifire.git
 cd unifire
-git checkout pre_release
+git checkout TRM-31483-interproscan
 ./build.sh
 
 echo "Done building UniFIRE."

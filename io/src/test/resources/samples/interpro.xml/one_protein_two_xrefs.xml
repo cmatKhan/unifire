@@ -15,7 +15,7 @@
   ~
   -->
 
-<protein-matches xmlns="http://www.ebi.ac.uk/interpro/resources/schemas/interproscan5" interProScanVersion="5.41-78.0">
+<protein-matches xmlns="https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/schemas" interproscan-version="5.66-98.0">
   <protein>
     <sequence md5="1cd6abff79ad3633e17582eb0e576539">MADSNGTITVEELKKLLEQWNLVIGFLFLTWICLLQFAYANRNRFLYIIKLIFLWLLWPVTLACFVLAAVYRINWITGGIAIAMACLVGLMWLSYFIASFRLFARTRSMWSFNPETNILLNVPLHGTILTRPLLESELVIGAVILRGHLRIAGHHLGRCDIKDLPKEITVATSRTLSYYKLGASQRVAGDSGFAAYSRYRIGNYKLNTDHSSSSDNIALLVQ</sequence>
     <xref id="tr|A0A6B9WDM2|A0A6B9WDM2_SARS2" name="tr|A0A6B9WDM2|A0A6B9WDM2_SARS2 Membrane protein OS=Severe acute respiratory syndrome coronavirus 2 OX=1,10239,2559587,76804,2499399,11118,2501931,694002,2509511,694009,2697049 GN=M PE=2 SV=1"/>

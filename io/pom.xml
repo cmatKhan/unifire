@@ -30,7 +30,7 @@
     <artifactId>unifire-io</artifactId>
 
     <properties>
-        <interproscan-model.version>5.62-94.0</interproscan-model.version>
+        <interproscan-model.version>5.66-98.0</interproscan-model.version>
     </properties>
 
     <dependencies>
