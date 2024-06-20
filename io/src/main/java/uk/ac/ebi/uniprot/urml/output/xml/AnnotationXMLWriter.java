@@ -68,7 +68,6 @@ public class AnnotationXMLWriter implements FactSetWriter<ProteinAnnotation> {
     @Override
     public void close() throws IOException {
         try {
-            urmlFactWriter.completeWrite();
             urmlFactWriter.close();
         } catch (XMLStreamException e) {
             throw new IOException(e);

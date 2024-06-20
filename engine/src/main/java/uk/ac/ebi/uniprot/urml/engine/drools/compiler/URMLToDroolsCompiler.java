@@ -25,6 +25,7 @@ import uk.ac.ebi.uniprot.urml.core.xml.readers.URMLRuleReader;
 import uk.ac.ebi.uniprot.urml.engine.drools.engine.DroolsRuleBase;
 
 import java.io.*;
+import java.util.List;
 import javax.xml.bind.JAXBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,16 +56,16 @@ public class URMLToDroolsCompiler {
 
         RulesValidator rulesValidator = new StandardRulesValidator();
         ValidationErrors validationErrors = new ValidationErrorStack();
-        if (!rulesValidator.isValid(rules, validationErrors)){
-            if (logger.isErrorEnabled()) {
+        if (!rulesValidator.isValid(rules, validationErrors) && logger.isErrorEnabled()) {
                 logger.error("Errors in {}_{}:\n{}", rules.getName(), rules.getVersion(), validationErrors.format());
                 throw new RuleValidationException(
                         String.format("Error when validating %s_%s. %s", rules.getName(), rules.getVersion(),
                                 validationErrors.getLastError()));
-            }
+
         }
 
-        URMLToDroolsTranspiler urmlToDroolsTranspiler = new URMLToDroolsTranspiler(baos);
+        URMLToDroolsTranspiler urmlToDroolsTranspiler = new URMLToDroolsTranspiler(baos,
+                new CompositeSanitizer(List.of(new EscapeSequenceSanitizer(), new DoubleQuotesSanitizer())));
         urmlToDroolsTranspiler.translate(rules);
 
         InputStream transpiledRules = new ByteArrayInputStream(baos.toByteArray());
