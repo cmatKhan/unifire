@@ -34,12 +34,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Alexandre Renaux
  */
-public class PositionalMapperTest {
+class PositionalMapperTest {
 
     @Test
     /* Based on UniRule prediction:
         UR000100891     FEATURE_BINDING Xanthine        A0A1F0RY62      156     156     0.0     0.0     UR      PREDICTED       OC:+:Bacteria;FRAGMENT:-;MATCH:+:MF_01184;FTPO:K=156;     */
-    public void testSinglePositionTemplateMappingToSamePosition(){
+    void testSinglePositionTemplateMappingToSamePosition(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQVLKVDSFLNHQIDPLLMQRIGDEFASRFAKDGITKIVTIESSGIAPAVMTGLKLGVPVVFARKHKSLTLTDNLLTASVYSFTKQTESQIAVSGTHLSDQDHVLIIDDFLANGQAAHGLVSIVKQAGASIAGIGIVIEKSFQPGRDELVKLGYRVESLARIQSLEEGKVSFVQEVHS");
@@ -63,7 +63,7 @@ public class PositionalMapperTest {
     @Test
     /* Based on UniRule prediction:
         UR000100891     FEATURE_BINDING Xanthine        D1W526  30      30      0.0     0.0     UR      PREDICTED      OC:+:Bacteria;FRAGMENT:-;MATCH:+:MF_01184;FTPO:[NT]=27;  */
-    public void testSinglePositionTemplateMappingToOtherPosition(){
+    void testSinglePositionTemplateMappingToOtherPosition(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQVLKVDSFLNHQIDPLLMQRIGDEFASRFAKDGITKIVTIESSGIAPAVMTGLKLGVPVVFARKHKSLTLTDNLLTASVYSFTKQTESQIAVSGTHLSDQDHVLIIDDFLANGQAAHGLVSIVKQAGASIAGIGIVIEKSFQPGRDELVKLGYRVESLARIQSLEEGKVSFVQEVHS");
@@ -89,7 +89,7 @@ public class PositionalMapperTest {
     @Test
     /* Based on UniRule prediction:
         UR000100891     FEATURE_BINDING Xanthine        A0A150MDD4      41      41      0.0     0.0     UR      PREDICTED       OC:+:Bacteria;FRAGMENT:-;MATCH:+:MF_01184;FTPO:[NT]=27; */
-    public void testSinglePositionTemplateMappingToOtherPosition_2(){
+    void testSinglePositionTemplateMappingToOtherPosition_2(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQVLKVDSFLNHQIDPLLMQRIGDEFASRFAKDGITKIVTIESSGIAPAVMTGLKLGVPVVFARKHKSLTLTDNLLTASVYSFTKQTESQIAVSGTHLSDQDHVLIIDDFLANGQAAHGLVSIVKQAGASIAGIGIVIEKSFQPGRDELVKLGYRVESLARIQSLEEGKVSFVQEVHS");
@@ -114,7 +114,7 @@ public class PositionalMapperTest {
     /* Based on UniRule predictions:
         UR000100891     FEATURE_BINDING Xanthine        A0A0R2CFM5      48      48      0.0     0.0     UR      PREDICTED       OC:+:Bacteria;FRAGMENT:-;MATCH:+:MF_01184;FTPO:[NT]=27;
         UR000100891     FEATURE_BINDING Xanthine        A0A0R2CFM5      177     177     0.0     0.0     UR      PREDICTED       OC:+:Bacteria;FRAGMENT:-;MATCH:+:MF_01184;FTPO:K=156;     */
-    public void testDoublePositionTemplateMappingToDifferentPositions(){
+    void testDoublePositionTemplateMappingToDifferentPositions(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQVLKVDSFLNHQIDPLLMQRIGDEFASRFAKDGITKIVTIESSGIAPAVMTGLKLGVPVVFARKHKSLTLTDNLLTASVYSFTKQTESQIAVSGTHLSDQDHVLIIDDFLANGQAAHGLVSIVKQAGASIAGIGIVIEKSFQPGRDELVKLGYRVESLARIQSLEEGKVSFVQEVHS");
@@ -148,7 +148,7 @@ public class PositionalMapperTest {
     /* Based on UniRule prediction:
     UR000568546     FEATURE_REGION  Involved in apical transport and lipid raft association A0A0K0NHR1      11      33      0.0     0.0     UR      PREDICTED       FRAGMENT:-;MATCH:+:MF
 _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
-    public void testSingleRangeTemplateMappingToSameRange(){
+    void testSingleRangeTemplateMappingToSameRange(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_04071");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P03468", "MNPNQKIITIGSICLVVGLISLILQIGNIISIWISHSIQTGSQNHTGICNQNIITYKNSTWVKDTTSVILTGNSSLCPIRGWAIYSKDNSIRIGSKGDVFVIREPFISCSHLECRTFFLTQGALLNDKHSNGTVKDRSPYRALMSCPVGEAPSPYNSRFESVAWSASACHDGMGWLTIGISGPDNGAVAVLKYNGIITETIKSWRKKILRTQESECACVNGSCFTIMTDGPSDGLASYKIFKIEKGKVTKSIELNAPNSHYEECSCYPDTGKVMCVCRDNWHGSNRPWVSFDQNLDYQIGYICSGVFGDNPRPEDGTGSCGPVYVDGANGVKGFSYRYGNGVWIGRTKSHSSRHGFEMIWDPNGWTETDSKFSVRQDVVAMTDWSGYSGSFVQHPELTGLDCMRPCFWVELIRGRPKEKTIWTSASSISFCGVNSDTVDWSWPDGAELPFSIDK");
@@ -174,7 +174,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     UR000568546     FEATURE_DISULFID                A0A0K0NHR1      183     230     0.0     0.0     UR      PREDICTED       FRAGMENT:-;MATCH:+:MF_04071;OC:+:Orthomyxoviridae;FTPO:C-x*-C=169-216;
     UR000568546     FEATURE_DISULFID                A0A0K0NHR1      92      417     0.0     0.0     UR      PREDICTED
            FRAGMENT:-;MATCH:+:MF_04071;OC:+:Orthomyxoviridae;FTPO:C-x*-C=77-402; */
-    public void testMultipleRangeTemplateMappingToDifferentRanges(){
+    void testMultipleRangeTemplateMappingToDifferentRanges(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_04071");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P03468", "MNPNQKIITIGSICLVVGLISLILQIGNIISIWISHSIQTGSQNHTGICNQNIITYKNSTWVKDTTSVILTGNSSLCPIRGWAIYSKDNSIRIGSKGDVFVIREPFISCSHLECRTFFLTQGALLNDKHSNGTVKDRSPYRALMSCPVGEAPSPYNSRFESVAWSASACHDGMGWLTIGISGPDNGAVAVLKYNGIITETIKSWRKKILRTQESECACVNGSCFTIMTDGPSDGLASYKIFKIEKGKVTKSIELNAPNSHYEECSCYPDTGKVMCVCRDNWHGSNRPWVSFDQNLDYQIGYICSGVFGDNPRPEDGTGSCGPVYVDGANGVKGFSYRYGNGVWIGRTKSHSSRHGFEMIWDPNGWTETDSKFSVRQDVVAMTDWSGYSGSFVQHPELTGLDCMRPCFWVELIRGRPKEKTIWTSASSISFCGVNSDTVDWSWPDGAELPFSIDK");
@@ -217,7 +217,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     /* Based on UniRule prediction:
     UR000568546     FEATURE_REGION  Head of neuraminidase   A0A0K0NHR1      91      469     0.0     0.0     UR      PREDICTED       FRAGMENT:-;MATCH:+:MF_04071;OC:+:Orthomyxoviridae;FTPO:=76-@CTER@;
      */
-    public void testRangeTemplateMappingWithCTER(){
+    void testRangeTemplateMappingWithCTER(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_04071");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P03468", "MNPNQKIITIGSICLVVGLISLILQIGNIISIWISHSIQTGSQNHTGICNQNIITYKNSTWVKDTTSVILTGNSSLCPIRGWAIYSKDNSIRIGSKGDVFVIREPFISCSHLECRTFFLTQGALLNDKHSNGTVKDRSPYRALMSCPVGEAPSPYNSRFESVAWSASACHDGMGWLTIGISGPDNGAVAVLKYNGIITETIKSWRKKILRTQESECACVNGSCFTIMTDGPSDGLASYKIFKIEKGKVTKSIELNAPNSHYEECSCYPDTGKVMCVCRDNWHGSNRPWVSFDQNLDYQIGYICSGVFGDNPRPEDGTGSCGPVYVDGANGVKGFSYRYGNGVWIGRTKSHSSRHGFEMIWDPNGWTETDSKFSVRQDVVAMTDWSGYSGSFVQHPELTGLDCMRPCFWVELIRGRPKEKTIWTSASSISFCGVNSDTVDWSWPDGAELPFSIDK");
@@ -242,7 +242,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     /* Based on UniRule prediction:
     UR000540784	FEATURE_REGION	RU A	W9WUY2	1	90	0.0	0.0	UR	PREDICTED	FRAGMENT:-;OC:+:Fungi;MATCH:+:MF_01989;FTPO:=@NTER@-103;
      */
-    public void testRangeTemplateMappingWithNTER(){
+    void testRangeTemplateMappingWithNTER(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_04071");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P58329", "MYHIDVFRIPCHSPGDTSGLEDLIETGRVAPADIVAVMGKTEGNGCVNDYTREYATAMLAACLGRHLQLPPHEVEKRVAFVMSGGTEGVLSPHHTVFARRPAIDAHRPAGKRLTLGIAFTRDFLPEEIGRHAQITETAGAVKRAMRDAGIASIDDLHFVQVKCPLLTPAKIASARSRGCAPVTTDTYESMGYSRGASALGIALATEEVPSSMLVDESVLNDWSLSSSLASASAGIELEHNVVIAIGMSEQATSELVIAHGVMSDAIDAASVRRTIESLGIRSDDEMDRIVNVFAKAEASPDGVVRGMRHTMLSDSDINSTRHARAVTGAAIASVVGHGMVYVSGGAEHQGPAGGGPFAVIARA");
@@ -267,7 +267,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     /* Based on UniRule prediction:
      UR000588304	FEATURE_ACT_SITE	Proton acceptor	A0A087HS97	65	65	0.0	0.0	UR	PREDICTED	MATCH:+:PS00920;OC:+:Eukaryota;FTPO:=5;
       */
-    public void testSinglePositionMappingWithoutTemplate(){
+    void testSinglePositionMappingWithoutTemplate(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS00920");
         Protein targetProtein = TestUtils.createProtein("A0A087HS97", "MSGKEEMSSVKNTTPANGVAPSSIVRASIVQASTVYNNTPATLEKAEKLIAEAASNGSKLVVFPEAFIGGYPRGFRFGIGVGVHNEDGRDEFRNYHASAIRVPGPEVEKLAEVAGKNNVYLVMGAIEKDGYTLYCTALFFSSQGLFLGKHRKLMPTSLERCIWGYGDGSTIPVYDTPHGKLGAAICWENRMPLYRTALYAKGVEIYCAPTADGSKEWQSSMLHIALEGGCFVLSACQFCRRKDFPDHPDYLFTDWDDNQEDHAIVSQGGSVIISPLGQVLAGPNFESEGLVTADLDLGDVARAKLYFDVVGHYSKPEVFNLTVNEDRKKPVTFVSKVEKAEDEPKK");
         PositionalProteinSignature targetMatch = TestUtils
@@ -287,7 +287,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     /* Based on UniRule prediction:
     UR000413441	FEATURE_DISULFID		D3DNU8	351	370	0.0	0.0	UR	PREDICTED	MATCH:+:PS51647;OC:+:Eutheria;FTPO:C-x*-C=80-99;
      */
-    public void testRangeMappingWithoutTemplate(){
+    void testRangeMappingWithoutTemplate(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS51647");
         Protein targetProtein = TestUtils.createProtein("D3DNU8", "MKLITILFLCSRLLLSLTQESQSEEIDCNDKDLFKAVDAALKKYNSQNQSNNQFVLYRITEATKTVGSDTFYSFKYEIKEGDCPVQSGKTWQDCEYKDAAKAATGECTATVGKRSSTKFSVATQ\n" +
                 "TCQITPAEGPVVTAQYDCLGCVHPISTQSPDLEPILRHGIQYFNNNTQHSSLFTLNEVKRAQRQVVAGLNFRITYSIVQTNCSKENFLFLTPDCKSLWNGDTGECTDNAYIDIQLRIASFSQNCDIYPGKDFVQPPTKICVGCPRDIPTNSPELEETLTHTITKLNAENNATFYFKIDNVK\n" +
@@ -307,7 +307,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     /* Based on UniRule prediction:
     UR000400536	FEATURE_MOTIF	TFG box	A0A1D6LXV9	620	640	0.0	0.0	UR	PREDICTED	OC:+:Eukaryota;MATCH:+:PS51536;FTPO:=@FROM@-@TO@;
      */
-    public void testRangeMappingWithoutTemplateWithFromToPlaceholders(){
+    void testRangeMappingWithoutTemplateWithFromToPlaceholders(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS51536");
         Protein targetProtein = TestUtils.createProtein("A0A1D6LXV9", "MAAAAAAAAAAPESYIGSLISLMSKSEIRYEGVLYTINTEESSIGLKNVRSFGTEGRKKDGQQIPASDKIYEYILFRGSDIKDLQVKSSPPSQSATLHNDPAIIQSHYPHPASLSTSLPSAAST\n" +
                 "IGANPTSQNAPSLIQMPPPFQGNLPPYQSGTSLQSWNSAPMPSSANGTGLTMPPMYWPGYYTPPTGFSHLQPPLFLRPPHSLAVPQVLQLPVQYPGLGSLPAGFPNMPELPSFLQPGNSNSLNQTSGVPTSVSTPASLSTSQTESSRSQLPNKFSSDSASVFSVGFTPPSVTPSVSTVEPS\n" +
@@ -326,7 +326,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testMappedPositionsFromConditionsOutsideTargetAlignmentIsInvalid(){
+    void testMappedPositionsFromConditionsOutsideTargetAlignmentIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS12345");
         Protein targetProtein = TestUtils.createProtein("P12345", "MKLITILFLCSRLLLSLTQESQ");
         PositionalProteinSignature targetMatch = TestUtils
@@ -344,7 +344,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testMappedPositionsFromConditionsLessThan1IsInvalid(){
+    void testMappedPositionsFromConditionsLessThan1IsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS12345");
         Protein targetProtein = TestUtils.createProtein("P12345", "MKLITILFLCSRLLLSLTQESQ");
         PositionalProteinSignature targetMatch = TestUtils
@@ -361,7 +361,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testTargetAlignmentPositionsOutsideSequenceLengthIsInvalid(){
+    void testTargetAlignmentPositionsOutsideSequenceLengthIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS12345");
         Protein targetProtein = TestUtils.createProtein("P12345", "MKLITILFLCSRLLLSLTQESQ");
         PositionalProteinSignature targetMatch = TestUtils
@@ -378,7 +378,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testEmptyTargetAlignmentIsInvalid(){
+    void testEmptyTargetAlignmentIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS12345");
         Protein targetProtein = TestUtils.createProtein("P12345", "MKLITILFLCSRLLLSLTQESQ");
         PositionalProteinSignature targetMatch = TestUtils
@@ -395,7 +395,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testNullTargetAlignmentIsInvalid(){
+    void testNullTargetAlignmentIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS12345");
         Protein targetProtein = TestUtils.createProtein("P12345", "MKLITILFLCSRLLLSLTQESQ");
         PositionalProteinSignature targetMatch = TestUtils
@@ -412,7 +412,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testEmptyTargetSequenceIsInvalid(){
+    void testEmptyTargetSequenceIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS12345");
         Protein targetProtein = TestUtils.createProtein("P12345", "");
         PositionalProteinSignature targetMatch = TestUtils
@@ -429,7 +429,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testNullTargetSequenceIsInvalid(){
+    void testNullTargetSequenceIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.PROSITE, "PS12345");
         Protein targetProtein = TestUtils.createProtein("P12345", null);
         PositionalProteinSignature targetMatch = TestUtils
@@ -446,7 +446,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithTemplateMappingAndMappedPositionsFromConditionsOutsideTargetAlignmentIsInvalid(){
+    void testWithTemplateMappingAndMappedPositionsFromConditionsOutsideTargetAlignmentIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQV");
@@ -469,7 +469,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithTemplateMappingAndMappedPositionsFromConditionsLessThan1IsInvalid(){
+    void testWithTemplateMappingAndMappedPositionsFromConditionsLessThan1IsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQV");
@@ -492,7 +492,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithTemplateMappingAndTargetAlignementPositionLessThan1IsInvalid(){
+    void testWithTemplateMappingAndTargetAlignementPositionLessThan1IsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQV");
@@ -515,7 +515,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithTemplateMappingAndTemplateAlignementPositionLessThan1IsInvalid(){
+    void testWithTemplateMappingAndTemplateAlignementPositionLessThan1IsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQV");
@@ -538,7 +538,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testTemplateAlignmentPositionsOutsideSequenceLengthIsInvalid(){
+    void testTemplateAlignmentPositionsOutsideSequenceLengthIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQV");
@@ -561,7 +561,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithEmptyTemplateSequenceIsValid(){
+    void testWithEmptyTemplateSequenceIsValid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "");
@@ -584,7 +584,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithNullTemplateSequenceIsValid(){
+    void testWithNullTemplateSequenceIsValid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", null);
@@ -607,7 +607,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithEmptyTemplateSequenceAlignmentIsInvalid(){
+    void testWithEmptyTemplateSequenceAlignmentIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQV");
@@ -630,7 +630,7 @@ _04071;OC:+:Orthomyxoviridae;FTPO:=11-33; */
     }
 
     @Test
-    public void testWithNullTemplateSequenceAlignmentIsInvalid(){
+    void testWithNullTemplateSequenceAlignmentIsInvalid(){
         Signature signature = TestUtils.createSignature(SignatureType.HAMAP, "MF_01184");
 
         TemplateProtein templateProtein = TestUtils.createProtein("P42085", "MEALKRKIEEEGVVLSDQV");

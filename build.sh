@@ -24,7 +24,7 @@ function checkEnv {
       exit 1
     fi
 
-    JAVA_VERSION_MIN=11
+    JAVA_VERSION_MIN=17
     CURRENT_JAVA_VERSION=`mvn -v | grep 'Java version' | awk '{split($3, a, "."); print a[1]}'`
 
     if [[ "${CURRENT_JAVA_VERSION}" -lt "${JAVA_VERSION_MIN}" ]]

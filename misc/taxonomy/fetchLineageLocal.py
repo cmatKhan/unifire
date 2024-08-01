@@ -7,14 +7,14 @@ by the full lineage corresponding to this taxId. The output is the resolved mult
 
 This script should be used when processing large amount of sequences from different species.
 
-All the taxonomy data from NCBI are stored locally via Ete (by default in ~/.etetoolkit/taxa.sqlite)
+All the taxonomy data from NCBI are stored locally via Ete (by default in ~/.local/share/ete/taxa.sqlite)
 This local storage can be updated using the following Python lines:
 
-    from ete3 import NCBITaxa
+    from ete4 import NCBITaxa
     NCBITaxa().update_taxonomy_database()
 
-Library dependencies (via pip / conda / ...):
-    * ete3  (pip install ete3  /  conda install -c etetoolkit ete3)
+Library dependencies (via pip):
+    * ete4  (pip install https://github.com/etetoolkit/ete/archive/ete4.zip)
     * biopython
 """
 #  Copyright (c) 2018 European Molecular Biology Laboratory
@@ -32,7 +32,7 @@ Library dependencies (via pip / conda / ...):
 #  limitations under the License.
 #
 
-from ete3 import NCBITaxa
+from ete4 import NCBITaxa
 from Bio import SeqIO
 import sys, re
 
@@ -74,7 +74,7 @@ def resolve_header(header):
             return re.sub(header_OX_pattern, replacement, header)
     return header
 
-def removeLongProteinName(description):
+def remove_long_protein_name(description):
     match = header_DE_remove_pattern.search(description)
     if match:
         groups = list(header_DE_remove_pattern.search(description).groups())
@@ -91,7 +91,7 @@ def main(argv):
     file_out = argv[2]
     with open(file_out, 'w') as f_out:
         for seq_record in SeqIO.parse(open(file_in, mode='r'), "fasta"):
-            seq_record.description = removeLongProteinName(resolve_header(seq_record.description))
+            seq_record.description = remove_long_protein_name(resolve_header(seq_record.description))
             seq_record.id = ""
             r=SeqIO.write(seq_record, f_out, "fasta")
             if r!=1: print("Error while writing sequence:  " + seq_record.id)

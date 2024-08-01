@@ -25,7 +25,7 @@ import org.uniprot.urml.facts.FactSet;
  *
  * @author Alexandre Renaux
  */
-public class    FactSetPartitioner implements Iterator<FactSetPartitioner.Partition> {
+public class FactSetPartitioner implements Iterator<FactSetPartitioner.Partition> {
 
     private final Iterator<FactSet> sourceFactSetIterator;
     private final int maxFactSets;
@@ -47,12 +47,12 @@ public class    FactSetPartitioner implements Iterator<FactSetPartitioner.Partit
     @Override
     public FactSetPartitioner.Partition next() {
         int counter = 0;
-        FactSet.Builder<Void> factSetBuilder = FactSet.builder();
+        FactSet factSet = new FactSet();
         while (sourceFactSetIterator.hasNext() && counter < maxFactSets){
-            factSetBuilder.addFact(sourceFactSetIterator.next().getFact());
+            sourceFactSetIterator.next().getFact().forEach(fact -> factSet.getFact().add(fact));
             counter++;
         }
-        return new Partition(factSetBuilder.build(), counter);
+        return new Partition(factSet, counter);
     }
 
     public class Partition {

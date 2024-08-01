@@ -43,7 +43,7 @@ public abstract class AbstractURMLWriter<S, E> implements URMLWriter<S, E> {
     protected final XMLStreamWriter xmlStreamWriter;
     protected final JAXBContext jaxbContext;
 
-    public AbstractURMLWriter(OutputStream os, JAXBContext jaxbContext, String namespace) throws XMLStreamException {
+    protected AbstractURMLWriter(OutputStream os, JAXBContext jaxbContext, String namespace) throws XMLStreamException {
         this.os = os;
         this.namespace = namespace;
         try {

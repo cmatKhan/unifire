@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Alexandre Renaux
  */
-public class MaxSigFreqPlaceholderResolverTest {
+class MaxSigFreqPlaceholderResolverTest {
 
     @Test
     public void resolveWithMultipleSignaturesWithSomeNotInArgs(){
@@ -166,6 +166,4 @@ public class MaxSigFreqPlaceholderResolverTest {
         return ProteinSignature.builder().withProtein(protein).withSignature().withType(signatureType)
                 .withValue(signatureName).end().withFrequency(frequency).build();
     }
-
-
 }

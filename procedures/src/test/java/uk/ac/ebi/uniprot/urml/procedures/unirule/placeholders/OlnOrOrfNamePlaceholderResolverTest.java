@@ -28,10 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  *
  * @author Alexandre Renaux
  */
-public class OlnOrOrfNamePlaceholderResolverTest {
+class OlnOrOrfNamePlaceholderResolverTest {
 
     @Test
-    public void noGenesResolvedToEmptyString(){
+    void noGenesResolvedToEmptyString(){
         ProteinAnnotation
                 proteinAnnotation = buildProteinAnnotationWithPlaceholdersWithGenes("UPF0107 protein @OLN_OR_ORF_NAME@.", null);
         OlnOrOrfNamePlaceholderResolver.resolve(proteinAnnotation);
@@ -40,7 +40,7 @@ public class OlnOrOrfNamePlaceholderResolverTest {
     }
 
     @Test
-    public void emptyGeneResolvedToEmptyString(){
+    void emptyGeneResolvedToEmptyString(){
         GeneInformation gene = GeneInformation.builder().build();
         ProteinAnnotation
                 proteinAnnotation = buildProteinAnnotationWithPlaceholdersWithGenes("UPF0107 protein @OLN_OR_ORF_NAME@.", gene);
@@ -50,7 +50,7 @@ public class OlnOrOrfNamePlaceholderResolverTest {
     }
 
     @Test
-    public void oneGeneWithAllMultipleGeneFieldsResolvedToFirstOln(){
+    void oneGeneWithAllMultipleGeneFieldsResolvedToFirstOln(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA", "synonA1", "synonA2").withOrfOrOlnNames("olnA1", "olnA2").build();
         ProteinAnnotation
                 proteinAnnotation = buildProteinAnnotationWithPlaceholdersWithGenes("UPF0107 protein @OLN_OR_ORF_NAME@.", gene);
@@ -60,7 +60,7 @@ public class OlnOrOrfNamePlaceholderResolverTest {
     }
 
     @Test
-    public void oneGeneWithNoOlnButMultipleOrfAndMultipleNameResolvedToFirstOrf(){
+    void oneGeneWithNoOlnButMultipleOrfAndMultipleNameResolvedToFirstOrf(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA", "synonA1", "synonA2").withOrfOrOlnNames("orfA1", "orfA2").build();
         ProteinAnnotation
                 proteinAnnotation = buildProteinAnnotationWithPlaceholdersWithGenes("UPF0107 protein @OLN_OR_ORF_NAME@.", gene);
@@ -70,7 +70,7 @@ public class OlnOrOrfNamePlaceholderResolverTest {
     }
 
     @Test
-    public void oneGeneWithNoOlnNoOrfButMultipleNamesResolvedToFirstName(){
+    void oneGeneWithNoOlnNoOrfButMultipleNamesResolvedToFirstName(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA", "synonA1", "synonA2").build();
         ProteinAnnotation
                 proteinAnnotation = buildProteinAnnotationWithPlaceholdersWithGenes("UPF0107 protein @OLN_OR_ORF_NAME@.", gene);
@@ -80,7 +80,7 @@ public class OlnOrOrfNamePlaceholderResolverTest {
     }
 
     @Test
-    public void multiplePlaceholderAllResolved(){
+    void multiplePlaceholderAllResolved(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA", "synonA1", "synonA2").withOrfOrOlnNames("olnA1", "olnA2").build();
 
         ProteinAnnotation

@@ -31,6 +31,7 @@
 #    limitations under the License.
 ############################################################################
 
-from ete3 import NCBITaxa
+from ete4 import NCBITaxa
 
 ncbi = NCBITaxa()
+ncbi.update_taxonomy_database()

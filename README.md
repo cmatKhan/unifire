@@ -170,7 +170,7 @@ Scripts are only provided for Linux and Mac OS.
 
 #### Software
 
-- Java 11 (e.g. OpenJDK 11)
+- Java 17 (e.g. OpenJDK 17)
 - Bash
 - Maven (version 3.6.0 has been tested successfully)
 
@@ -350,11 +350,11 @@ The script also print out warnings if an important data (e.g organism name) is m
 ### Running InterProScan
 
 Once the multifasta file is ready (cf. previous steps), you can find the matches of all sequences using InterProScan.
-It is advised to download the last version from [https://www.ebi.ac.uk/interpro/download.html](https://www.ebi.ac.uk/interpro/download.html) and keep it up-to-date. The current version of InterProScan (5.42-78.0) requires Java 11 to run. 
+It is advised to download the last version from [https://www.ebi.ac.uk/interpro/download.html](https://www.ebi.ac.uk/interpro/download.html) and keep it up-to-date.
 
 The output format must be XML to be accepted as a valid input for UniFIRE.
 
-The option `-dp` or `--disable-precalc` must be used to be able to get the sequence alignments (necessary if you are interested by the positional features annotations provided by UniRule).
+The option `-dp` or `--disable-precalc` must be used to be able to get the sequence alignments (necessary if you are interested in the positional features annotations provided by UniRule).
 
 Command:
 

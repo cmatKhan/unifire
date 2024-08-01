@@ -43,11 +43,11 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
  * @author Alexandre Renaux
  */
 
-public class DroolsExecutionTest {
+class DroolsExecutionTest {
 
     @ParameterizedTest(name = "{index}: ruleFileName={0}, factFileName={1}")
     @CsvSource({ "simple_rule, facts_1"})
-    public void droolsExecutionReturnExpectedFacts(String ruleFileName, String factFileName) throws Exception {
+    void droolsExecutionReturnExpectedFacts(String ruleFileName, String factFileName) throws Exception {
         URMLRuleReader ruleReader = new URMLRuleReader();
         Rules rules = ruleReader.read(this.getClass().getResourceAsStream("/rules/" +ruleFileName+".xml"));
 
