@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 /**
  * Created by Hermann Zellner on 05/08/2020.
  */
-public class AnnotationXMLWriterTest {
+class AnnotationXMLWriterTest {
 
     private final static String ACCESSION_1 = "P12345";
     private final static String ACCESSION_2 = "P12346";
@@ -37,7 +37,7 @@ public class AnnotationXMLWriterTest {
     private final static String ANNOTATION_2 = "Another annotation value";
 
     @Test
-    public void writeOneProteinAnnotation() throws IOException {
+    void writeOneProteinAnnotation() throws IOException {
         String expectedResult = "<?xml version=\"1.0\" ?>\n" +
                 "<facts xmlns=\"http://uniprot.org/urml/facts\" xmlns:xsi=\"http://www.w3" +
                 ".org/2001/XMLSchema-instance\">\n" +
@@ -65,7 +65,7 @@ public class AnnotationXMLWriterTest {
     }
 
     @Test
-    public void writeTwoProteinAnnotations() throws IOException {
+    void writeTwoProteinAnnotations() throws IOException {
         String expectedResult = "<?xml version=\"1.0\" ?>\n" +
                 "<facts xmlns=\"http://uniprot.org/urml/facts\" xmlns:xsi=\"http://www.w3" +
                 ".org/2001/XMLSchema-instance\">\n" +
@@ -100,7 +100,7 @@ public class AnnotationXMLWriterTest {
     }
 
     @Test
-    public void writeFactSetWithOneProteinAnnotation() throws IOException {
+    void writeFactSetWithOneProteinAnnotation() throws IOException {
 
         String expectedResult = "<?xml version=\"1.0\" ?>\n" +
                 "<facts xmlns=\"http://uniprot.org/urml/facts\" xmlns:xsi=\"http://www.w3" +
@@ -132,7 +132,7 @@ public class AnnotationXMLWriterTest {
     }
 
     @Test
-    public void writeFactSetWithTwoProteinAnnotations() throws IOException {
+    void writeFactSetWithTwoProteinAnnotations() throws IOException {
 
         String expectedResult = "<?xml version=\"1.0\" ?>\n" +
                 "<facts xmlns=\"http://uniprot.org/urml/facts\" xmlns:xsi=\"http://www.w3" +
@@ -169,7 +169,7 @@ public class AnnotationXMLWriterTest {
     }
 
     @Test
-    public void writeTwoFactSets() throws IOException {
+    void writeTwoFactSets() throws IOException {
 
         String expectedResult = "<?xml version=\"1.0\" ?>\n" +
                 "<facts xmlns=\"http://uniprot.org/urml/facts\" xmlns:xsi=\"http://www.w3" +

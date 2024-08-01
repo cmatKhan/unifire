@@ -66,6 +66,7 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
                 switch (property.getType()){
                     case "NCBI_taxonomy_id":
                         ncbiTaxId = property.getValue();
+                        break;
                     case "NCBI_taxonomy_lineage_ids":
                         ncbiTaxIds = property.getValue();
                         break;
@@ -124,12 +125,22 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
 
             Signature libSignature = Signature.builder().withType(signatureType).withValue(libSignatureId).build();
             Signature iprSignature = Signature.builder().withType(SignatureType.INTER_PRO).withValue(iprSignatureId).build();
-            for (LocationType locationType : seqFeatureType.getLcn()) {
-                ProteinSignature.Builder<Void> pSignatureBuilder = ProteinSignature.builder();
-                pSignatureBuilder.withProtein(protein);
-                pSignatureBuilder.withFrequency(seqFeatureType.getLcn().size());
-                factSetBuilder.addFact(pSignatureBuilder.withSignature(libSignature).build());
-                factSetBuilder.addFact(pSignatureBuilder.withSignature(iprSignature).build());
+            Iterator<LocationType> iterator = seqFeatureType.getLcn().iterator();
+            while(iterator.hasNext()) {
+                ProteinSignature libSig = PositionalProteinSignature
+                                            .builder()
+                                            .withProtein(protein)
+                                            .withFrequency(seqFeatureType.getLcn().size())
+                                            .withSignature(libSignature)
+                                            .build();
+                ProteinSignature iprSig = PositionalProteinSignature
+                                            .builder()
+                                            .withProtein(protein)
+                                            .withFrequency(seqFeatureType.getLcn().size())
+                                            .withSignature(iprSignature)
+                                            .build();
+                factSetBuilder.addFact(libSig);
+                factSetBuilder.addFact(iprSig);
             }
         }
 
@@ -153,44 +164,28 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
     }
 
     private String getSignatureValue(String value, SignatureType signatureType){
-        switch (signatureType){
-            case GENE_3_D:
+        if (signatureType == SignatureType.GENE_3_D) {
                 return value.replace("G3DSA:", "");
-            default:
-                return value;
         }
+                return value;
     }
 
     private SignatureType getSignatureType(String library){
-        switch (library){
-            case "CDD":
-                return SignatureType.CDD;
-            case "Gene3D":
-                return SignatureType.GENE_3_D;
-            case "HAMAP":
-                return SignatureType.HAMAP;
-            case "PANTHER":
-                return SignatureType.PANTHER;
-            case "PIRSF":
-                return SignatureType.PIR_SUPERFAMILY;
-            case "Pfam":
-                return SignatureType.PFAM;
-            case "ProDom":
-                return SignatureType.PRO_DOM;
-            case "PRINTS":
-                return SignatureType.PRINTS;
-            case "PROSITE":
-                return SignatureType.PROSITE;
-            case "SFLD":
-                return SignatureType.SFLD;
-            case "SMART":
-                return SignatureType.SMART;
-            case "SUPFAM":
-                return SignatureType.SCOP_SUPERFAMILY;
-            case "NCBIFAM":
-                return SignatureType.NCBIFAM;
-            default:
-                return null;
-        }
+        return switch (library) {
+            case "CDD" -> SignatureType.CDD;
+            case "Gene3D" -> SignatureType.GENE_3_D;
+            case "HAMAP" -> SignatureType.HAMAP;
+            case "PANTHER" -> SignatureType.PANTHER;
+            case "PIRSF" -> SignatureType.PIR_SUPERFAMILY;
+            case "Pfam" -> SignatureType.PFAM;
+            case "ProDom" -> SignatureType.PRO_DOM;
+            case "PRINTS" -> SignatureType.PRINTS;
+            case "PROSITE" -> SignatureType.PROSITE;
+            case "SFLD" -> SignatureType.SFLD;
+            case "SMART" -> SignatureType.SMART;
+            case "SUPFAM" -> SignatureType.SCOP_SUPERFAMILY;
+            case "NCBIFAM" -> SignatureType.NCBIFAM;
+            default -> null;
+        };
     }
 }

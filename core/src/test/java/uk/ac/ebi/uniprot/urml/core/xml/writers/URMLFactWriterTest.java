@@ -47,6 +47,7 @@ class URMLFactWriterTest {
                     .withFact(builder().withType("type1").build(), builder().withType("type2").build())
                     .build();
 
+
             //when and then
             assertDoesNotThrow(() -> factWriter.write(factSet));
         }

@@ -20,10 +20,10 @@ set -e
 set -u
 
 SCRIPT_PATH=`dirname $0`
-ETE3FOLDER="/opt/ete3"
+ETE4FOLDER="/opt/ete4"
 
 ${SCRIPT_PATH}/update-taxonomy-cache.py
 
-mkdir -p ${ETE3FOLDER}
-mv ~/.etetoolkit/taxa.sqlite ${ETE3FOLDER}/
-chmod 644 ${ETE3FOLDER}/taxa.sqlite
+mkdir -p ${ETE4FOLDER}
+mv ~/.local/share/ete/taxa.sqlite ${ETE4FOLDER}/
+chmod 644 ${ETE4FOLDER}/taxa.sqlite

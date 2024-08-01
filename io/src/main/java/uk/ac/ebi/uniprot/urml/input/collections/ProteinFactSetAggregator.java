@@ -61,15 +61,14 @@ public class ProteinFactSetAggregator implements FactSetAggregator {
     public Collection<FactSet> getFactSets() {
         Collection<FactSet> factSets = new ArrayList<>();
         for (Map.Entry<TemplateProtein, Collection<ProteinSignature>> entry : factData.entrySet()) {
-            FactSet.Builder<Void> factBuilder = FactSet.builder();
             TemplateProtein protein = entry.getKey();
             Collection<ProteinSignature> proteinSignatures = entry.getValue();
-            factBuilder.addFact(protein);
+            FactSet factSet = new FactSet();
+            factSet.getFact().add(protein);
             if (protein instanceof Protein){
-                factBuilder.addFact(((Protein) protein).getOrganism());
+                factSet.getFact().add(((Protein) protein).getOrganism());
             }
-            factBuilder.addFact(proteinSignatures);
-            FactSet factSet = factBuilder.build();
+            proteinSignatures.forEach(proteinSignature -> factSet.getFact().add(proteinSignature));
             factSets.add(factSet);
         }
         return factSets;

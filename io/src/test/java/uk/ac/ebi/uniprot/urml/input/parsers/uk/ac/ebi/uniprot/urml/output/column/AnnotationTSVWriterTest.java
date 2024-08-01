@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by Hermann Zellner on 03/12/18.
  */
-public class AnnotationTSVWriterTest {
+class AnnotationTSVWriterTest {
 
     /**
      * Created by Hermann Zellner on 03/12/18.
@@ -42,7 +42,7 @@ public class AnnotationTSVWriterTest {
     @DisplayName("Tests for AnnotationTSVWriter writing and reading predicted ProteinAnnotations")
     @ParameterizedTest
     @MethodSource("argumentSource")
-    public void test(List<ProteinAnnotation> proteinAnnotations, List<String> expectedResult) throws IOException {
+    void test(List<ProteinAnnotation> proteinAnnotations, List<String> expectedResult) throws IOException {
         FactSet factSet = getFactSets(proteinAnnotations);
 
         File tempFile = File.createTempFile("annotationTSVWriter", "tsv");
@@ -70,7 +70,7 @@ public class AnnotationTSVWriterTest {
                 ),
                 Arguments.of(
                         Arrays.asList(
-                            getProteinAnnotation("P12345", "feature.METAL", null, 26, 26, "UR000416798")
+                                getProteinAnnotation("P12345", "feature.METAL", null, 26, 26, "UR000416798")
                         ),
                         Arrays.asList(
                                 "Evidence\tProteinId\tAnnotationType\tValue\tStart\tEnd",
@@ -79,7 +79,7 @@ public class AnnotationTSVWriterTest {
                 ),
                 Arguments.of(
                         Arrays.asList(
-                            getProteinAnnotation("A8DZ02", "feature.METAL", "Zinc; catalytic", 604, 604, "UR000401086")
+                                getProteinAnnotation("A8DZ02", "feature.METAL", "Zinc; catalytic", 604, 604, "UR000401086")
                         ),
                         Arrays.asList(
                                 "Evidence\tProteinId\tAnnotationType\tValue\tStart\tEnd",
@@ -101,8 +101,8 @@ public class AnnotationTSVWriterTest {
     }
 
     private static ProteinAnnotation getProteinAnnotation(String proteinAccession, String type, String value,
-            Integer start,
-            Integer end, String evidence) {
+                                                          Integer start,
+                                                          Integer end, String evidence) {
         Protein.Builder<Void> proteinBuilder =
                 Protein.builder().withId(proteinAccession).withOrganism(Organism.builder().build()).withSequence(ProteinSequence.builder().build());
 

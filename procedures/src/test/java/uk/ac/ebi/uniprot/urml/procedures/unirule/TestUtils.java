@@ -36,7 +36,7 @@ public class TestUtils {
     }
 
     public static PositionalProteinSignature createPositionalProteinSignature(TemplateProtein protein,
-            Signature signature, int positionStart, int positionEnd, String alignment){
+                                                                              Signature signature, int positionStart, int positionEnd, String alignment){
         return PositionalProteinSignature.builder()
                 .withSignature(signature)
                 .withProtein(protein)
@@ -46,7 +46,7 @@ public class TestUtils {
     }
 
     public static PositionalMapping createUnmappedPositionalMapping(PositionalProteinSignature targetMatch,
-            PositionalProteinSignature templateMatch, String templateStart, String templateEnd){
+                                                                    PositionalProteinSignature templateMatch, String templateStart, String templateEnd){
         return PositionalMapping.builder().withIsValid(false).withProtein((Protein) targetMatch.getProtein())
                 .withTemplateMatch(templateMatch).withTargetMatch(targetMatch)
                 .withTemplateStart(templateStart).withTemplateEnd(templateEnd)

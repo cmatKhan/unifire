@@ -18,14 +18,14 @@
 
 UNIFIRE_REPO="/opt/git/unifire"
 INTERPROSCAN_REPO="/opt/interproscan"
-ETE3FOLDER="/opt/ete3"
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ETE4FOLDER="/opt/ete4"
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 export PATH="${JAVA_HOME}/bin:${PATH}"
 VOLUME=/volume
 infilename=infile.fasta
 
 ${UNIFIRE_REPO}/misc/taxonomy/fetchTaxonomicLineage.py -i ${VOLUME}/proteins.fasta -o ${VOLUME}/proteins_lineage.fasta \
-  -t ${ETE3FOLDER}/taxa.sqlite
+  -t ${ETE4FOLDER}/taxa.sqlite
 
 ${INTERPROSCAN_REPO}/interproscan.sh -f xml -dp -i ${VOLUME}/proteins_lineage.fasta \
     --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,NCBIFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY" \

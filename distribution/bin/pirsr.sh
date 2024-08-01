@@ -31,7 +31,7 @@ get_script_dir () {
 }
 
 # Environment
-JAVA_VERSION_MIN=11
+JAVA_VERSION_MIN=17
 SCRIPT_DIR=$(get_script_dir)
 
 # Default values
@@ -40,7 +40,7 @@ DEFAULT_MAX_MEMORY=4096
 function run {
     local cmdArgs="${@}"
     local memory=$(echo $cmdArgs | grep -P "\-m(\s+)?\d+" | sed -E 's/.*-m *([0-9]+).*/\1/g')
-    java -Xmx"${memory:-$DEFAULT_MAX_MEMORY}M" -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" org.proteininformationresource.pirsr.PIRSRApp ${cmdArgs}
+    java --add-opens java.desktop/java.awt.font=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED -Xmx"${memory:-$DEFAULT_MAX_MEMORY}M" -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" org.proteininformationresource.pirsr.PIRSRApp ${cmdArgs}
 }
 
 function checkEnv {

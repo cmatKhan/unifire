@@ -8,14 +8,14 @@ output path.
 
 This script should be used when processing large amount of sequences from different species.
 
-All the taxonomy data from NCBI are stored locally via Ete (by default in ~/.etetoolkit/taxa.sqlite)
+All the taxonomy data from NCBI are stored locally via Ete (by default in ~/.local/share/ete/taxa.sqlite)
 This local storage can be updated using the following Python lines:
 
-    from ete3 import NCBITaxa
+    from ete4 import NCBITaxa
     NCBITaxa().update_taxonomy_database()
 
-Library dependencies (via pip / conda / ...):
-    * ete3  (pip install ete3  /  conda install -c etetoolkit ete3)
+Library dependencies (via pip):
+    * ete4  (pip install https://github.com/etetoolkit/ete/archive/ete4.zip)
     * biopython
 """
 #  Copyright (c) 2018 European Molecular Biology Laboratory
@@ -35,7 +35,7 @@ Library dependencies (via pip / conda / ...):
 
 import argparse
 
-from ete3 import NCBITaxa
+from ete4 import NCBITaxa
 from Bio import SeqIO
 import sys, re
 
@@ -111,7 +111,7 @@ def parse_args():
     OX={taxId1,taxId2,...}
     """)
     parser.add_argument('--taxa-sqlite', '-t', dest="taxadb", required=False, help="""
-    Path to the sqlite DB file for taxonomy database. Default location is ~/.etetoolkit/taxa.sqlite
+    Path to the sqlite DB file for taxonomy database. Default location is ~/.local/share/ete/taxa.sqlite
     """)
 
     return parser.parse_args()

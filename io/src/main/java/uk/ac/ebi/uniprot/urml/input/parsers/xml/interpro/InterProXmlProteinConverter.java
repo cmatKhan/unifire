@@ -74,9 +74,7 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
     private void convertProteinMatches(Protein ipsProtein){
 
         if (!ipsProtein.getCrossReferences().isEmpty()) {
-            Iterator<ProteinXref> xrefIterator = ipsProtein.getCrossReferences().iterator();
-            while (xrefIterator.hasNext()) {
-                ProteinXref proteinXref = xrefIterator.next();
+            for (ProteinXref proteinXref : ipsProtein.getCrossReferences()) {
                 FastaHeaderData fastaHeaderData = uniProtFastaHeaderParser.parse(proteinXref.getName());
                 FactSet.Builder<Void> factSetBuilder = FactSet.builder();
 
@@ -103,7 +101,7 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
     }
 
     private void buildProteinSignature(FactSet.Builder<Void> factSetBuilder, org.uniprot.urml.facts.Protein protein,
-            Match match) {
+                                       Match match) {
         if (match.getSignature().getEntry() == null){
             logger.debug("Ignored unintegrated InterPro signature {}", match.getSignature().getAccession());
             return;
@@ -123,13 +121,11 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
             PositionalProteinSignature.Builder<Void> pSignatureBuilder = PositionalProteinSignature.builder();
             pSignatureBuilder.withProtein(protein);
             pSignatureBuilder.withFrequency(match.getLocations().size());
-            if (o instanceof ProfileScanMatch.ProfileScanLocation) {
-                ProfileScanMatch.ProfileScanLocation profileScanLocation = (ProfileScanMatch.ProfileScanLocation) o;
+            if (o instanceof ProfileScanMatch.ProfileScanLocation profileScanLocation) {
                 String alignment = profileScanLocation.getAlignment();
                 pSignatureBuilder.withAlignment().withValue(alignment).end();
             }
-            if (o instanceof Location) {
-                Location location = (Location) o;
+            if (o instanceof Location location) {
                 pSignatureBuilder.withPositionStart(location.getStart());
                 pSignatureBuilder.withPositionEnd(location.getEnd());
             }
@@ -140,20 +136,20 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
 
     private Organism buildOrganism(FactSet.Builder<Void> factSetBuilder, FastaHeaderData fastaHeaderData) {
         Organism organism = createOrGetOrganism(fastaHeaderData.getOrganismScientificName(),
-                                                fastaHeaderData.getOrganismLineage());
+                fastaHeaderData.getOrganismLineage());
         factSetBuilder.addFact(organism);
         return organism;
     }
 
     private void buildProtein(org.uniprot.urml.facts.Protein.Builder proteinBuilder, FastaHeaderData fastaHeaderData,
-            Protein ipsProtein) {
+                              Protein ipsProtein) {
         proteinBuilder.withId(fastaHeaderData.getIdentifier());
         proteinBuilder.withSequence().withValue(ipsProtein.getSequence())
                 .withLength(ipsProtein.getSequenceLength()).withIsFragment(fastaHeaderData.isFragment()).end();
     }
 
     private void buildGeneInformation(org.uniprot.urml.facts.Protein.Builder proteinBuilder,
-            FastaHeaderData fastaHeaderData) {
+                                      FastaHeaderData fastaHeaderData) {
         GeneInformation.Builder geneBuilder = proteinBuilder.withGene();
 
         if(fastaHeaderData.getRecommendedGeneName() != null){
@@ -205,12 +201,11 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
                 return SignatureType.PRO_DOM;
             case SMART:
                 return SignatureType.SMART;
-            case TIGRFAM:
-            case NCBIFAM:
+            case TIGRFAM, NCBIFAM:
                 return SignatureType.NCBIFAM;
             case SUPERFAMILY:
                 return SignatureType.SCOP_SUPERFAMILY;
-            case PROSITE_PATTERNS: case PROSITE_PROFILES:
+            case PROSITE_PATTERNS, PROSITE_PROFILES:
                 return SignatureType.PROSITE;
             default:
                 return null;

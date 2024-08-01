@@ -82,14 +82,13 @@ public class URMLToDroolsCompiler {
     public DroolsRuleBase compile(File... urmlInputFiles) throws IOException, JAXBException {
         URMLRuleReader urmlReader = new URMLRuleReader();
 
-        Rules.Builder<Void> ruleSetBuilder = Rules.builder();
+        Rules ruleSet = new Rules();
 
         for (File urmlInputFile : urmlInputFiles) {
             Rules rules = urmlReader.read(new FileInputStream(urmlInputFile));
-            ruleSetBuilder.addRule(rules.getRule());
+            rules.getRule().forEach(rule->ruleSet.getRule().add(rule));
         }
-
-        return compile(ruleSetBuilder.build());
+        return compile(ruleSet);
     }
 
 }

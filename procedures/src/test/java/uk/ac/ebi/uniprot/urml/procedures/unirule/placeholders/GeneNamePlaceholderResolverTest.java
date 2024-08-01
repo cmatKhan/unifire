@@ -28,10 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  *
  * @author Alexandre Renaux
  */
-public class GeneNamePlaceholderResolverTest {
+class GeneNamePlaceholderResolverTest {
 
     @Test
-    public void resolveGeneNamePlaceholderWithOneGeneReplacedWithItsName(){
+    void resolveGeneNamePlaceholderWithOneGeneReplacedWithItsName(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA").build();
 
         ProteinAnnotation proteinAnnotation = buildProteinAnnotationWithGenes("Annotation with gene named @GENE_NAME@.", gene);
@@ -41,7 +41,7 @@ public class GeneNamePlaceholderResolverTest {
     }
 
     @Test
-    public void resolveGeneNamePlaceholderWithMultipleGenesReplacedWithFirstGeneName(){
+    void resolveGeneNamePlaceholderWithMultipleGenesReplacedWithFirstGeneName(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA", "geneB").build();
 
         ProteinAnnotation proteinAnnotation = buildProteinAnnotationWithGenes("Annotation with gene named @GENE_NAME@.", gene);
@@ -51,7 +51,7 @@ public class GeneNamePlaceholderResolverTest {
     }
 
     @Test
-    public void resolveMultipleGeneNamePlaceholdersWithOneGeneAllReplacedWithItsName(){
+    void resolveMultipleGeneNamePlaceholdersWithOneGeneAllReplacedWithItsName(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA").build();
 
         ProteinAnnotation proteinAnnotation = buildProteinAnnotationWithGenes("Annotation with gene named @GENE_NAME@. It is @GENE_NAME@.", gene);
@@ -61,7 +61,7 @@ public class GeneNamePlaceholderResolverTest {
     }
 
     @Test
-    public void resolveMultipleGeneNamePlaceholdersWithMultipleGenesAllReplacedWithFirstGeneName(){
+    void resolveMultipleGeneNamePlaceholdersWithMultipleGenesAllReplacedWithFirstGeneName(){
         GeneInformation gene = GeneInformation.builder().withNames("geneA", "geneB").build();
 
         ProteinAnnotation proteinAnnotation = buildProteinAnnotationWithGenes("Annotation with gene named @GENE_NAME@. It is @GENE_NAME@.", gene);
@@ -71,7 +71,7 @@ public class GeneNamePlaceholderResolverTest {
     }
 
     @Test
-    public void resolveGeneNamePlaceholderWithNoGeneReplacedWithEmptyString(){
+    void resolveGeneNamePlaceholderWithNoGeneReplacedWithEmptyString(){
         ProteinAnnotation proteinAnnotation = buildProteinAnnotationWithGenes("Annotation with gene named @GENE_NAME@.", null);
         GeneNamePlaceholderResolver.resolve(proteinAnnotation);
         assertThat(proteinAnnotation.getValue(), equalTo("Annotation with gene named ."));
@@ -79,7 +79,7 @@ public class GeneNamePlaceholderResolverTest {
     }
 
     @Test
-    public void resolveGeneNamePlaceholderWithEmptyGeneNameReplaceWithEmptyString(){
+    void resolveGeneNamePlaceholderWithEmptyGeneNameReplaceWithEmptyString(){
         GeneInformation gene = GeneInformation.builder().withOrfOrOlnNames("orf1").build();
 
         ProteinAnnotation proteinAnnotation = buildProteinAnnotationWithGenes("Annotation with gene named @GENE_NAME@.", gene);

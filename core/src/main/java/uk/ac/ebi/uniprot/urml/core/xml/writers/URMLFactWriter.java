@@ -50,7 +50,8 @@ public class URMLFactWriter extends AbstractURMLWriter<FactSet, Fact> {
 
     public URMLFactWriter(OutputStream outputStream) throws JAXBException, XMLStreamException {
         super(outputStream, JAXBContext.newInstance(URMLConstants.URML_FACTS_JAXB_CONTEXT), URML_FACT_NAMESPACE);
-        writeRoot(getRootDocument(FactSet.builder().build()));
+        FactSet factSet = new FactSet();
+        writeRoot(getRootDocument(factSet));
     }
 
     @Override

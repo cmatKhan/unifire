@@ -138,13 +138,13 @@ public class UniFireRunner {
     }
 
     private FactSet mergeFactSets(Iterator<FactSet> factSetIterator) {
-        FactSet.Builder<Void> factSetBuilder = FactSet.builder();
+        FactSet factSet = new FactSet();
         Iterable<FactSet> factSetIterable = () -> factSetIterator;
         StreamSupport.stream(factSetIterable.spliterator(), false)
                 .flatMap(fs -> fs.getFact().stream())
-                .forEach(factSetBuilder::addFact);
+                .forEach(fact->factSet.getFact().add(fact));
 
-        return factSetBuilder.build();
+        return factSet;
     }
 
     private void initTemplateRetriever() throws IOException {

@@ -14,7 +14,7 @@ before_script:
   - echo "UniFire image tag will be = ${UNIFIRE_IMAGE_TAG}"
 
 .mvn:
-  image: maven:3.8.2-openjdk-11-slim
+  image: maven:3.8.2-openjdk-17-slim
   before_script:
     - java --version
     - mvn --version
@@ -43,6 +43,6 @@ build_docker_image:
     - docker push ${CONTAINER_IMAGE}
     - docker rmi ${CONTAINER_IMAGE}
     - docker logout "$CI_REGISTRY"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "pre_release" && $CI_COMMIT_TITLE =~ /^Merge branch '.*' into 'pre_release'$/
-      when: on_success
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "pre_release" && $CI_COMMIT_TITLE =~ /^Merge branch '.*' into 'pre_release'$/
+#      when: on_success
