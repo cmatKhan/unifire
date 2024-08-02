@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author Vishal Joshi
  */
-class CompositeSanitizer implements Sanitizer {
+public class CompositeSanitizer implements Sanitizer {
 
     private final List<Sanitizer> orderedSanitizers;
 
@@ -18,7 +18,7 @@ class CompositeSanitizer implements Sanitizer {
      *                          be applied i.e. first sanitiser in the {@link java.util.List} will be applied first.
      *                          A different order of orderedSanitizers will lead to different results for the same input.
      */
-    CompositeSanitizer(List<Sanitizer> orderedSanitizers) {
+    public CompositeSanitizer(List<Sanitizer> orderedSanitizers) {
         this.orderedSanitizers = orderedSanitizers;
     }
 

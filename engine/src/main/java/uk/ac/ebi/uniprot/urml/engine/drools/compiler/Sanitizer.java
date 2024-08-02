@@ -3,7 +3,7 @@ package uk.ac.ebi.uniprot.urml.engine.drools.compiler;
 /**
  * @author Vishal Joshi
  */
-interface Sanitizer {
+public interface Sanitizer {
     String sanitize(String toSanitize);
 
 }
