@@ -50,7 +50,6 @@
         <mockito.version>3.6.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit5.version>5.8.2</junit5.version>
-        <junit5.platform.version>1.8.2</junit5.platform.version>
         <xmlunit.version>2.7.0</xmlunit.version>
         <!--JAXB-->
         <plugin.jaxb.version>2.0.9</plugin.jaxb.version>
@@ -105,33 +104,26 @@
         </dependency>
 
         <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-runner</artifactId>
-            <scope>test</scope>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
             <version>${hamcrest.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
             <version>${hamcrest.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -212,13 +204,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.junit.platform</groupId>
-                <artifactId>junit-platform-runner</artifactId>
-                <version>${junit5.platform.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit5.version}</version>
@@ -290,6 +275,9 @@
                                 <exclude>**/IT*.java</exclude>
                             </excludes>
                             <argLine>
+                                --add-opens java.base/java.lang=ALL-UNNAMED
+                                --add-opens=java.base/java.util=ALL-UNNAMED
+                                --add-opens=java.desktop/java.awt.font=ALL-UNNAMED
                                 --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
                                 --add-opens=java.base/java.text=ALL-UNNAMED
                                 ${jacoco.agent.ut.arg}

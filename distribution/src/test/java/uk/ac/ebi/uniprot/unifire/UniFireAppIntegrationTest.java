@@ -19,7 +19,6 @@ package uk.ac.ebi.uniprot.unifire;
 
 import matchers.NodeMatcherBuilder;
 import org.apache.commons.io.FileUtils;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.xmlunit.matchers.CompareMatcher;
@@ -30,8 +29,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
 
 /**
  * @author Vishal Joshi
@@ -92,7 +91,7 @@ class UniFireAppIntegrationTest {
 
         //then
         String expectedOutputFilePath = this.getClass().getResource("/unifireapp/unifire_output.xml").getPath();
-        MatcherAssert.assertThat(new File(outputPath), CompareMatcher.isSimilarTo(new File(expectedOutputFilePath))
+        assertThat(new File(outputPath), CompareMatcher.isSimilarTo(new File(expectedOutputFilePath))
                 .ignoreWhitespace()
                 .normalizeWhitespace()
                 .withNodeMatcher(NodeMatcherBuilder.unifireXMLNodeMatcher())
