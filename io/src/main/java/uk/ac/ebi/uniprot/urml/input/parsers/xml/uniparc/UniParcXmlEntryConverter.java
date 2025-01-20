@@ -117,30 +117,25 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
                 continue;
             }
             String libSignatureId = getSignatureValue(seqFeatureType.getId(), signatureType);
-            String iprSignatureId = seqFeatureType.getIpr().getId();
-            if (iprSignatureId == null){
-                logger.debug("Ignored unintegrated InterPro signature {}", libSignatureId);
-                continue;
+            Signature libSignature = Signature.builder().withType(signatureType).withValue(libSignatureId).build();
+
+            Signature iprSignature = null;
+            if (seqFeatureType.getIpr() != null){
+                iprSignature = Signature.builder().withType(SignatureType.INTER_PRO).withValue(seqFeatureType.getIpr().getId()).build();
             }
 
-            Signature libSignature = Signature.builder().withType(signatureType).withValue(libSignatureId).build();
-            Signature iprSignature = Signature.builder().withType(SignatureType.INTER_PRO).withValue(iprSignatureId).build();
-            Iterator<LocationType> iterator = seqFeatureType.getLcn().iterator();
-            while(iterator.hasNext()) {
-                ProteinSignature libSig = PositionalProteinSignature
-                                            .builder()
-                                            .withProtein(protein)
-                                            .withFrequency(seqFeatureType.getLcn().size())
-                                            .withSignature(libSignature)
-                                            .build();
-                ProteinSignature iprSig = PositionalProteinSignature
-                                            .builder()
-                                            .withProtein(protein)
-                                            .withFrequency(seqFeatureType.getLcn().size())
-                                            .withSignature(iprSignature)
-                                            .build();
-                factSetBuilder.addFact(libSig);
-                factSetBuilder.addFact(iprSig);
+            for (LocationType locationType: seqFeatureType.getLcn()) {
+                PositionalProteinSignature.Builder<Void> pSignatureBuilder =
+                        PositionalProteinSignature.builder()
+                                .withProtein(protein)
+                                .withFrequency(seqFeatureType.getLcn().size());
+                pSignatureBuilder.withPositionStart(locationType.getStart());
+                pSignatureBuilder.withPositionEnd(locationType.getEnd());
+
+                factSetBuilder.addFact(pSignatureBuilder.withSignature(libSignature).build());
+                if (iprSignature != null) {
+                    factSetBuilder.addFact(pSignatureBuilder.withSignature(iprSignature).build());
+                }
             }
         }
 
@@ -164,7 +159,7 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
     }
 
     private String getSignatureValue(String value, SignatureType signatureType){
-        if (signatureType == SignatureType.GENE_3_D) {
+        if (signatureType.equals(SignatureType.GENE_3_D) || signatureType.equals(SignatureType.FUNFAM)) {
                 return value.replace("G3DSA:", "");
         }
                 return value;
@@ -185,6 +180,7 @@ public class UniParcXmlEntryConverter implements Iterator<FactSet> {
             case "SMART" -> SignatureType.SMART;
             case "SUPFAM" -> SignatureType.SCOP_SUPERFAMILY;
             case "NCBIFAM" -> SignatureType.NCBIFAM;
+            case "FUNFAM" -> SignatureType.FUNFAM;
             default -> null;
         };
     }

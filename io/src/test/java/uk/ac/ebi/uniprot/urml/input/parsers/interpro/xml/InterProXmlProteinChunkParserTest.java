@@ -16,9 +16,15 @@
 
 package uk.ac.ebi.uniprot.urml.input.parsers.interpro.xml;
 
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hamcrest.core.Is;
+import org.junit.jupiter.api.Test;
+import org.uniprot.urml.facts.*;
 import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlFactSetChunkParser;
 import uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro.InterProXmlProteinParser;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,29 +32,19 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.StreamSupport;
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.hamcrest.core.Is;
-import org.junit.jupiter.api.Test;
-import org.uniprot.urml.facts.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class InterProXmlProteinChunkParserTest {
+class InterProXmlProteinChunkParserTest {
 
     private static final String BASE_PATH = "/samples/interpro.xml/";
 
     @Test
-    public void parseOneProteinOneXrefChunkParser() throws Exception {
+    void parseOneProteinOneXrefChunkParser() throws Exception {
         Iterator<FactSet> parsedFactSet;
-        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_matches.xml")) {
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH + "one_protein_matches.xml")) {
             InterProXmlFactSetChunkParser interProXmlChunkProteinParser = new InterProXmlFactSetChunkParser(interproXmlIS);
             assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(true));
             parsedFactSet = interProXmlChunkProteinParser.nextChunk();
@@ -71,9 +67,9 @@ public class InterProXmlProteinChunkParserTest {
     }
 
     @Test
-    public void parseOneProteinTwoXrefsChunkParser() throws Exception {
+    void parseOneProteinTwoXrefsChunkParser() throws Exception {
         Iterator<FactSet> parsedFactSet;
-        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"one_protein_two_xrefs.xml")) {
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH + "one_protein_two_xrefs.xml")) {
             InterProXmlFactSetChunkParser interProXmlChunkProteinParser =
                     new InterProXmlFactSetChunkParser(interproXmlIS);
             assertThat(interProXmlChunkProteinParser.hasNext(), Is.is(true));
@@ -97,9 +93,9 @@ public class InterProXmlProteinChunkParserTest {
     }
 
     @Test
-    public void sameResultAsInterProXmlProteinParser() throws IOException, XMLStreamException, JAXBException {
+    void sameResultAsInterProXmlProteinParser() throws IOException, XMLStreamException, JAXBException {
         List<Fact> factsFromChunkParser = new ArrayList<>();
-        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"UP000307542-ipr.xml")) {
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH + "UP000307542-ipr.xml")) {
             InterProXmlFactSetChunkParser interProXmlChunkProteinParser =
                     new InterProXmlFactSetChunkParser(interproXmlIS, 10);
             while (interProXmlChunkProteinParser.hasNext()) {
@@ -113,7 +109,7 @@ public class InterProXmlProteinChunkParserTest {
         }
 
         List<Fact> factsFromParser = new ArrayList<>();
-        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH+"UP000307542-ipr.xml")) {
+        try (InputStream interproXmlIS = getClass().getResourceAsStream(BASE_PATH + "UP000307542-ipr.xml")) {
             Iterator<FactSet> parsedFactSet = new InterProXmlProteinParser().parse(interproXmlIS);
             Iterable<FactSet> iterableFactSet = () -> parsedFactSet;
 
@@ -133,7 +129,7 @@ public class InterProXmlProteinChunkParserTest {
             }
 
             protected int expectedNumberOfProteinSignatures() {
-                return 4; // 2 libraries + 2 IPR equivalents
+                return 7; // 2 integrated libraries + 2 IPR equivalents + 3 unintegrated libraries
             }
 
             protected void checkProtein(Protein protein) {
@@ -154,18 +150,23 @@ public class InterProXmlProteinChunkParserTest {
             protected void checkProteinSignature(ProteinSignature proteinSignature) {
                 assertTrue(proteinSignature.isSetSignature() && proteinSignature.getSignature().isSetValue());
                 switch (proteinSignature.getSignature().getValue()) {
-                    case "PF01370":
-                    case "IPR001509":
+                    case "PF01370", "IPR001509" -> {
                         checkInterProSignatureType(proteinSignature, SignatureType.PFAM);
                         assertThat(proteinSignature.getFrequency(), equalTo(1));
-                        break;
-                    case "MF_00956":
-                    case "IPR028614":
+                    }
+                    case "MF_00956", "IPR028614" -> {
                         checkInterProSignatureType(proteinSignature, SignatureType.HAMAP);
                         assertThat(proteinSignature.getFrequency(), equalTo(1));
-                        break;
-                    default:
-                        fail("Unexpected protein signature" + proteinSignature);
+                    }
+                    case "PTHR43238", "PTHR43238:SF3" -> {
+                        checkInterProSignatureType(proteinSignature, SignatureType.PANTHER);
+                        assertThat(proteinSignature.getFrequency(), equalTo(1));
+                    }
+                    case "3.40.309.10:FF:000001" -> {
+                        checkInterProSignatureType(proteinSignature, SignatureType.FUNFAM);
+                        assertThat(proteinSignature.getFrequency(), equalTo(1));
+                    }
+                    default -> fail("Unexpected protein signature" + proteinSignature);
                 }
             }
         };
@@ -176,7 +177,7 @@ public class InterProXmlProteinChunkParserTest {
             private List<String> expectedProteinNames = Arrays.asList(
                     // We have 4 signature matches for each protein, so the protein name is checked 5 times: once for
                     // ProteinFact and 4 times for ProteinSignatures
-                    "A0A6B9WDM2","A0A6B9WDM2","A0A6B9WDM2","A0A6B9WDM2","A0A6B9WDM2",
+                    "A0A6B9WDM2", "A0A6B9WDM2", "A0A6B9WDM2", "A0A6B9WDM2", "A0A6B9WDM2",
                     "A0A6C0TBF5", "A0A6C0TBF5", "A0A6C0TBF5", "A0A6C0TBF5", "A0A6C0TBF5");
 
             protected int expectedNumberOfProteins() {
@@ -196,28 +197,27 @@ public class InterProXmlProteinChunkParserTest {
 
             protected void checkOrganism(Organism organism) {
                 assertTrue(organism.isSetId());
-                assertThat(organism.getLineage().getIds(), containsInAnyOrder(1,10239,2559587,76804,2499399,11118,2501931,694002,2509511,694009,2697049));
+                assertThat(organism.getLineage().getIds(), containsInAnyOrder(1, 10239, 2559587, 76804, 2499399, 11118, 2501931, 694002, 2509511, 694009, 2697049));
                 assertThat(organism.getScientificName(), equalTo("Severe acute respiratory syndrome coronavirus 2"));
             }
 
             protected void checkProteinSignature(ProteinSignature proteinSignature) {
                 assertTrue(proteinSignature.isSetSignature() && proteinSignature.getSignature().isSetValue());
-                switch (proteinSignature.getSignature().getValue()){
-                    case "PF01635":
+                switch (proteinSignature.getSignature().getValue()) {
+                    case "PF01635" -> {
                         checkInterProSignatureType(proteinSignature, SignatureType.PFAM);
                         assertThat(proteinSignature.getFrequency(), equalTo(1));
-                        break;
-                    case "IPR002574":
+                    }
+                    case "IPR002574" -> {
                         checkInterProSignatureType(proteinSignature, SignatureType.PFAM);
                         checkInterProSignatureType(proteinSignature, SignatureType.HAMAP);
                         assertThat(proteinSignature.getFrequency(), equalTo(1));
-                        break;
-                    case "MF_04202":
+                    }
+                    case "MF_04202" -> {
                         checkInterProSignatureType(proteinSignature, SignatureType.HAMAP);
                         assertThat(proteinSignature.getFrequency(), equalTo(1));
-                        break;
-                    default:
-                        fail("Unexpected protein signature"+proteinSignature);
+                    }
+                    default -> fail("Unexpected protein signature" + proteinSignature);
                 }
             }
 

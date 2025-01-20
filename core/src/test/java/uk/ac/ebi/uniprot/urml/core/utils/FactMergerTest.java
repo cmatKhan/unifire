@@ -33,7 +33,7 @@ import static org.uniprot.urml.facts.SignatureType.*;
 /**
  * Created by Hermann Zellner on 21/07/2020.
  */
-public class FactMergerTest {
+class FactMergerTest {
 
     private static Organism organism_1;
     private static Organism organism_2;
@@ -83,7 +83,7 @@ public class FactMergerTest {
     }
 
     @Test
-    public void emptyFactSetMergedWithEmptyMap() {
+    void emptyFactSetMergedWithEmptyMap() {
         FactSet factSet = new FactSet();
         Iterator<FactSet> factSetIterator = Arrays.asList(factSet).iterator();
 
@@ -95,7 +95,7 @@ public class FactMergerTest {
     }
 
     @Test
-    public void emtryFactSetMergedWithOneAlignment() {
+    void emtryFactSetMergedWithOneAlignment() {
         FactSet factSet = new FactSet();
         Iterator<FactSet> factSetIterator = Arrays.asList(factSet).iterator();
 
@@ -108,7 +108,7 @@ public class FactMergerTest {
     }
 
     @Test
-    public void oneProteinMergedWithEmptyMap() {
+    void oneProteinMergedWithEmptyMap() {
         FactSet factSet = new FactSet();
         factSet.setFact(Arrays.asList(protein_1, organism_1, proteinSignature_1_1, proteinSignature_1_2));
         Iterator<FactSet> factSetIterator = Arrays.asList(factSet).iterator();
@@ -124,7 +124,7 @@ public class FactMergerTest {
     }
 
     @Test
-    public void oneProteinMergedWithOneAlignment() {
+    void oneProteinMergedWithOneAlignment() {
         FactSet factSet = new FactSet();
         factSet.setFact(Arrays.asList(protein_1, organism_1, proteinSignature_1_1, proteinSignature_1_2));
         Iterator<FactSet> factSetIterator = Arrays.asList(factSet).iterator();
@@ -139,7 +139,7 @@ public class FactMergerTest {
     }
 
     @Test
-    public void oneProteinNotMergedWithAlignmentForOtherProtein() {
+    void oneProteinNotMergedWithAlignmentForOtherProtein() {
         FactSet factSet = new FactSet();
         factSet.setFact(Arrays.asList(protein_1, organism_1, proteinSignature_1_1, proteinSignature_1_2));
         Iterator<FactSet> factSetIterator = Arrays.asList(factSet).iterator();
@@ -155,7 +155,7 @@ public class FactMergerTest {
     }
 
     @Test
-    public void twoProteinsWithSameOrganismWithAlignments() {
+    void twoProteinsWithSameOrganismWithAlignments() {
         FactSet factSet = new FactSet();
         factSet.setFact(Arrays.asList(
                 protein_1, organism_1, proteinSignature_1_1, proteinSignature_1_2,
@@ -175,7 +175,7 @@ public class FactMergerTest {
     }
 
     @Test
-    public void twoProteinsWithDifferentOrganismWithAlignments() {
+    void twoProteinsWithDifferentOrganismWithAlignments() {
         FactSet factSet = new FactSet();
         factSet.setFact(Arrays.asList(
                 protein_1, organism_1, proteinSignature_1_1, proteinSignature_1_2,

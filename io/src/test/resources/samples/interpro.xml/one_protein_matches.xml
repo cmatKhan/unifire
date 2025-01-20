@@ -70,6 +70,19 @@
                     </profilescan-location>
                 </locations>
             </profilescan-match>
+            <hmmer3-match evalue="3.9E-101" score="338.4">
+                <signature ac="G3DSA:3.40.309.10:FF:000001" desc="Mitochondrial aldehyde dehydrogenase 2">
+                    <signature-library-release library="FUNFAM" version="4.3.0"/>
+                </signature>
+                <model-ac>3.40.309.10-FF-000001</model-ac>
+                <locations>
+                    <hmmer3-location env-end="387" env-start="199" post-processed="false" score="337.2" evalue="9.0E-101" hmm-start="1" hmm-end="185" hmm-length="190" hmm-bounds="COMPLETE" start="199" end="387" representative="false">
+                        <location-fragments>
+                            <hmmer3-location-fragment start="199" end="387" dc-status="CONTINUOUS"/>
+                        </location-fragments>
+                    </hmmer3-location>
+                </locations>
+            </hmmer3-match>
         </matches>
     </protein>
 </protein-matches>
