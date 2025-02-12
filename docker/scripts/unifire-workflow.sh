@@ -16,6 +16,9 @@
 #    limitations under the License.
 ############################################################################
 
+set -e
+set -u
+
 UNIFIRE_REPO="/opt/git/unifire"
 INTERPROSCAN_REPO="/opt/interproscan"
 ETE4FOLDER="/opt/ete4"
