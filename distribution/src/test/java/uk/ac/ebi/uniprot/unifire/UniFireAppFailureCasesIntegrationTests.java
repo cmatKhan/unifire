@@ -17,18 +17,22 @@
 
 package uk.ac.ebi.uniprot.unifire;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.*;
 
 /**
  * @author Vishal Joshi
@@ -48,13 +52,24 @@ class UniFireAppFailureCasesIntegrationTests {
     void testShouldVerifyThatIfRequiredArgumentsAreNotPassedTheAppFailsWithAnError(String inCompleteArguments,
                                                                                    String missingArgument) throws Exception {
         //given
+        // get Logback Logger
+        Logger logger = LoggerFactory.getLogger(UniFireApp.class);
+
+        // create and start a ListAppender
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+
+        // add the appender to the logger
+        // addAppender is outdated now
+        ((ch.qos.logback.classic.Logger) logger).addAppender(listAppender);
 
         //when
         String[] argsArray = inCompleteArguments.split(" ");
         UniFireApp.main(argsArray);
 
         //then
-        String expected = "Missing required option: " + missingArgument + " \n" +
+        String expectedLog = "Missing required option: " + missingArgument;
+        String expectedSystemOut =
                 "--------------------------------------------\n" +
                 "usage: unifire -i <INPUT_FILE> -o <OUTPUT_FILE> -r <RULE_URML_FILE> [-f <OUTPUT_FORMAT>] [-n\n" +
                 "       <INPUT_CHUNK_SIZE>] [-s <INPUT_SOURCE>] [-t <TEMPLATE_FACTS>] [-m <MAX_MEMORY>] [-h]\n" +
@@ -84,8 +99,10 @@ class UniFireAppFailureCasesIntegrationTests {
                 "                                            (default: 4096 MB).\n" +
                 "     -h,--help                              Print this usage.\n" +
                 "--------------------------------------------";
-        assertThat(outputStreamCaptor.toString().trim(), containsString(expected));
-
+        assertThat(outputStreamCaptor.toString().trim(), containsString(expectedSystemOut));
+        assertThat(listAppender.list, contains(
+                hasProperty("message", equalTo(expectedLog))
+        ));
     }
 
     static Stream<Arguments> invalidOrIncompleteArguments() {

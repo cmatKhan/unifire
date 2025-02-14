@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<facts xmlns="http://uniprot.org/urml/facts" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Organism" id="organism_9606">
+    <lineage>
+      <ids>9606</ids>
+    </lineage>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Protein" id="UPI00017A801B:B4DXX3">
+    <sequence length="390">MSSSGTPDLPVLLTDLKIQYTKIFINNEWHDSVSGKKFPVFNPATEEELCQVEEGDKEDVDKAVKAARQAFQIGSPWRTMDASERGRLLYKLADLIERDRLLLATMESMNGGNTVVVKPAEQTPLTALHVASLIKEAGFPPGVVNIVPGYGPTAGAAISSHMDIDKVAFTGSTEVGKLIKEAAGKSNLKRVTLELGGKSPCIVLADADLDNAVEFAHHGVFYHQGQCCIAASRIFVEESIYDEFVRRSVERAKKYILGNPLTPGVTQGPQIDKEQYDKILDLIESGKKEGAKLECGGGPWGNKGYFVQPTVFSNVTDEMRIAKEEIFGPVQQIMKFKSLDDVIERANNTFYGLSAGVFTKDIDKAITISSALQAGTVWVNCYGVGRVRFP</sequence>
+    <organism>organism_9606</organism>
+    <gene/>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="Gene3D">3.40.605.10</signature>
+    <frequency>2</frequency>
+    <positionStart>12</positionStart>
+    <positionEnd>111</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="InterPro">IPR016162</signature>
+    <frequency>2</frequency>
+    <positionStart>12</positionStart>
+    <positionEnd>111</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="Gene3D">3.40.605.10</signature>
+    <frequency>2</frequency>
+    <positionStart>112</positionStart>
+    <positionEnd>389</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="InterPro">IPR016162</signature>
+    <frequency>2</frequency>
+    <positionStart>112</positionStart>
+    <positionEnd>389</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="Gene3D">3.40.309.10</signature>
+    <frequency>1</frequency>
+    <positionStart>199</positionStart>
+    <positionEnd>388</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="InterPro">IPR016163</signature>
+    <frequency>1</frequency>
+    <positionStart>199</positionStart>
+    <positionEnd>388</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="SCOP Superfamily">SSF53720</signature>
+    <frequency>1</frequency>
+    <positionStart>13</positionStart>
+    <positionEnd>388</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="InterPro">IPR016161</signature>
+    <frequency>1</frequency>
+    <positionStart>13</positionStart>
+    <positionEnd>388</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="PROSITE">PS00070</signature>
+    <frequency>1</frequency>
+    <positionStart>221</positionStart>
+    <positionEnd>232</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="InterPro">IPR016160</signature>
+    <frequency>1</frequency>
+    <positionStart>221</positionStart>
+    <positionEnd>232</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="PFAM">PF00171</signature>
+    <frequency>1</frequency>
+    <positionStart>112</positionStart>
+    <positionEnd>387</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="InterPro">IPR015590</signature>
+    <frequency>1</frequency>
+    <positionStart>112</positionStart>
+    <positionEnd>387</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="PROSITE">PS00687</signature>
+    <frequency>1</frequency>
+    <positionStart>193</positionStart>
+    <positionEnd>200</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="InterPro">IPR029510</signature>
+    <frequency>1</frequency>
+    <positionStart>193</positionStart>
+    <positionEnd>200</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="PANTHER">PTHR11699</signature>
+    <frequency>1</frequency>
+    <positionStart>19</positionStart>
+    <positionEnd>112</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="FUNFAM">3.40.309.10:FF:000001</signature>
+    <frequency>1</frequency>
+    <positionStart>199</positionStart>
+    <positionEnd>387</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="FUNFAM">3.40.605.10:FF:000029</signature>
+    <frequency>2</frequency>
+    <positionStart>9</positionStart>
+    <positionEnd>111</positionEnd>
+  </fact>
+  <fact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PositionalProteinSignature">
+    <protein>UPI00017A801B:B4DXX3</protein>
+    <signature type="FUNFAM">3.40.605.10:FF:000029</signature>
+    <frequency>2</frequency>
+    <positionStart>112</positionStart>
+    <positionEnd>204</positionEnd>
+  </fact>
+</facts>

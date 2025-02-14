@@ -253,6 +253,7 @@
             <xs:enumeration value="SFLD"/>
             <xs:enumeration value="GeneTree"/>
             <xs:enumeration value="SRHMM"/>
+            <xs:enumeration value="FUNFAM"/>
         </xs:restriction>
     </xs:simpleType>
 

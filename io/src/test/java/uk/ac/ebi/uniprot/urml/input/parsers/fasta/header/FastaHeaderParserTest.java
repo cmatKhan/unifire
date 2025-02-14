@@ -29,19 +29,19 @@ import static org.hamcrest.Matchers.equalTo;
  *
  * @author Alexandre Renaux
  */
-public class FastaHeaderParserTest {
+class FastaHeaderParserTest {
 
     private static final String MINIMAL_HEADER = "1|name OX=1,2,3";
 
     @Test
-    public void parseWithMinimalValidHeader() throws Exception {
+    void parseWithMinimalValidHeader() throws Exception {
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(MINIMAL_HEADER);
         assertMinimalHeaderData(parsedData);
     }
 
     @Test
-    public void parseWithDatabaseValidHeader() throws Exception {
+    void parseWithDatabaseValidHeader() throws Exception {
         String minimalHeader = "db|"+MINIMAL_HEADER;
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -49,7 +49,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithAngleBracketValidHeader() throws Exception {
+    void parseWithAngleBracketValidHeader() throws Exception {
         String minimalHeader = ">"+MINIMAL_HEADER;
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -57,7 +57,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithAdditionalUnsupportedFlagValidHeader() throws Exception {
+    void parseWithAdditionalUnsupportedFlagValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" PE=1";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -66,7 +66,7 @@ public class FastaHeaderParserTest {
 
 
     @Test
-    public void parseWithOrganismScientificNameValidHeader() throws Exception {
+    void parseWithOrganismScientificNameValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" OS=orgName";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -77,7 +77,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithFragmentValidHeader() throws Exception {
+    void parseWithFragmentValidHeader() throws Exception {
         String minimalHeader = ">1|name (Fragment) OX=1,2,3";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -87,7 +87,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithGeneNameValidHeader() throws Exception {
+    void parseWithGeneNameValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" GN=abc";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -97,7 +97,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithOlnOrOrfValidHeader() throws Exception {
+    void parseWithOlnOrOrfValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" GL=def";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -107,7 +107,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithMultipleOlnOrOrfKeepFirstValidHeader() throws Exception {
+    void parseWithMultipleOlnOrOrfKeepFirstValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" GL=def,ghi";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -117,7 +117,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithSingleGeneLocationOrganelleValidHeader() throws Exception {
+    void parseWithSingleGeneLocationOrganelleValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" OG=plastid";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -127,7 +127,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithMultipleGeneLocationOrganelleValidHeader() throws Exception {
+    void parseWithMultipleGeneLocationOrganelleValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" OG=plastid,chloroplast";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -137,7 +137,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithMultipleGeneLocationOrganelleSpacedDelimiterValidHeader() throws Exception {
+    void parseWithMultipleGeneLocationOrganelleSpacedDelimiterValidHeader() throws Exception {
         String minimalHeader = MINIMAL_HEADER+" OG=plastid, chloroplast";
         FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
         FastaHeaderData parsedData = fastaHeaderParser.parse(minimalHeader);
@@ -147,7 +147,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithInvalidGeneLocationOrganelleInvalidHeader() throws Exception {
+    void parseWithInvalidGeneLocationOrganelleInvalidHeader() throws Exception {
         Assertions.assertThrows(FastaHeaderParseException.class, () -> {
             String minimalHeader = MINIMAL_HEADER + " OG=invalidOrganelle";
             FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
@@ -156,7 +156,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithoutFlagsInvalidHeader() throws Exception {
+    void parseWithoutFlagsInvalidHeader() throws Exception {
         Assertions.assertThrows(FastaHeaderParseException.class, () -> {
             String minimalHeader = ">1|name";
             FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
@@ -165,7 +165,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithoutOXFlagInvalidHeader() throws Exception {
+    void parseWithoutOXFlagInvalidHeader() throws Exception {
         Assertions.assertThrows(FastaHeaderParseException.class, () -> {
             String minimalHeader = ">1|name OS=orgName";
             FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();
@@ -174,7 +174,7 @@ public class FastaHeaderParserTest {
     }
 
     @Test
-    public void parseWithoutName() throws Exception {
+    void parseWithoutName() throws Exception {
         Assertions.assertThrows(FastaHeaderParseException.class, () -> {
             String minimalHeader = ">1| OS=orgName";
             FastaHeaderParser fastaHeaderParser = new FastaHeaderParser();

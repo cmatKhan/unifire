@@ -62,7 +62,7 @@
   </fact>
   <fact xsi:type="PositionalProteinSignature">
     <protein>J0U7L2</protein>
-    <signature type="Gene3D">G3DSA:1.10.760.10</signature>
+    <signature type="Gene3D">1.10.760.10</signature>
     <frequency>1</frequency>
     <positionStart>36</positionStart>
     <positionEnd>110</positionEnd>
@@ -176,7 +176,7 @@
   </fact>
   <fact xsi:type="PositionalProteinSignature">
     <protein>J0U7L2</protein>
-    <signature type="Gene3D">G3DSA:1.10.760.10</signature>
+    <signature type="Gene3D">1.10.760.10</signature>
     <frequency>1</frequency>
     <positionStart>115</positionStart>
     <positionEnd>208</positionEnd>
@@ -187,5 +187,19 @@
     <frequency>1</frequency>
     <positionStart>115</positionStart>
     <positionEnd>208</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PANTHER">PTHR33751</signature>
+    <frequency>1</frequency>
+    <positionStart>19</positionStart>
+    <positionEnd>207</positionEnd>
+  </fact>
+  <fact xsi:type="PositionalProteinSignature">
+    <protein>J0U7L2</protein>
+    <signature type="PANTHER">PTHR33751:SF9</signature>
+    <frequency>1</frequency>
+    <positionStart>19</positionStart>
+    <positionEnd>207</positionEnd>
   </fact>
 </facts>

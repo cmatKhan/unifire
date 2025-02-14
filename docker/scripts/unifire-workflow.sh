@@ -16,6 +16,9 @@
 #    limitations under the License.
 ############################################################################
 
+set -e
+set -u
+
 UNIFIRE_REPO="/opt/git/unifire"
 INTERPROSCAN_REPO="/opt/interproscan"
 ETE4FOLDER="/opt/ete4"
@@ -28,7 +31,7 @@ ${UNIFIRE_REPO}/misc/taxonomy/fetchTaxonomicLineage.py -i ${VOLUME}/proteins.fas
   -t ${ETE4FOLDER}/taxa.sqlite
 
 ${INTERPROSCAN_REPO}/interproscan.sh -f xml -dp -i ${VOLUME}/proteins_lineage.fasta \
-    --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,NCBIFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY" \
+    --appl "Hamap,ProSiteProfiles,ProSitePatterns,Pfam,NCBIFAM,SMART,PRINTS,SFLD,CDD,Gene3D,PIRSF,PANTHER,SUPERFAMILY,FunFam" \
     -o ${VOLUME}/proteins_lineage-ipr.xml
 
 ${UNIFIRE_REPO}/distribution/bin/pirsr.sh -i ${VOLUME}/proteins_lineage-ipr.xml \

@@ -1,0 +1,47 @@
+<uniparc xmlns="http://uniprot.org/uniparc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://uniprot.org/uniparc http://www.uniprot.org/docs/uniparc.xsd">
+    <entry xmlns="http://uniprot.org/uniparc" dataset="uniparc">
+        <accession>UPI00017A801B</accession>
+        <dbReference type="UniProtKB/TrEMBL" id="B4DXX3" version_i="1" active="Y" version="1" created="2008-09-23" last="2024-11-27">
+            <property type="protein_name" value="Aldehyde dehydrogenase 1A1"/>
+            <property type="NCBI_taxonomy_id" value="9606"/>
+            <property type="NCBI_taxonomy_lineage_ids" value="9606"/>
+        </dbReference>
+        <signatureSequenceMatch database="Gene3D" id="G3DSA:3.40.605.10">
+            <ipr name="Aldehyde dehydrogenase, N-terminal" id="IPR016162"/>
+            <lcn start="12" end="111"/>
+            <lcn start="112" end="389"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="Gene3D" id="G3DSA:3.40.309.10">
+            <ipr name="Aldehyde dehydrogenase, C-terminal" id="IPR016163"/>
+            <lcn start="199" end="388"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="FUNFAM" id="G3DSA:3.40.309.10:FF:000001">
+            <lcn start="199" end="387"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="FUNFAM" id="G3DSA:3.40.605.10:FF:000029">
+            <lcn start="112" end="204"/>
+            <lcn start="9" end="111"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="SUPFAM" id="SSF53720">
+            <ipr name="Aldehyde/histidinol dehydrogenase" id="IPR016161"/>
+            <lcn start="13" end="388"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="PROSITE" id="PS00070">
+            <ipr name="Aldehyde dehydrogenase, cysteine active site" id="IPR016160"/>
+            <lcn start="221" end="232"  alignment="1M1I10M"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="PANTHER" id="PTHR11699">
+            <lcn start="19" end="112"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="Pfam" id="PF00171">
+            <ipr name="Aldehyde dehydrogenase domain" id="IPR015590"/>
+            <lcn start="112" end="387"/>
+        </signatureSequenceMatch>
+        <signatureSequenceMatch database="PROSITE" id="PS00687">
+            <ipr name="Aldehyde dehydrogenase, glutamic acid active site" id="IPR029510"/>
+            <lcn start="193" end="200" alignment="8M"/>
+        </signatureSequenceMatch>
+        <sequence length="390" checksum="425B4C6E61604123">MSSSGTPDLPVLLTDLKIQYTKIFINNEWHDSVSGKKFPVFNPATEEELCQVEEGDKEDVDKAVKAARQAFQIGSPWRTMDASERGRLLYKLADLIERDRLLLATMESMNGGNTVVVKPAEQTPLTALHVASLIKEAGFPPGVVNIVPGYGPTAGAAISSHMDIDKVAFTGSTEVGKLIKEAAGKSNLKRVTLELGGKSPCIVLADADLDNAVEFAHHGVFYHQGQCCIAASRIFVEESIYDEFVRRSVERAKKYILGNPLTPGVTQGPQIDKEQYDKILDLIESGKKEGAKLECGGGPWGNKGYFVQPTVFSNVTDEMRIAKEEIFGPVQQIMKFKSLDDVIERANNTFYGLSAGVFTKDIDKAITISSALQAGTVWVNCYGVGRVRFP</sequence>
+    </entry>
+    <copyright> Copyrighted by the UniProt Consortium, see https://www.uniprot.org/terms Distributed under the Creative Commons Attribution (CC BY 4.0) License </copyright>
+</uniparc>

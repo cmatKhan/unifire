@@ -16,6 +16,9 @@
 #    limitations under the License.
 ############################################################################
 
+set -e
+set -u
+
 get_script_dir () {
      SOURCE="${BASH_SOURCE[0]}"
 
@@ -35,12 +38,20 @@ JAVA_VERSION_MIN=17
 SCRIPT_DIR=$(get_script_dir)
 
 # Default values
-DEFAULT_MAX_MEMORY=4096
-
+# default min heap size 4G
+MIN_HEAP_MEM_OPTION="-Xms4G"
+# default max heap size 75% of available RAM
+MAX_HEAP_MEM_OPTION="-XX:MaxRAMPercentage=75"
 function run {
     local cmdArgs="${@}"
-    local memory=$(echo $cmdArgs | grep -P "\-m(\s+)?\d+" | sed -E 's/.*-m *([0-9]+).*/\1/g')
-    java --add-opens java.desktop/java.awt.font=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED -Xmx"${memory:-$DEFAULT_MAX_MEMORY}M" -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" uk.ac.ebi.uniprot.unifire.UniFireApp ${cmdArgs}
+    local memory
+    memory=$(echo $cmdArgs | grep -P "\-m(\s+)?\d+" | sed -E 's/.*-m *([0-9]+).*/\1/g')
+    #if heap memory provided with -m arg, then it is used instead of the percentage option
+    if [[ -n "${memory}" ]]
+    then
+        MAX_HEAP_MEM_OPTION="-Xmx${memory}M"
+    fi
+    java --add-opens java.desktop/java.awt.font=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED -XshowSettings:vm "${MIN_HEAP_MEM_OPTION}" "${MAX_HEAP_MEM_OPTION}" -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" uk.ac.ebi.uniprot.unifire.UniFireApp ${cmdArgs}
 }
 
 function checkEnv {

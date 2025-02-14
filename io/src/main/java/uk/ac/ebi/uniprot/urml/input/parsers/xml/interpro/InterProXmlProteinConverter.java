@@ -16,6 +16,7 @@
 
 package uk.ac.ebi.uniprot.urml.input.parsers.xml.interpro;
 
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.interpro.scan.model.Protein;
 import uk.ac.ebi.interpro.scan.model.*;
 import uk.ac.ebi.uniprot.urml.input.parsers.fasta.header.FastaHeaderData;
@@ -102,20 +103,26 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
 
     private void buildProteinSignature(FactSet.Builder<Void> factSetBuilder, org.uniprot.urml.facts.Protein protein,
                                        Match match) {
-        if (match.getSignature().getEntry() == null){
-            logger.debug("Ignored unintegrated InterPro signature {}", match.getSignature().getAccession());
-            return;
-        }
-        String accession = match.getSignature().getAccession();
         SignatureLibrary library = match.getSignature().getSignatureLibraryRelease().getLibrary();
         SignatureType signatureType = getSignatureType(library);
         if (signatureType == null){
             logger.warn("Ignored signature type {}", library.getName());
             return;
         }
+
+        String accession = match.getSignature().getAccession();
+        if (match instanceof PantherMatch) {
+            //Panther subfamily accession is under model-ac element
+            accession = StringUtils.isNotBlank(match.getSignatureModels()) ? match.getSignatureModels() : accession;
+        }
+        accession = getSignatureValue(accession, signatureType);
         Signature libSignature = Signature.builder().withType(signatureType).withValue(accession).build();
-        String ipsAccession = match.getSignature().getEntry().getAccession();
-        Signature ipSignature = Signature.builder().withType(SignatureType.INTER_PRO).withValue(ipsAccession).build();
+
+        Signature ipSignature = null;
+        if (match.getSignature().getEntry() != null) {
+            String ipsAccession = match.getSignature().getEntry().getAccession();
+            ipSignature = Signature.builder().withType(SignatureType.INTER_PRO).withValue(ipsAccession).build();
+        }
 
         for (Object o : match.getLocations()) {
             PositionalProteinSignature.Builder<Void> pSignatureBuilder = PositionalProteinSignature.builder();
@@ -130,7 +137,9 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
                 pSignatureBuilder.withPositionEnd(location.getEnd());
             }
             factSetBuilder.addFact(pSignatureBuilder.withSignature(libSignature).build());
-            factSetBuilder.addFact(pSignatureBuilder.withSignature(ipSignature).build());
+            if (ipSignature != null) {
+                factSetBuilder.addFact(pSignatureBuilder.withSignature(ipSignature).build());
+            }
         }
     }
 
@@ -179,6 +188,13 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
         }
     }
 
+    private String getSignatureValue(String value, SignatureType signatureType){
+        if (signatureType.equals(SignatureType.GENE_3_D) || signatureType.equals(SignatureType.FUNFAM)) {
+            return value.replace("G3DSA:", "");
+        }
+        return value;
+    }
+
     private SignatureType getSignatureType(SignatureLibrary signatureLibrary) {
         switch (signatureLibrary){
             case CDD:
@@ -207,6 +223,8 @@ public class InterProXmlProteinConverter implements Iterator<FactSet>{
                 return SignatureType.SCOP_SUPERFAMILY;
             case PROSITE_PATTERNS, PROSITE_PROFILES:
                 return SignatureType.PROSITE;
+            case FUNFAM:
+                return SignatureType.FUNFAM;
             default:
                 return null;
         }

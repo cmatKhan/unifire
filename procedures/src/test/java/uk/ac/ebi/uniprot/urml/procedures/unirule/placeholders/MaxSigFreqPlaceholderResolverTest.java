@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class MaxSigFreqPlaceholderResolverTest {
 
     @Test
-    public void resolveWithMultipleSignaturesWithSomeNotInArgs(){
+    void resolveWithMultipleSignaturesWithSomeNotInArgs(){
         Protein protein = Protein.builder().withId("P12345")
                 .withOrganism(Organism.builder().build())
                 .withSequence(ProteinSequence.builder().build()).build();
@@ -56,7 +56,7 @@ class MaxSigFreqPlaceholderResolverTest {
     }
 
     @Test
-    public void resolveWithOneSignatureInMultipleArgs(){
+    void resolveWithOneSignatureInMultipleArgs(){
         Protein protein = Protein.builder().withId("P12345")
                 .withOrganism(Organism.builder().build())
                 .withSequence(ProteinSequence.builder().build()).build();
@@ -73,7 +73,7 @@ class MaxSigFreqPlaceholderResolverTest {
     }
 
     @Test
-    public void resolveWithOneSignatureWithSingleOccurrenceRemovePlural(){
+    void resolveWithOneSignatureWithSingleOccurrenceRemovePlural(){
         Protein protein = Protein.builder().withId("P12345")
                 .withOrganism(Organism.builder().build())
                 .withSequence(ProteinSequence.builder().build()).build();
@@ -91,7 +91,7 @@ class MaxSigFreqPlaceholderResolverTest {
     }
 
     @Test
-    public void resolveMultipleMaxSigFreqPlaceholdersAreAllReplaced(){
+    void resolveMultipleMaxSigFreqPlaceholdersAreAllReplaced(){
         Protein protein = Protein.builder().withId("P12345")
                 .withOrganism(Organism.builder().build())
                 .withSequence(ProteinSequence.builder().build()).build();
@@ -109,7 +109,7 @@ class MaxSigFreqPlaceholderResolverTest {
     }
 
     @Test
-    public void resolveWithNoSignatureMatchingArgsReplacedWith0(){
+    void resolveWithNoSignatureMatchingArgsReplacedWith0(){
         Protein protein = Protein.builder().withId("P12345")
                 .withOrganism(Organism.builder().build())
                 .withSequence(ProteinSequence.builder().build()).build();
@@ -126,7 +126,7 @@ class MaxSigFreqPlaceholderResolverTest {
     }
 
     @Test
-    public void resolveWithNoSignatureAtAllReplacedWith0(){
+    void resolveWithNoSignatureAtAllReplacedWith0(){
         Protein protein = Protein.builder().withId("P12345")
                 .withOrganism(Organism.builder().build())
                 .withSequence(ProteinSequence.builder().build()).build();
@@ -141,7 +141,7 @@ class MaxSigFreqPlaceholderResolverTest {
     }
 
     @Test
-    public void resolveWithNoArgumentsDoesNotResolvePlaceholder(){
+    void resolveWithNoArgumentsDoesNotResolvePlaceholder(){
         Protein protein = Protein.builder().withId("P12345")
                 .withOrganism(Organism.builder().build())
                 .withSequence(ProteinSequence.builder().build()).build();

@@ -16,6 +16,9 @@
 #    limitations under the License.
 ############################################################################
 
+set -e
+set -u
+
 get_script_dir () {
      SOURCE="${BASH_SOURCE[0]}"
 

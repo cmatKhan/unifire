@@ -17,18 +17,23 @@
 
 package org.proteininformationresource.pirsr;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * @author Vishal Joshi
@@ -47,12 +52,24 @@ class PIRSRAppFailureCasesIntegrationTest {
     @MethodSource("invalidOrIncompleteArguments")
     void testShouldVerifyThatIfRequiredArgumentsAreNotPassedTheAppFailsWithAnError(String inCompleteArguments,
                                                                                    String missingArgument) throws Exception {
+        // get Logback Logger
+        Logger logger = LoggerFactory.getLogger(PIRSRApp.class);
+
+        // create and start a ListAppender
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+
+        // add the appender to the logger
+        // addAppender is outdated now
+        ((ch.qos.logback.classic.Logger) logger).addAppender(listAppender);
+
         //when
         String[] argsArray = inCompleteArguments.split(" ");
         PIRSRApp.main(argsArray);
 
         //then
-        String expected = "Missing required option: "+missingArgument+" \n" +
+        String expectedLog = "Missing required option: " + missingArgument;
+        String expectedSystemOut =
                 "usage: pirsr -a <HMMALIGN> -d <PIRSR_DATA_DIR> -i <INPUT_FILE> -o <OUTPUT_DIR> [-t <INPUT_TYPE>]\n" +
                 "       [-h]\n" +
                 "----------------------------------------------------------------------------------------------------\n" +
@@ -69,7 +86,10 @@ class PIRSRAppFailureCasesIntegrationTest {
                 "                                              (default: InterProScan)\n" +
                 "     -h,--help                                Print this usage.\n" +
                 "----------------------------------------------------------------------------------------------------";
-        assertThat(outputStreamCaptor.toString().trim(), containsString(expected));
+        assertThat(outputStreamCaptor.toString().trim(), containsString(expectedSystemOut));
+        assertThat(listAppender.list, contains(
+                hasProperty("message", equalTo(expectedLog))
+        ));
     }
 
     private static Stream<Arguments> invalidOrIncompleteArguments() {
