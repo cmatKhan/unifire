@@ -32,7 +32,7 @@ git clone https://gitlab.ebi.ac.uk/uniprot-public/unifire.git
 
 ### Prerequisites
 #### Hardware
-A machine with at least 8 GB of memory and ~100 GB of available disk space.
+A machine with at least 4 GB of memory (8 GB or more recommended) and ~100 GB of available disk space.
 
 #### Operating system support
 The Docker image is expected to run on any operating system 
@@ -161,7 +161,7 @@ predictions_arba.out
 
 #### Hardware
 
-A machine with at least 8 GB of memory.
+A machine with at least 4 GB of memory (8 GB or more recommended).
 
 #### Operating system support
 

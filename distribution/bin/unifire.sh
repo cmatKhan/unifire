@@ -38,6 +38,8 @@ JAVA_VERSION_MIN=17
 SCRIPT_DIR=$(get_script_dir)
 
 # Default values
+# default min heap size 4G
+MIN_HEAP_MEM_OPTION="-Xms4G"
 # default max heap size 75% of available RAM
 MAX_HEAP_MEM_OPTION="-XX:MaxRAMPercentage=75"
 function run {
@@ -49,7 +51,7 @@ function run {
     then
         MAX_HEAP_MEM_OPTION="-Xmx${memory}M"
     fi
-    java --add-opens java.desktop/java.awt.font=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED "${MAX_HEAP_MEM_OPTION}" -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" uk.ac.ebi.uniprot.unifire.UniFireApp ${cmdArgs}
+    java --add-opens java.desktop/java.awt.font=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED -XshowSettings:vm "${MIN_HEAP_MEM_OPTION}" "${MAX_HEAP_MEM_OPTION}" -cp "${SCRIPT_DIR}/../target/*:${SCRIPT_DIR}/../target/dependency/*" uk.ac.ebi.uniprot.unifire.UniFireApp ${cmdArgs}
 }
 
 function checkEnv {
