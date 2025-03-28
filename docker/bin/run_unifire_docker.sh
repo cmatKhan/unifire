@@ -20,6 +20,7 @@ set -e
 set -u
 
 infile=""
+filetype="fasta" # either fasta or iprscanxml
 outdir=""
 workdir=""
 cleanworkdir=0
@@ -28,10 +29,13 @@ docker_version=""
 predictionfiles="predictions_unirule.out predictions_arba.out predictions_unirule-pirsr.out"
 
 function usage() {
-    echo "usage: $0 -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-v <VERSION>] [-w <WORKING_FOLDER] [-c]"
+    echo "usage: $0 -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-t <FILE_TYPE>] [-v <VERSION>] [-w <WORKING_FOLDER] [-c]"
     echo "          [-s docker|singularity|podman]"
-    echo "    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least"
-    echo "        OX=<taxid>. (Required)"
+    echo "    -i: Path to input file (Required). Can be either multi-FASTA file (default) or InterProScan xml file (see -t option)."
+    echo "    -t: Input file type. (Optional), DEFAULT: fasta"
+    echo "        Allowed values:"
+    echo "        fasta: multi-FASTA file with headers in UniProt FASTA header format, containing at least OX=<taxid>"
+    echo "        iprscanxml: InterProScan file in xml format. Each protein should have at least one xref element with 'name' attribute containing OX=<taxid>"
     echo "    -o: Path to output folder. All output files with predictions in TSV format will be available in this"
     echo "        folder at the end of the procedure. (Required)"
     echo "    -v: Version of the docker image to use, e.g. 2020.2. Available versions are listed under"
@@ -49,10 +53,11 @@ function usage() {
     exit 1
 }
 
-while getopts "i:o:w:c:v:s:" optionName
+while getopts "i:t:o:w:c:v:s:" optionName
 do
   case "${optionName}" in
     i) infile=${OPTARG};;
+    t) filetype="$OPTARG" ;;
     o) outdir=${OPTARG};;
     w) workdir=${OPTARG};;
     v) docker_version=${OPTARG};;
@@ -92,6 +97,12 @@ function check_infile() {
       echo "Error: Input file ${infile} not found!"
       usage
     fi
+
+   # Validate the file type
+   if [[ "$filetype" != "fasta" && "$filetype" != "iprscanxml" ]]; then
+       echo "Error: Invalid file type. Valid options are 'fasta' or 'iprscanxml'."
+       usage
+   fi
 }
 
 # outdir
@@ -151,7 +162,14 @@ function check_workdir() {
 
 # Run the docker image on $the prepared {workdir}
 function run_docker_image() {
-    cp ${infile} ${workdir}/proteins.fasta
+    # Perform the copy based on file type
+    # unifire-workflow.sh script expects the input files to be named exactly as below
+    if [[ "$filetype" == "fasta" ]]; then
+        cp -v ${infile} ${workdir}/proteins.fasta
+    elif [[ "$filetype" == "iprscanxml" ]]; then
+        cp -v ${infile} ${workdir}/proteins-ipr.xml
+    fi
+
     if [ ${container_software} == "docker" ]
     then
       docker run \
@@ -190,6 +208,7 @@ function cleanup_workdir() {
       done
       rm -f ${workdir}/proteins.fasta
       rm -f ${workdir}/proteins_lineage.fasta
+      rm -f ${workdir}/proteins-ipr.xml
       rm -f ${workdir}/proteins_lineage-ipr-urml.xml
       rm -f ${workdir}/proteins_lineage-ipr.xml
       rm -f ${workdir}/seq/*.fasta

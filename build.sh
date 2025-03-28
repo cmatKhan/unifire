@@ -16,6 +16,8 @@
 #    limitations under the License.
 ############################################################################
 
+set -e
+set -u
 
 function checkEnv {
     if ! command -v mvn &> /dev/null
@@ -61,7 +63,7 @@ echo "Done downloading rule urml files."
 
 PIRSR_DATA_SRC="https://proteininformationresource.org/pirsr/pirsr_data_latest.tar.gz"
 echo "Download pirsr data files..."
-wget -q ${PIRSR_DATA_SRC} -O ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz
+wget ${PIRSR_DATA_SRC} -O ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz
 echo "untarring pirsr_data..."
 tar -zxf ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz -C ${SCRIPT_DIR}/samples/
 echo "Done download pirsr data files."
