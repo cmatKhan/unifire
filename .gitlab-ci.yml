@@ -25,6 +25,18 @@ test:
   script:
     - mvn clean verify
 
+python-test:
+  stage: test
+  image: ubuntu:24.04
+  before_script:
+    - apt-get update && apt-get install -y python3-pip python3 python3-lxml
+    - python3 --version
+    # flag is required to force system-wide installation (not in virtualenv)
+    - pip install https://github.com/etetoolkit/ete/archive/ete4.zip --break-system-packages
+  script:
+    - cd ${CI_PROJECT_DIR}/misc/taxonomy
+    - python3 -m unittest discover -s tests
+
 build_docker_image:
   stage: build_docker_image
   image: docker:23.0.6

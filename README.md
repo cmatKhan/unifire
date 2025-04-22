@@ -39,7 +39,7 @@ The Docker image is expected to run on any operating system
 
 #### Software
 A recent version of Docker is necessary to start the UniFIRE docker image as a new container. It has been tested
- successfully on Ubuntu 20.04 and Docker version 23.0.6.
+ successfully on Ubuntu 24.04 and Docker version 23.0.6.
 
 ### Data preparation
 The only input data that need to be provided are the protein sequence data in multi-FASTA format for which 
@@ -64,14 +64,17 @@ The only input data that need to be provided are the protein sequence data in mu
 
 ### Usage
 ```
-usage: ./docker/bin/run_unifire_docker.sh -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-v <VERSION>] [-w <WORKING_FOLDER] [-c]
+usage: ./docker/bin/run_unifire_docker.sh -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-t <FILE_TYPE>] [-v <VERSION>] [-w <WORKING_FOLDER] [-c]
           [-s docker|singularity|podman]
-    -i: Path to multi-FASTA input file with headers in UniProt FASTA header format, containing at least
-        OX=<taxid>. (Required)
+    -i: Path to input file (Required). Can be either multi-FASTA file (default) or InterProScan xml file (see -t option).
+    -t: Input file type. (Optional), DEFAULT: fasta
+        Allowed values:
+        fasta: multi-FASTA file with headers in UniProt FASTA header format, containing at least OX=<taxid>
+        iprscanxml: InterProScan file in xml format. Each protein should have at least one xref element with 'name' attribute containing OX=<taxid>
     -o: Path to output folder. All output files with predictions in TSV format will be available in this
         folder at the end of the procedure. (Required)
     -v: Version of the docker image to use, e.g. 2020.2. Available versions are listed under
-        https://gitlab.ebi.ac.uk/uniprot-public/unifire/container_registry. (Optional), DEFAULT: 2020.4.1
+        https://gitlab.ebi.ac.uk/uniprot-public/unifire/container_registry. (Optional), DEFAULT: version defined in version.properties
     -w: Path to an empty working directory.  If this option is not given, then a temporary folder will be
         created and used to store intermediate files. (Optional)
     -c: Clean up temporary files. If set, then all temporary files will be cleaned up at the end of the
@@ -85,12 +88,16 @@ usage: ./docker/bin/run_unifire_docker.sh -i <INPUT_FILE> -o <OUTPUT_FOLDER> [-v
 ```
 
 ### Example
+
+**Warning:** The first time this command is run, it will download the ~25 GB large UniFIRE Docker image from the
+docker container registry and extract it on the local machine. Depending on the speed of your network and your CPU
+this can take a few hours.
+
+### 1) Fasta input file:
+
 This is a simple example, which shows how to use the UniFIRE Docker image to run the whole UniFIRE workflow on some
  sample protein data.
- 
-**Warning:** The first time this command is run, it will download the ~25 GB large UniFIRE Docker image from the
- docker container registry and extract it on the local machine. Depending on the speed of your network and your CPU
- this can take a few hours.  
+
 ```bash
 ./docker/bin/run_unifire_docker.sh -i samples/proteins.fasta -o .
 ```
@@ -98,6 +105,24 @@ This command will use as input the file samples/proteins.fasta which is in multi
  the format as described above. It will run the whole UniFIRE workflow to predict functional annotations from UniRule
  and ARBA rules. The resulting functional predictions will be written into these files in the current working
  directory:
+```
+predictions_unirule.out
+predictions_unirule-pirsr.out
+predictions_arba.out
+```
+
+### 2) InterProScan input file:
+
+This is a simple example, which shows how to use the UniFIRE Docker image to run UniFIRE workflow on some
+sample interproscan xml data.
+
+```bash
+./docker/bin/run_unifire_docker.sh -i samples/input_ipr.fasta.xml -t iprscanxml -o .
+```
+This command will use as input the file samples/input_ipr.fasta.xml which is in InterProScan xml format with the xref 
+name attribute in the format as described above (same fasta header format). It will skip the interproscan step (as it is already given as input) and
+run the remaining UniFIRE workflow to predict functional annotations from UniRule and ARBA rules. The resulting 
+functional predictions will be written into these files in the current working directory:
 ```
 predictions_unirule.out
 predictions_unirule-pirsr.out
@@ -273,7 +298,7 @@ usage: unifire -i <INPUT_FILE> -o <OUTPUT_FILE> -r <RULE_URML_FILE> [-f <OUTPUT_
 This section is a walk through on how to prepare your data, assuming you are starting from scratch: from a set of
  sequences (multifasta) that you would like to annotate.
 
-More advanced users / developers with an existing bioinformatics pipeline already integrating InterProScan results should try to load their existing data into the fact model described on the Developer Guide below.
+More advanced users / developers with an existing bioinformatics pipeline already integrating InterProScan results can directly pass the InterProScan file in xml format. Note that the same fasta header format described below applies to the **xref elements name attribute** in the interproscan xml file.
 
 ### MultiFasta header format
 
@@ -327,12 +352,11 @@ Customized full header:
 
 ### Fetching the full lineages
 
-From the previously described multifasta format, you can use the following scripts to fetch the full NCBI taxonomy id lineage. Both scripts have dependencies which are detailed at the start of the script
+From the previously described header format, you can use the following script to fetch the full NCBI taxonomy id lineage. The script has dependency on NCBITaxa python package (ete4).
 
-* python [./misc/taxonomy/fetchLineageLocal.py](misc/taxonomy/fetchLineageLocal.py) `<input>` `<output>`  - for large amount of data on multiple species
-* python [./misc/taxonomy/fetchLineageRemote.py](misc/taxonomy/fetchLineageRemote.py) `<input>` `<output>`   - for one-off usage / few species
+* python [./misc/taxonomy/updateIPRScanWithTaxonomicLineage.py](misc/taxonomy/fetchLineageLocal.py) `-i <input>` `-o <output>`
 
-Both scripts will simply replace the OX={taxId} by OX={fullLineage}.
+The script will simply replace the OX={taxId} by OX={fullLineage} in the xref name attribute.
 
 Having the full lineage is necessary for the majority of the rules to be executed.
 
