@@ -20,3 +20,7 @@
 /samples/unirule-templates-latest.xml
 
 /samples/unirule-urml-latest.xml
+
+.venv
+
+__pycache__/

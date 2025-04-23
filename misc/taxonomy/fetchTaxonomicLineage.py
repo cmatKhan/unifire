@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
+Note: This file is not used anymore in the current workflow. The updateIPRScanWithTaxonomicLineage.py script is used
+instead to update the interproscan xml file.
+
+
 The fetchTaxonomicLineage.py script reads a MultiFasta file and will replace any occurence of "OX={taxId}" in the header
 by the full lineage corresponding to this taxId. The output is the resolved multifasta file written on the given
 output path.
