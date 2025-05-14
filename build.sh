@@ -52,18 +52,18 @@ echo "Done building UniFIRE and downloading dependencies."
 
 popd > /dev/null
 
-unirule_version="$(grep -E "^URML_RULES_VERSION=" "${SCRIPT_DIR}"/docker/versions.properties | cut -d '=' -f 2)"
+# unirule_version="$(grep -E "^URML_RULES_VERSION=" "${SCRIPT_DIR}"/docker/versions.properties | cut -d '=' -f 2)"
 
-echo "Downloading rule urml files..."
-for file_prefix in arba-urml unirule-urml unirule-templates unirule.pirsr-urml;
-do
-    wget ${FTP_SRC}/${file_prefix}-${unirule_version}.xml -O ${SCRIPT_DIR}/samples/${file_prefix}-latest.xml
-done
-echo "Done downloading rule urml files."
+# echo "Downloading rule urml files..."
+# for file_prefix in arba-urml unirule-urml unirule-templates unirule.pirsr-urml;
+# do
+#     wget ${FTP_SRC}/${file_prefix}-${unirule_version}.xml -O ${SCRIPT_DIR}/samples/${file_prefix}-latest.xml
+# done
+# echo "Done downloading rule urml files."
 
-PIRSR_DATA_SRC="https://proteininformationresource.org/pirsr/pirsr_data_latest.tar.gz"
-echo "Download pirsr data files..."
-wget ${PIRSR_DATA_SRC} -O ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz
-echo "untarring pirsr_data..."
-tar -zxf ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz -C ${SCRIPT_DIR}/samples/
-echo "Done download pirsr data files."
+# PIRSR_DATA_SRC="https://proteininformationresource.org/pirsr/pirsr_data_latest.tar.gz"
+# echo "Download pirsr data files..."
+# wget ${PIRSR_DATA_SRC} -O ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz
+# echo "untarring pirsr_data..."
+# tar -zxf ${SCRIPT_DIR}/samples/pirsr_data_latest.tar.gz -C ${SCRIPT_DIR}/samples/
+# echo "Done download pirsr data files."
